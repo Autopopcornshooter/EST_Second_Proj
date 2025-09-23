@@ -6,7 +6,7 @@
 - 정준범
 - 최애정
 ## 피그마 팀 페이지
-https://www.figma.com/design/irVDgXXKzlPvJhvNSPNtQt/12%EA%B8%B0-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8--%EB%B0%B0%EB%8B%AC%EC%9D%98-%EB%AF%BC%EC%A1%B1-%ED%81%B4%EB%A1%A0%EC%BD%94%EB%94%A9-?t=KJuBO5BsvT6EoEYX-1
+https://www.figma.com/design/LxDQnJF9Qkv7RnbSKT3fWk/12%EA%B8%B0-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8?node-id=0-1&p=f&t=SWN8wmjD3z4PXGfe-0
 
 ## 프로젝트 일정
 - 프로젝트 일정: 9/23(화) ~ 10/20(월)
