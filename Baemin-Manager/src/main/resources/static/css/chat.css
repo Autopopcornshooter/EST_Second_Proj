@@ -1,0 +1,108 @@
+#main-content {
+  width: 1440px;
+  height: 750px;
+  margin: 10px auto;
+  border: 1px solid #ccc;
+}
+
+#chatting-list {
+  width: 25%;
+  border-right: 1px solid #ccc;
+}
+
+#chatting-room {
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.profile-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 5px;
+}
+
+#nickname-area {
+  width: 100%;
+  border-bottom: 1px solid #ccc;
+}
+
+.nickname {
+  font-weight: bold;
+}
+
+.last-comment {
+  color: #666;
+  font-size: 0.9em;
+  margin-top: 2px;
+}
+
+.chatting-list-item {
+  border-bottom: 1px solid #ccc;
+}
+
+#restaurant-name {
+  font-weight: bold;
+}
+
+#info-area {
+  border-bottom: 1px solid #ccc;
+}
+
+#chatting-content {
+  flex: 1;
+  overflow-y: auto;
+  display: block;
+}
+
+.chatting-item1 {
+  background-color: #f2f3f6;
+  padding: 10px;
+  border-radius: 10px;
+  max-width: 30%;
+  margin: 5px 0;
+}
+
+.chatting-item2 {
+  background-color: #2f9eab;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  max-width: 30%;
+  margin: 5px 0;
+}
+
+.time {
+  font-size: 0.7em;
+}
+
+#chatting-input-area {
+  height: 130px;
+  background-color: #f2f3f6;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+#message-input {
+  width: 100%;
+  border: none;
+  background-color: #f2f3f6;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+#message-input:focus {
+  outline: none; /* 파란 테두리 제거 */
+  box-shadow: none; /* 부트스트랩 같은 프레임워크 기본 그림자 제거 */
+  border-color: inherit; /* border 색상 원래대로 유지 (원하면 따로 지정 가능) */
+}
+
+#send-btn {
+  width: 60px;
+  height: 40px;
+  background-color: #2f9eab;
+  color: white;
+  border: none;
+  border-radius: 10px;
+}
