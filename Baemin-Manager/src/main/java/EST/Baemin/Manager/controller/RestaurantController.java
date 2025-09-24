@@ -1,15 +1,13 @@
-package EST.Baemin.Manager.restaurant_management.controller;
+package EST.Baemin.Manager.controller;
 
-import EST.Baemin.Manager.restaurant_management.domain.Restaurant;
-import EST.Baemin.Manager.restaurant_management.dto.RestaurantDto;
-import EST.Baemin.Manager.restaurant_management.service.RestaurantService;
+import EST.Baemin.Manager.domain.Restaurant;
+import EST.Baemin.Manager.dto.RestaurantDto;
+import EST.Baemin.Manager.service.RestaurantService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 

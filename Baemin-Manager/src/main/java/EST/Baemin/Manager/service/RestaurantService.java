@@ -1,13 +1,11 @@
-package EST.Baemin.Manager.restaurant_management.service;
+package EST.Baemin.Manager.service;
 
-import EST.Baemin.Manager.restaurant_management.domain.Restaurant;
-import EST.Baemin.Manager.restaurant_management.dto.RestaurantDto;
-import EST.Baemin.Manager.restaurant_management.repository.RestaurantRepository;
+import EST.Baemin.Manager.domain.Restaurant;
+import EST.Baemin.Manager.dto.RestaurantDto;
+import EST.Baemin.Manager.repository.RestaurantRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 

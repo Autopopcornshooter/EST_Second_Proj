@@ -1,4 +1,4 @@
-package EST.Baemin.Manager.restaurant_management.config;
+package EST.Baemin.Manager.config;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;

@@ -1,4 +1,4 @@
-package EST.Baemin.Manager.restaurant_management.domain;
+package EST.Baemin.Manager.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
