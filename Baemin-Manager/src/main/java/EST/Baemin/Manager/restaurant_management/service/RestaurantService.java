@@ -43,11 +43,12 @@ public class RestaurantService {
     // 식당 수정 기능
     public Optional<Restaurant> updateRestaurant(Long id, RestaurantDto dto) {
         return restaurantRepository.findById(id).map(r -> {
-            r.setName(dto.getName());
-            r.setMainMenu(dto.getMainMenu());
-            r.setDescription(dto.getDescription());
-            r.setAddress(dto.getAddress());
-            r.setPrice(dto.getPrice());
+            // PutMapping 할 때 들어온값이 null이면 기존 데이터 유지
+            if (dto.getName() != null) r.setName(dto.getName());
+            if (dto.getMainMenu() != null) r.setMainMenu(dto.getMainMenu());
+            if (dto.getDescription() != null) r.setDescription(dto.getDescription());
+            if (dto.getAddress() != null) r.setAddress(dto.getAddress());
+            if (dto.getPrice() != null) r.setPrice(dto.getPrice());
 //            r.setImageUrl(dto.getImageUrl());
             return restaurantRepository.save(r);
         });
