@@ -4,6 +4,7 @@ import EST.Baemin.Manager.restaurant_management.domain.Restaurant;
 import EST.Baemin.Manager.restaurant_management.dto.RestaurantDto;
 import EST.Baemin.Manager.restaurant_management.service.RestaurantService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -12,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
+@Tag(name = "Restaurant", description = "식당 관리 API")
 @RestController
 @RequestMapping("/api/restaurants")
 @RequiredArgsConstructor
