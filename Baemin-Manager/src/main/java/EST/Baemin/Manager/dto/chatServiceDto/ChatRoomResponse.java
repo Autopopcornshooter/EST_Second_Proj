@@ -1,0 +1,23 @@
+package EST.Baemin.Manager.dto.chatServiceDto;
+
+import EST.Baemin.Manager.domain.Chat;
+import EST.Baemin.Manager.domain.ChatRoom;
+
+import java.util.Date;
+import java.util.List;
+
+public class ChatRoomResponse {
+  private long id;
+  private long user1Id;
+  private long user2Id;
+  private Date updatedAt;
+  private List<Chat> chats;
+
+  public ChatRoomResponse(ChatRoom chatRoom) {
+    this.id = chatRoom.getId();
+    this.user1Id = chatRoom.getUser1Id();
+    this.user2Id = chatRoom.getUser2Id();
+    this.updatedAt = chatRoom.getUpdatedAt();
+    this.chats = chatRoom.getChats();
+  }
+}
