@@ -1,7 +1,6 @@
-package EST.Baemin.Manager.dto.chatServiceDto;
+package EST.Baemin.Manager.dto;
 
 import EST.Baemin.Manager.domain.Chat;
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

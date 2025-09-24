@@ -1,8 +1,7 @@
 package EST.Baemin.Manager.controller;
 
-import EST.Baemin.Manager.domain.Chat;
 import EST.Baemin.Manager.domain.ChatRoom;
-import EST.Baemin.Manager.dto.chatServiceDto.ChatRequest;
+import EST.Baemin.Manager.dto.ChatRequest;
 import EST.Baemin.Manager.service.ChatService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

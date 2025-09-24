@@ -1,4 +1,4 @@
-package EST.Baemin.Manager.dto.chatServiceDto;
+package EST.Baemin.Manager.dto;
 
 import EST.Baemin.Manager.domain.Chat;
 import EST.Baemin.Manager.domain.ChatRoom;
