@@ -1,6 +1,6 @@
-package EST.Baemin.Manager.service.userManagementService;
+package EST.Baemin.Manager.service;
 
-import EST.Baemin.Manager.repository.userManagementRepository.UserRepository;
+import EST.Baemin.Manager.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

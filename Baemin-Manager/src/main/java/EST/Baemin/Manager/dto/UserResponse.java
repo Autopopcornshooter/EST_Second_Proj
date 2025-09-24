@@ -1,6 +1,6 @@
-package EST.Baemin.Manager.dto.userManagementDto;
+package EST.Baemin.Manager.dto;
 
-import EST.Baemin.Manager.entity.userManagementEntity.User;
+import EST.Baemin.Manager.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

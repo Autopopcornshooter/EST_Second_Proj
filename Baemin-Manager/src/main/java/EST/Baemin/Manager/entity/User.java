@@ -1,4 +1,4 @@
-package EST.Baemin.Manager.entity.userManagementEntity;
+package EST.Baemin.Manager.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
