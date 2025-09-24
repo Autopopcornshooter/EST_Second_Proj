@@ -1,6 +1,6 @@
 # 로컬 환경 변수 설정
 server:
-  port: 8090
+  port: 8080
 
 spring:
   datasource:
