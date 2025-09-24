@@ -25,7 +25,7 @@ public class Restaurant {
     private String name;    // 가게명
 
     @Column(nullable = false)
-    private String mainMenu;
+    private String mainMenu;    // 대표메뉴
 
     @Column(length = 500)   // 500자 까지
     private String description; // 대표메뉴 설명
