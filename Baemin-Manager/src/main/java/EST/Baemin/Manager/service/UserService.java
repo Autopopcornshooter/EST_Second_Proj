@@ -1,10 +1,9 @@
 package EST.Baemin.Manager.service;
 
 import EST.Baemin.Manager.dto.AddUserRequest;
-import EST.Baemin.Manager.entity.User;
+import EST.Baemin.Manager.domain.User;
 import EST.Baemin.Manager.repository.UserRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +16,10 @@ public class UserService {
     public User save(AddUserRequest request){
         return userRepository.save(
                 User.builder()
-                        .loginId(request.getLoginId())
+                        .loginId(request.getUsername())
                         .password(encoder.encode(request.getPassword()))
+                        .nickname(request.getNickname())
+                        .storeName(request.getStoreName())
                         .build()
         );
     }

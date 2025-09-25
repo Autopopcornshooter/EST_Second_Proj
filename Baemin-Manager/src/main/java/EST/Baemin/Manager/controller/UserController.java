@@ -4,6 +4,8 @@ import EST.Baemin.Manager.dto.AddUserRequest;
 import EST.Baemin.Manager.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
@@ -11,8 +13,26 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class UserController {
     private final UserService userService;
 
-    @PostMapping("/user")
-    public String signup(AddUserRequest request){
+
+
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
+    @GetMapping("/signup")
+    public String signup(Model model) {
+
+        model.addAttribute("formData",new AddUserRequest());
+        return "signup";
+    }
+
+
+    @PostMapping("/signup")
+    public String signup(AddUserRequest request, Model model){
+        if(!request.getPassword().equals( request.getConfirmPassword())){
+            model.addAttribute("formData",request);
+            return"/signup";
+        }
         userService.save(request);
         return "redirect:/login";
     }
