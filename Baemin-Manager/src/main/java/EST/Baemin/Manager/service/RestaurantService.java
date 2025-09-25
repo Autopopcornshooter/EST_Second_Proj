@@ -15,17 +15,23 @@ public class RestaurantService {
     private final RestaurantRepository restaurantRepository;
 
     // 식당 조회 기능
-    public List<Restaurant> findAllRestaurants() {
-        return restaurantRepository.findAll();
+    public List<RestaurantDto> findAllRestaurants() {
+
+        return restaurantRepository.findAll()
+                .stream()
+                .map(RestaurantDto::new)
+                .toList();
     }
 
     // 식당 아이디별 조회 기능
-    public Optional<Restaurant> findRestaurantById(Long id) {
-        return restaurantRepository.findById(id);
+    public Optional<RestaurantDto> findRestaurantById(Long id) {
+
+        return restaurantRepository.findById(id)
+                .map(RestaurantDto::new);
     }
 
     // 식당 추가 기능
-    public Restaurant createRestaurant(RestaurantDto dto) {
+    public RestaurantDto createRestaurant(RestaurantDto dto) {
         Restaurant restaurant = Restaurant.builder()
                 .name(dto.getName())
                 .mainMenu(dto.getMainMenu())
@@ -35,21 +41,25 @@ public class RestaurantService {
 //                .imageUrl(dto.getImageUrl())
                 .build();
 
-        return restaurantRepository.save(restaurant);
+        Restaurant saved = restaurantRepository.save(restaurant);
+
+        return new RestaurantDto(saved);
     }
 
     // 식당 수정 기능
-    public Optional<Restaurant> updateRestaurant(Long id, RestaurantDto dto) {
-        return restaurantRepository.findById(id).map(r -> {
+    public Optional<RestaurantDto> updateRestaurant(Long id, RestaurantDto dto) {
+        return restaurantRepository.findById(id)
+                .map(r -> {
             // PutMapping 할 때 들어온값이 null이면 기존 데이터 유지
-            if (dto.getName() != null) r.setName(dto.getName());
-            if (dto.getMainMenu() != null) r.setMainMenu(dto.getMainMenu());
-            if (dto.getDescription() != null) r.setDescription(dto.getDescription());
-            if (dto.getAddress() != null) r.setAddress(dto.getAddress());
-            if (dto.getPrice() != null) r.setPrice(dto.getPrice());
-//            r.setImageUrl(dto.getImageUrl());
-            return restaurantRepository.save(r);
-        });
+                    if (dto.getName() != null) r.setName(dto.getName());
+                    if (dto.getMainMenu() != null) r.setMainMenu(dto.getMainMenu());
+                    if (dto.getDescription() != null) r.setDescription(dto.getDescription());
+                    if (dto.getAddress() != null) r.setAddress(dto.getAddress());
+                    if (dto.getPrice() != null) r.setPrice(dto.getPrice());
+//                  r.setImageUrl(dto.getImageUrl());
+                 return restaurantRepository.save(r);
+        })
+                .map(RestaurantDto::new);
     }
 
     // 식당 삭제 기능
