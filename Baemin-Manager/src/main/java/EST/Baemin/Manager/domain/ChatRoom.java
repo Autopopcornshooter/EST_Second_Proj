@@ -5,34 +5,38 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.UpdateTimestamp;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ChatRoom {
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private long id;
+  private Long id;
 
-  @Column
-  private long user1Id;
+  @Column(nullable = false)
+  private Long user1Id;
 
-  @Column
-  private long user2Id;
+  @Column(nullable = false)
+  private Long user2Id;
 
-  @Column
-  private Date updatedAt;
+  @UpdateTimestamp
+  @Column(nullable = false)
+  private LocalDateTime updatedAt;
 
-  @OneToMany(mappedBy = "chatRoomId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-  private List<Chat> chats;
+  // 양방향: ChatRoom → Chat, LAZY 로딩
+  @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+  private List<Chat> chats = new ArrayList<>();
 
   @Builder
-  public ChatRoom(long user1Id, long user2Id, Date updatedAt) {
+  public ChatRoom(Long user1Id, Long user2Id) {
     this.user1Id = user1Id;
     this.user2Id = user2Id;
-    this.updatedAt = updatedAt;
   }
 }
