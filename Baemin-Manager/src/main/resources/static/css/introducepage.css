@@ -1,0 +1,147 @@
+/* 기본 스타일 */
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: white;
+}
+
+/* 상단 메뉴 */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 50px;
+  background-color: #fff;
+  border-bottom: 1px solid #ddd;
+}
+
+.topbar .logo {
+  height: 40px;
+  width: 85px;
+}
+.topbar nav {
+  margin-left: 20px;
+}
+
+.topbar nav a {
+  margin: 0 5px;
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+}
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+}
+
+.topbar-right input {
+  padding: 5px 10px;
+  margin-right: 10px;
+  border-radius: 10px;
+  border: none;
+  background-color: #dee2e6;
+}
+
+.topbar-right button {
+  margin-left: 5px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+/* 메인 히어로 섹션 */
+.main-hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px 80px;
+  background-color: #d7f5f9;
+}
+
+.hero-text h1 {
+  margin: 0;
+  font-size: 36px;
+}
+
+.hero-text p {
+  margin-top: 10px;
+  font-size: 16px;
+  color: #666;
+}
+
+.hero-img {
+  text-align: center;
+}
+
+.hero-img img {
+  border-radius: 10%;
+  width: 200px;
+  height: 200px;
+}
+
+/* 식당 리스트 */
+.restaurant-list-section {
+  padding: 20px 40px;
+}
+
+.restaurant-list-section h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.restaurant-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 20px;
+}
+
+.restaurant-card {
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.restaurant-img {
+  background-color: #ccc;
+  width: 100%;
+  padding-top: 100%; /* 정사각형 비율 */
+  border-radius: 10px;
+}
+
+.restaurant-info {
+  margin-top: 10px;
+}
+
+.restaurant-name {
+  font-weight: bold;
+  margin: 0;
+}
+
+.restaurant-menu, .restaurant-price, .restaurant-views {
+  margin: 2px 0;
+  font-size: 14px;
+  color: #333;
+}
+
+/* 오른쪽 식당 등록 버튼 */
+.add-restaurant-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #2abf9f;
+  color: #fff;
+  border: none;
+  padding: 15px 20px;
+  border-radius: 100%;
+  cursor: pointer;
+  font-weight: bold;
+  height: 85px;
+}
