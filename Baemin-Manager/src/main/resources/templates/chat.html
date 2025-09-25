@@ -1,68 +1,72 @@
 <!DOCTYPE html>
 <html lang="kr" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="UTF-8" />
-    <title>album</title>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/xUj+3OJ+Y3QjeKk2Gm2bZ6Yh2b9gqv0O2f5Y5b5YkA=" crossorigin="anonymous"></script>
-    <link
+<head>
+  <meta charset="UTF-8" />
+  <title>Chat</title>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" crossorigin="anonymous"></script>
+  <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
       rel="stylesheet"
       integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
       crossorigin="anonymous"
-    />
-    <link rel="stylesheet" href="/static/css/chat.css" />
-  </head>
-  <body>
-    <header></header>
-    <main id="main-content" class="d-flex">
-      <div id="chatting-list">
-        <div id="nickname-area" class="p-2">
-          <p class="nickname mb-0">내 닉네임</p>
-        </div>
-        <div class="chatting-list-item d-flex align-items-center p-2">
-          <div>
-            <p class="nickname mb-0">상대 닉네임</p>
-            <p class="last-comment mb-0">마지막 대화 내용</p>
-          </div>
-          <img src="dev의 민족.avif" alt="상대방 프로필 사진" class="profile-img ms-auto" />
-        </div>
+  />
+  <link rel="stylesheet" href="/css/chat.css" />
+</head>
+<body>
+<header></header>
+<main id="main-content" class="d-flex">
+  <!-- 채팅방 리스트 -->
+  <div id="chatting-list">
+    <div id="nickname-area" class="p-2">
+      <p class="nickname mb-0" th:text="${myNickname}">내 닉네임</p>
+    </div>
+    <div th:each="room : ${chatRooms}" class="chatting-list-item d-flex align-items-center p-2">
+      <div>
+        <p class="nickname mb-0" th:text="${roomOtherNicknames[room.id]}">상대 닉네임</p>
+        <p class="last-comment mb-0">마지막 대화 내용</p>
       </div>
-      <div id="chatting-room">
-        <div id="info-area" class="ps-2">
-          <p class="nickname ps-2 pe-2 pt-2 mb-0 mt-2">상대 닉네임</p>
-          <div class="d-flex align-items-center p-2">
-            <img src="dev의 민족.avif" alt="상대방 프로필 사진" class="profile-img" />
-            <p id="restaurant-name" class="ms-auto me-2 mt-4 mb-0">~~사장님</p>
-          </div>
-        </div>
-        <div id="chatting-content" class="p-3">
-          <!-- 상대방 채팅 -->
-          <div class="d-flex">
-            <div class="chatting-item1">사장님도 번창하시길 바라요! 근래에 한 번 뵙죠 :)</div>
-            <p class="time ms-1 mt-auto mb-2">오후 1:30</p>
-          </div>
-          <!-- 내 채팅 -->
-          <div class="d-flex justify-content-end">
-            <span class="time me-1 mt-auto mb-2">오후 1:31</span>
-            <p class="chatting-item2">넵 오늘도 장사 잘하시고 즐거운 하루 되세요!!</p>
-          </div>
-        </div>
-        <!-- 채팅 입력창 영역 -->
-        <div id="chatting-input-area" class="m-3 p-2">
-          <div class="input-group">
-            <textarea id="message-input" placeholder="메시지를 입력하세요."></textarea>
-          </div>
-          <div class="d-flex">
-            <button class="ms-auto me-2" id="send-btn" type="button">전송</button>
-          </div>
-        </div>
+      <img src="/images/default-profile.png" alt="상대방 프로필 사진" class="profile-img ms-auto" />
+    </div>
+  </div>
+  
+  <!-- 선택된 채팅방 -->
+  <div id="chatting-room" th:if="${selectedRoom != null}">
+    <div id="info-area" class="ps-2">
+      <p class="nickname ps-2 pe-2 pt-2 mb-0 mt-2" th:text="${roomOtherNicknames[selectedRoom.id]}">상대 닉네임</p>
+      <div class="d-flex align-items-center p-2">
+        <img src="/images/default-profile.png" alt="상대방 프로필 사진" class="profile-img" />
+        <p id="restaurant-name" class="ms-auto me-2 mt-4 mb-0">~~사장님</p>
       </div>
-    </main>
-    <footer></footer>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-      crossorigin="anonymous"
-    ></script>
-  </body>
+    </div>
+    
+    <!-- 채팅 내용 반복 -->
+    <div id="chatting-content" class="p-3">
+      <div th:each="chat : ${selectedRoom.chats}"
+          class="d-flex"
+          th:classappend="${chat.senderId == 101} ? ' justify-content-end' : ''">
+        <div th:text="${chat.message}"
+            th:class="${chat.senderId == 101} ? 'chatting-item2' : 'chatting-item1'">
+          메시지 내용
+        </div>
+        <p class="time ms-1 mt-auto mb-2"
+            th:text="${#temporals.format(chat.createdAt,'a h:mm')}">
+          시간
+        </p>
+      </div>
+    </div>
+    
+    <!-- 채팅 입력창 영역 -->
+    <div id="chatting-input-area" class="m-3 p-2">
+      <div class="input-group">
+        <textarea id="message-input" placeholder="메시지를 입력하세요."></textarea>
+      </div>
+      <div class="d-flex">
+        <button class="ms-auto me-2" id="send-btn" type="button">전송</button>
+      </div>
+    </div>
+  </div>
+</main>
+<footer></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+</body>
 </html>
