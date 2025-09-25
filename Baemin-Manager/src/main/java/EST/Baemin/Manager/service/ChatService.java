@@ -22,8 +22,14 @@ public class ChatService {
   }
 
   // Create Chat
-  public Chat savaChat(ChatRequest request) {
-    return chatRepository.save(request.toEntity());
+  public Chat saveChat(ChatRequest request) {
+    ChatRoom chatRoom = chatRoomRepository.findById(request.getChatRoomId())
+                                .orElseThrow(() -> new RuntimeException("ChatRoom not found"));
+
+    Chat chat = request.toEntity(chatRoom);
+
+    // 저장
+    return chatRepository.save(chat);
   }
 
   public List<ChatRoom> getChatRoomsByUserId(Long userId) {
