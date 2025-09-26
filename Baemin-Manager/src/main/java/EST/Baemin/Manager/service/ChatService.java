@@ -24,7 +24,7 @@ public class ChatService {
   // Create Chat
   public Chat saveChat(ChatRequest request) {
     ChatRoom chatRoom = chatRoomRepository.findById(request.getChatRoomId())
-                                .orElseThrow(() -> new RuntimeException("ChatRoom not found"));
+                                .orElseThrow(() -> new ChatRoomNotFoundException(request.getChatRoomId()));
 
     Chat chat = request.toEntity(chatRoom);
 
@@ -33,10 +33,10 @@ public class ChatService {
   }
 
   public List<ChatRoom> getChatRoomsByUserId(Long userId) {
-    return chatRoomRepository.findByUser1IdOrUser2Id(userId, userId);
+    return chatRoomRepository.findByUser1IdOrUser2IdOrderByUpdatedAtDesc(userId, userId);
   }
 
-  public ChatRoomResponse getChatRoomById(long id) {
+  public ChatRoomResponse findById(long id) {
     ChatRoom chatRoom = chatRoomRepository.findById(id)
                                 .orElseThrow(() -> new ChatRoomNotFoundException(id));
 

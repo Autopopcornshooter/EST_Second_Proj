@@ -26,12 +26,21 @@ public class ChatRoom {
   @Column(nullable = false)
   private Long user2Id;
 
+//  @ManyToOne(fetch = FetchType.LAZY)
+//  @JoinColumn(name = "user1_id", nullable = false)
+//  private User user1;
+//
+//  @ManyToOne(fetch = FetchType.LAZY)
+//  @JoinColumn(name = "user2_id", nullable = false)
+//  private User user2;
+
   @UpdateTimestamp
   @Column(nullable = false)
   private LocalDateTime updatedAt;
 
   // 양방향: ChatRoom → Chat, LAZY 로딩
   @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+  @OrderBy("createdAt ASC")
   private List<Chat> chats = new ArrayList<>();
 
   @Builder

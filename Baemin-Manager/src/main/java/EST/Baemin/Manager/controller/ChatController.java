@@ -1,13 +1,14 @@
 package EST.Baemin.Manager.controller;
 
+import EST.Baemin.Manager.domain.Chat;
 import EST.Baemin.Manager.domain.ChatRoom;
 import EST.Baemin.Manager.dto.ChatRequest;
+import EST.Baemin.Manager.dto.ChatRoomResponse;
 import EST.Baemin.Manager.service.ChatService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -52,18 +53,18 @@ public class ChatController {
     return "chat";
   }
 
-//  // 1) 채팅방 목록 조회
-//  @GetMapping("/rooms")
-//  public ResponseEntity<List<ChatRoom>> getChatRooms(@RequestParam Long userId) {
-//    List<ChatRoom> chatRooms = chatService.getChatRoomsByUserId(userId);
-//    return ResponseEntity.ok(chatRooms);
-//  }
-//
-//  // 2) 채팅 추가
-//  @PostMapping("/api/chats")
-//  public ResponseEntity<Chat> addChat(@RequestBody ChatRequest request) {
-//    Chat savedChat = chatService.saveChat(request);
-//    return ResponseEntity.ok(savedChat);
-//  }
+  @GetMapping("/api/chat/{roomId}")
+  public String getChatRoom(@PathVariable Long roomId, Model model) {
+    ChatRoomResponse chatroom = chatService.findById(roomId);
+    model.addAttribute("chatRoom", chatroom);
+    return "chat :: chatFragment";
+  }
+
+  // 2) 채팅 추가
+  @PostMapping("/api/chats")
+  public ResponseEntity<Chat> addChat(@RequestBody ChatRequest request) {
+    Chat savedChat = chatService.saveChat(request);
+    return ResponseEntity.ok(savedChat);
+  }
 
 }

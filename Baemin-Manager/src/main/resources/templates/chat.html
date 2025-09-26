@@ -20,7 +20,8 @@
     <div id="nickname-area" class="p-2">
       <p class="nickname mb-0" th:text="${myNickname}">내 닉네임</p>
     </div>
-    <div th:each="room : ${chatRooms}" class="chatting-list-item d-flex align-items-center p-2">
+    <div th:each="room : ${chatRooms}"  class="chatting-list-item d-flex align-items-center p-2">
+      <input class="room-id" type="hidden" th:value="${room.id}" />
       <div>
         <p class="nickname mb-0" th:text="${roomOtherNicknames[room.id]}">상대 닉네임</p>
         <p class="last-comment mb-0">마지막 대화 내용</p>
@@ -29,36 +30,38 @@
     </div>
   </div>
   
-  <!-- 선택된 채팅방 -->
-  <div id="chatting-room" th:if="${selectedRoom != null}">
-    <div id="info-area" class="ps-2">
-      <p class="nickname ps-2 pe-2 pt-2 mb-0 mt-2" th:text="${roomOtherNicknames[selectedRoom.id]}">상대 닉네임</p>
-      <div class="d-flex align-items-center p-2">
-        <img src="/images/default-profile.png" alt="상대방 프로필 사진" class="profile-img" />
-        <p id="restaurant-name" class="ms-auto me-2 mt-4 mb-0">~~사장님</p>
-      </div>
-    </div>
-    
-    <!-- 채팅 내용 반복 -->
-    <div id="chatting-content" class="p-3">
-      <div th:each="chat : ${selectedRoom.chats}"
-          class="d-flex"
-          th:classappend="${chat.senderId == 101} ? ' justify-content-end' : ''">
-        <div th:text="${chat.message}"
-            th:class="${chat.senderId == 101} ? 'chatting-item2' : 'chatting-item1'">
-          메시지 내용
+  <div id="chat-area" th:fragment="chatFragment">
+    <!-- 선택된 채팅방 -->
+    <div id="chatting-room" th:if="${selectedRoom != null}">
+      <div id="info-area" class="ps-2">
+        <p class="nickname ps-2 pe-2 pt-2 mb-0 mt-2" th:text="${roomOtherNicknames[selectedRoom.id]}">상대 닉네임</p>
+        <div class="d-flex align-items-center p-2">
+          <img src="/images/default-profile.png" alt="상대방 프로필 사진" class="profile-img" />
+          <p id="restaurant-name" class="ms-auto me-2 mt-4 mb-0">~~사장님</p>
         </div>
-        <p class="time ms-1 mt-auto mb-2"
-            th:text="${#temporals.format(chat.createdAt,'a h:mm')}">
-          시간
-        </p>
+      </div>
+      
+      <!-- 채팅 내용 반복 -->
+      <div id="chatting-content" class="p-3">
+        <div th:each="chat : ${selectedRoom.chats}"
+            class="d-flex"
+            th:classappend="${chat.senderId == 101} ? ' justify-content-end' : ''">
+          <div th:text="${chat.message}"
+              th:class="${chat.senderId == 101} ? 'chatting-item2' : 'chatting-item1'">
+            메시지 내용
+          </div>
+          <p class="time ms-1 mt-auto mb-2"
+              th:text="${#temporals.format(chat.createdAt,'a h:mm')}">
+            시간
+          </p>
+        </div>
       </div>
     </div>
     
     <!-- 채팅 입력창 영역 -->
     <div id="chatting-input-area" class="m-3 p-2">
       <div class="input-group">
-        <textarea id="message-input" placeholder="메시지를 입력하세요."></textarea>
+        <textarea id="message-input" th:data-room-id="${room.id}" th:data-sender-id="${myId}"placeholder="메시지를 입력하세요."></textarea>
       </div>
       <div class="d-flex">
         <button class="ms-auto me-2" id="send-btn" type="button">전송</button>
