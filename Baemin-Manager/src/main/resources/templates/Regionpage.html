@@ -14,7 +14,7 @@
 
 <header>
   <div class="logo">
-    <img src="../static/images/BaeMin_Logo.jpeg" alt="배달의민족 로고" width="100">
+    <img src="/images/BaeMin_Logo.jpeg" alt="배달의민족 로고" width="100">
   </div>
   <button class="login-btn">로그인</button>
 </header>
@@ -88,6 +88,10 @@
 <script async defer
         th:src="@{'https://maps.googleapis.com/maps/api/js?key=' + ${apiKey} + '&callback=initMap'}">
 </script>
-
+<script>
+    window.addEventListener("load", () => {
+        console.log("리소스 로드 완료");
+    });
+</script>
 </body>
 </html>
