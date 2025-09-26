@@ -8,7 +8,5 @@ import java.util.List;
 
 @Repository
 public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
-  List<ChatRoom> findByUser1IdOrUser2Id(Long userId, Long userId1);
-
-  List<ChatRoom> id(long id);
+  List<ChatRoom> findByUser1IdOrUser2IdOrderByUpdatedAtDesc(Long userId, Long userId1);
 }

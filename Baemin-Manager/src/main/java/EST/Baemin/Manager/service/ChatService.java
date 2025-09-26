@@ -22,15 +22,21 @@ public class ChatService {
   }
 
   // Create Chat
-  public Chat savaChat(ChatRequest request) {
-    return chatRepository.save(request.toEntity());
+  public Chat saveChat(ChatRequest request) {
+    ChatRoom chatRoom = chatRoomRepository.findById(request.getChatRoomId())
+                                .orElseThrow(() -> new ChatRoomNotFoundException(request.getChatRoomId()));
+
+    Chat chat = request.toEntity(chatRoom);
+
+    // 저장
+    return chatRepository.save(chat);
   }
 
   public List<ChatRoom> getChatRoomsByUserId(Long userId) {
-    return chatRoomRepository.findByUser1IdOrUser2Id(userId, userId);
+    return chatRoomRepository.findByUser1IdOrUser2IdOrderByUpdatedAtDesc(userId, userId);
   }
 
-  public ChatRoomResponse getChatRoomById(long id) {
+  public ChatRoomResponse findById(long id) {
     ChatRoom chatRoom = chatRoomRepository.findById(id)
                                 .orElseThrow(() -> new ChatRoomNotFoundException(id));
 

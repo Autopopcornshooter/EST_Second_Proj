@@ -1,37 +1,35 @@
 package EST.Baemin.Manager.dto;
 
 import EST.Baemin.Manager.domain.Chat;
-import lombok.AllArgsConstructor;
+import EST.Baemin.Manager.domain.ChatRoom;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.Date;
 
 @Getter
 @Setter
-@AllArgsConstructor
+@NoArgsConstructor
 public class ChatRequest {
-  private long id;
-  private long chatRoomId;
-  private long senderId;
+
+  private Long senderId;
   private String message;
-  private Date createdAt;
+  private Long chatRoomId; // ChatRoom 참조용
 
   @Builder
-  public ChatRequest(long id, long chatRoomId, long senderId, String message) {
-    this.id = id;
-    this.chatRoomId = chatRoomId;
+  public ChatRequest(Long senderId, String message, Long chatRoomId) {
     this.senderId = senderId;
     this.message = message;
+    this.chatRoomId = chatRoomId;
   }
 
-  public Chat toEntity() {
-    return Chat.builder()
-                   .chatRoomId(this.chatRoomId)
-                   .senderId(this.senderId)
-                   .message(this.message)
-                   .createdAt(this.createdAt)
-                   .build();
+  // Chat 엔티티 변환
+  public Chat toEntity(ChatRoom chatRoom) {
+    Chat chat = Chat.builder()
+                        .senderId(this.senderId)
+                        .message(this.message)
+                        .build();
+    chat.setChatRoom(chatRoom); // 양방향 연결
+    return chat;
   }
 }
