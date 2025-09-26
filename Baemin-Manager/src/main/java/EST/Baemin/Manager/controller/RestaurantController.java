@@ -34,7 +34,9 @@ public class RestaurantController {
     @Operation(summary = "식당 아이디별 조회", description = "해당 아이디의 식당을 조회합니다.")
     @GetMapping("/{id}")
     public String showRestaurantDetail(@PathVariable Long id, Model model) {
-        restaurantService.findRestaurantById(id).ifPresent(dto -> model.addAttribute("restaurant", dto));
+        RestaurantDto restaurant = restaurantService.findRestaurantById(id)
+                .orElseThrow(() -> new RuntimeException("식당을 찾을 수 없습니다."));
+        model.addAttribute("restaurant", restaurant);
         return "restaurantdetail";
     }
 
