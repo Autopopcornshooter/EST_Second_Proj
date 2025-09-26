@@ -13,3 +13,8 @@
 #  region: ap-northeast-2
 #  s3:
 #    bucket-name:  ${BUCKET_NAME}
+#
+google:
+  maps:
+    api:
+      key: ${GOOGLE_MAPS_API_KEY}
