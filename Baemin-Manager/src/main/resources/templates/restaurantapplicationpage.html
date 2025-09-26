@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>식당 등록 작성 페이지</title>
+    <link rel="stylesheet" href="../static/css/restaurantapplicationpage.css">
+</head>
+<body>
+<!-- 상단 메뉴 -->
+<header class="topbar">
+    <div class="topbar-left">
+        <img src="../static/images/BaeMin_Logo.jpeg" class="logo" alt="로고">
+        <nav>
+            <a href="#">동네소개</a>
+            <a href="#">동네인증</a>
+        </nav>
+    </div>
+    <div class="topbar-right">
+        <input type="text" placeholder="찾는 메뉴가 뭐예요?">
+        <button>채팅하기</button>
+        <button>로그아웃</button>
+    </div>
+</header>
+
+<!--메인 컨테이너-->
+<div class="form-container">
+    <form class="restaurant-form">
+        <!-- 이미지 업로드 -->
+        <div class="form-group image-upload">
+            <label for="imageInput">
+                <div class="image-box">
+                    <img src="../static/images/camera-icon.png" alt="카메라 아이콘" class="camera-icon">
+                </div>
+            </label>
+            <input type="file" id="imageInput" accept="image/*" hidden>
+        </div>
+
+        <!-- 대표 메뉴 -->
+        <div class="form-group menu-info">
+            <label for="menuName">대표 메뉴</label>
+            <input type="text" id="menuName" placeholder="메뉴">
+            <input type="text" id="menuPrice" placeholder="가격">
+        </div>
+
+        <!-- 대표 메뉴 설명 -->
+        <div class="form-group">
+            <label for="menuDesc">대표 메뉴 설명</label>
+            <textarea id="menuDesc" placeholder="대표 메뉴에 대한 설명을 적어주세요."></textarea>
+        </div>
+
+        <!-- 가게 위치 -->
+        <div class="form-group">
+            <label for="location">가게 위치</label>
+            <input type="text" id="location" placeholder="ex) 서울시 강서구 화곡동">
+        </div>
+
+        <!-- 완료 버튼 -->
+        <div class="form-actions">
+            <button type="submit" class="submit-btn">완료</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
