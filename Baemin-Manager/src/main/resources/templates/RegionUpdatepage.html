@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>동네 수정</title>
+  <style>
+    #map { height: 50vh; width: 100%; margin-top: 10px; }
+    header { display: flex; justify-content: space-between; align-items: center; padding: 10px; }
+    .text { margin: 15px 0; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <img src="../static/images/BaeMin_Logo.jpeg" alt="배달의민족 로고" width="100">
+  </div>
+  <button class="login-btn">로그인</button>
+</header>
+
+<section class="main-section">
+  <div class="text">
+    <h3>내 동네 수정</h3>
+    <input id="address-input" type="text" placeholder="예) 서울 강서구 화곡동"
+           th:value="${region.address}">
+    <button id="Myposition-btn" name="Myposition-location">내 동네 수정</button>
+  </div>
+  <div class="text">
+    <h3>현재 위치로 동네 인증하기</h3>
+    <div id="map"></div>
+    <label id="location-firstlabel">현재 위치는 <span th:text="${region.address}">서울 강서구 화곡동</span>입니다.</label>
+    <br>
+    <label id="location-secondlabel">현재 위치가 내 동네 설정과 같습니다.</label>
+    <button id="verify-btn" name="verify-location">동네인증 완료하기</button>
+  </div>
+</section>
+
+<script>
+  let map;
+  let marker;
+  let geocoder;
+
+  function initMap() {
+    const seoul = { lat: 37.5665, lng: 126.9780 };
+    map = new google.maps.Map(document.getElementById("map"), { center: seoul, zoom: 14 });
+    marker = new google.maps.Marker({ position: seoul, map: map });
+    geocoder = new google.maps.Geocoder();
+  }
+
+  document.getElementById("Myposition-btn").addEventListener("click", () => {
+    const address = document.getElementById("address-input").value;
+    if (!address) { alert("주소를 입력해주세요!"); return; }
+
+    geocoder.geocode({ address }, (results, status) => {
+      if (status === "OK") {
+        const location = results[0].geometry.location;
+        map.setCenter(location);
+        marker.setPosition(location);
+        document.getElementById("location-firstlabel").innerText =
+            "현재 위치는 " + results[0].formatted_address + "입니다.";
+      } else {
+        alert("주소를 찾을 수 없습니다: " + status);
+      }
+    });
+  });
+
+  document.getElementById("verify-btn").addEventListener("click", () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const userLocation = { lat: position.coords.latitude, lng: position.coords.longitude };
+        map.setCenter(userLocation);
+        marker.setPosition(userLocation);
+
+        geocoder.geocode({ location: userLocation }, (results, status) => {
+          if (status === "OK" && results[0]) {
+            document.getElementById("location-secondlabel").innerText =
+                "현재 위치는 " + results[0].formatted_address + "입니다.";
+          } else {
+            document.getElementById("location-secondlabel").innerText =
+                "현재 위치 정보를 불러올 수 없습니다.";
+          }
+        });
+      });
+    } else { alert("이 브라우저는 위치 정보를 지원하지 않습니다."); }
+  });
+</script>
+
+<!-- 구글 지도 API -->
+<script async defer
+        th:src="@{'https://maps.googleapis.com/maps/api/js?key=' + ${apiKey} + '&callback=initMap'}">
+</script>
+
+</body>
+</html>
