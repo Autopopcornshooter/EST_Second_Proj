@@ -20,6 +20,7 @@ public class RestaurantDto {
     private Integer price;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private Integer view;
     private String imageUrl;
 
     public RestaurantDto(Restaurant restaurant) {
@@ -30,6 +31,7 @@ public class RestaurantDto {
         this.price = restaurant.getPrice();
         this.createdAt = restaurant.getCreatedAt();
         this.updatedAt = restaurant.getUpdatedAt();
+        this.view = restaurant.getView();
         this.imageUrl = restaurant.getImageUrl();
     }
 }

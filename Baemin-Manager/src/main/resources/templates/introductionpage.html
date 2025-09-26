@@ -47,7 +47,7 @@
                 <p class="restaurant-name" th:text="${restaurant.name}">식당명</p>
                 <p class="restaurant-menu" th:text="${restaurant.mainMenu}">대표 메뉴</p>
                 <span th:text="${#numbers.formatDecimal(restaurant.price, 0, 'COMMA', 0, 'POINT')}"></span>
-<!--                <p class="restaurant-views" th:text="'조회수 ' + ${restaurant.views}">조회수</p>-->
+                <p class="restaurant-views" th:text="'조회수 ' + ${restaurant.view}">조회수</p>
             </div>
         </div>
     </div>

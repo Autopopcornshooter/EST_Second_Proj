@@ -36,6 +36,8 @@ public class Restaurant {
     @Column(nullable = false)
     private Integer price;  // 가격
 
+    private Integer view; // 조회수
+
     private String imageUrl;    // 이미지
 
     @CreationTimestamp

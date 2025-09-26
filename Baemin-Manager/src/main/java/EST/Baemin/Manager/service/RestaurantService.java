@@ -38,6 +38,7 @@ public class RestaurantService {
                 .description(dto.getDescription())
                 .address(dto.getAddress())
                 .price(dto.getPrice())
+                .view(dto.getView())
 //                .imageUrl(dto.getImageUrl())
                 .build();
 
