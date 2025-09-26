@@ -1,109 +1,171 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>동네 소개 페이지</title>
-  <link rel="stylesheet" href="../static/css/introducepage.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>동네 소개 페이지</title>
+    <link rel="stylesheet" th:href="@{/css/introducepage.css}">
 </head>
 <body>
 <!-- 상단 메뉴 -->
 <header class="topbar">
-  <div class="topbar-left">
-    <img src="../static/images/BaeMin_Logo.jpeg" class="logo">
-    <nav>
-      <a href="#">동네소개</a>
-      <a href="#">동네인증</a>
-    </nav>
-  </div>
-  <div class="topbar-right">
-    <input type="text" placeholder="찾는 메뉴가 뭐예요?">
-    <button>채팅하기</button>
-    <button>로그아웃</button>
-  </div>
+    <div class="topbar-left">
+        <img th:src="@{/images/BaeMin_Logo.jpeg}" class="logo" alt="로고">
+        <nav>
+            <a href="#">동네소개</a>
+            <a href="#">동네인증</a>
+        </nav>
+    </div>
+    <div class="topbar-right">
+        <input type="text" placeholder="찾는 메뉴가 뭐예요?">
+        <button>채팅하기</button>
+        <button>로그아웃</button>
+    </div>
 </header>
 
 <!-- 메인 섹션 -->
 <section class="main-hero">
-  <div class="hero-text">
-    <h1>우리 동네<br>식당 소개</h1>
-    <p>오늘도 가장 앞서 뜨겁게 달립니다.</p>
-  </div>
-  <div class="hero-img">
-    <img src="../static/images/Baemin-main.jpg" alt="동네 사장님">
-  </div>
+    <div class="hero-text">
+        <h1>우리 동네<br>식당 소개</h1>
+        <p>오늘도 가장 앞서 뜨겁게 달립니다.</p>
+    </div>
+    <div class="hero-img">
+        <img th:src="@{/images/Baemin-main.jpg}" alt="동네 사장님">
+    </div>
 </section>
 
 <!-- 식당 리스트 -->
 <section class="restaurant-list-section">
-  <h2>우리 동네 식당 소개</h2>
-  <div class="restaurant-grid">
-    <!-- 식당 카드1 -->
-    <div class="restaurant-card">
-      <div class="restaurant-img"></div>
-      <div class="restaurant-info">
-        <p class="restaurant-name">OK Burger</p>
-        <p class="restaurant-menu">데리야끼 버거</p>
-        <p class="restaurant-price">11,000원</p>
-        <p class="restaurant-views">조회수 15</p>
-      </div>
+    <h2>우리 동네 식당 소개</h2>
+    <div class="restaurant-grid">
+        <!-- 식당 카드 반복 -->
+        <div class="restaurant-card" th:each="restaurant : ${restaurants}">
+            <div class="restaurant-img">
+                <img th:if="${restaurant.imageUrl != null}" th:src="@{${restaurant.imageUrl}}" alt="식당 이미지">
+            </div>
+            <div class="restaurant-info">
+                <p class="restaurant-name" th:text="${restaurant.name}">식당명</p>
+                <p class="restaurant-menu" th:text="${restaurant.mainMenu}">대표 메뉴</p>
+                <span th:text="${#numbers.formatDecimal(restaurant.price, 0, 'COMMA', 0, 'POINT')}"></span>
+<!--                <p class="restaurant-views" th:text="'조회수 ' + ${restaurant.views}">조회수</p>-->
+            </div>
+        </div>
     </div>
-    <!-- 식당 카드2 -->
-    <div class="restaurant-card">
-      <div class="restaurant-img"></div>
-      <div class="restaurant-info">
-        <p class="restaurant-name">OK Burger</p>
-        <p class="restaurant-menu">데리야끼 버거</p>
-        <p class="restaurant-price">11,000원</p>
-        <p class="restaurant-views">조회수 15</p>
-      </div>
-    </div>
-    <!-- 식당 카드3 -->
-    <div class="restaurant-card">
-      <div class="restaurant-img"></div>
-      <div class="restaurant-info">
-        <p class="restaurant-name">OK Burger</p>
-        <p class="restaurant-menu">데리야끼 버거</p>
-        <p class="restaurant-price">11,000원</p>
-        <p class="restaurant-views">조회수 15</p>
-      </div>
-    </div>
-    <!-- 식당 카드4 -->
-    <div class="restaurant-card">
-      <div class="restaurant-img"></div>
-      <div class="restaurant-info">
-        <p class="restaurant-name">OK Burger</p>
-        <p class="restaurant-menu">데리야끼 버거</p>
-        <p class="restaurant-price">11,000원</p>
-        <p class="restaurant-views">조회수 15</p>
-      </div>
-    </div>
-    <!-- 식당 카드5 -->
-    <div class="restaurant-card">
-      <div class="restaurant-img"></div>
-      <div class="restaurant-info">
-        <p class="restaurant-name">OK Burger</p>
-        <p class="restaurant-menu">데리야끼 버거</p>
-        <p class="restaurant-price">11,000원</p>
-        <p class="restaurant-views">조회수 15</p>
-      </div>
-    </div>
-    <!-- 식당 카드6 -->
-    <div class="restaurant-card">
-      <div class="restaurant-img"></div>
-      <div class="restaurant-info">
-        <p class="restaurant-name">OK Burger</p>
-        <p class="restaurant-menu">데리야끼 버거</p>
-        <p class="restaurant-price">11,000원</p>
-        <p class="restaurant-views">조회수 15</p>
-      </div>
-    </div>
-  </div>
 
-  <!-- 식당 등록 버튼 -->
-  <button class="add-restaurant-btn">식당 등록</button>
+    <!-- 식당 등록 버튼 -->
+    <button class="add-restaurant-btn">식당 등록</button>
 </section>
-
 
 </body>
 </html>
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns="http://www.w3.org/1999/html">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--  <title>동네 소개 페이지</title>-->
+<!--  <link rel="stylesheet" href="../static/css/introducepage.css">-->
+<!--</head>-->
+<!--<body>-->
+<!--&lt;!&ndash; 상단 메뉴 &ndash;&gt;-->
+<!--<header class="topbar">-->
+<!--  <div class="topbar-left">-->
+<!--    <img src="../static/images/BaeMin_Logo.jpeg" class="logo">-->
+<!--    <nav>-->
+<!--      <a href="#">동네소개</a>-->
+<!--      <a href="#">동네인증</a>-->
+<!--    </nav>-->
+<!--  </div>-->
+<!--  <div class="topbar-right">-->
+<!--    <input type="text" placeholder="찾는 메뉴가 뭐예요?">-->
+<!--    <button>채팅하기</button>-->
+<!--    <button>로그아웃</button>-->
+<!--  </div>-->
+<!--</header>-->
+
+<!--&lt;!&ndash; 메인 섹션 &ndash;&gt;-->
+<!--<section class="main-hero">-->
+<!--  <div class="hero-text">-->
+<!--    <h1>우리 동네<br>식당 소개</h1>-->
+<!--    <p>오늘도 가장 앞서 뜨겁게 달립니다.</p>-->
+<!--  </div>-->
+<!--  <div class="hero-img">-->
+<!--    <img src="../static/images/Baemin-main.jpg" alt="동네 사장님">-->
+<!--  </div>-->
+<!--</section>-->
+
+<!--&lt;!&ndash; 식당 리스트 &ndash;&gt;-->
+<!--<section class="restaurant-list-section">-->
+<!--  <h2>우리 동네 식당 소개</h2>-->
+<!--  <div class="restaurant-grid">-->
+<!--    &lt;!&ndash; 식당 카드1 &ndash;&gt;-->
+<!--    <div class="restaurant-card">-->
+<!--      <div class="restaurant-img"></div>-->
+<!--      <div class="restaurant-info">-->
+<!--        <p class="restaurant-name">OK Burger</p>-->
+<!--        <p class="restaurant-menu">데리야끼 버거</p>-->
+<!--        <p class="restaurant-price">11,000원</p>-->
+<!--        <p class="restaurant-views">조회수 15</p>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    &lt;!&ndash; 식당 카드2 &ndash;&gt;-->
+<!--    <div class="restaurant-card">-->
+<!--      <div class="restaurant-img"></div>-->
+<!--      <div class="restaurant-info">-->
+<!--        <p class="restaurant-name">OK Burger</p>-->
+<!--        <p class="restaurant-menu">데리야끼 버거</p>-->
+<!--        <p class="restaurant-price">11,000원</p>-->
+<!--        <p class="restaurant-views">조회수 15</p>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    &lt;!&ndash; 식당 카드3 &ndash;&gt;-->
+<!--    <div class="restaurant-card">-->
+<!--      <div class="restaurant-img"></div>-->
+<!--      <div class="restaurant-info">-->
+<!--        <p class="restaurant-name">OK Burger</p>-->
+<!--        <p class="restaurant-menu">데리야끼 버거</p>-->
+<!--        <p class="restaurant-price">11,000원</p>-->
+<!--        <p class="restaurant-views">조회수 15</p>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    &lt;!&ndash; 식당 카드4 &ndash;&gt;-->
+<!--    <div class="restaurant-card">-->
+<!--      <div class="restaurant-img"></div>-->
+<!--      <div class="restaurant-info">-->
+<!--        <p class="restaurant-name">OK Burger</p>-->
+<!--        <p class="restaurant-menu">데리야끼 버거</p>-->
+<!--        <p class="restaurant-price">11,000원</p>-->
+<!--        <p class="restaurant-views">조회수 15</p>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    &lt;!&ndash; 식당 카드5 &ndash;&gt;-->
+<!--    <div class="restaurant-card">-->
+<!--      <div class="restaurant-img"></div>-->
+<!--      <div class="restaurant-info">-->
+<!--        <p class="restaurant-name">OK Burger</p>-->
+<!--        <p class="restaurant-menu">데리야끼 버거</p>-->
+<!--        <p class="restaurant-price">11,000원</p>-->
+<!--        <p class="restaurant-views">조회수 15</p>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    &lt;!&ndash; 식당 카드6 &ndash;&gt;-->
+<!--    <div class="restaurant-card">-->
+<!--      <div class="restaurant-img"></div>-->
+<!--      <div class="restaurant-info">-->
+<!--        <p class="restaurant-name">OK Burger</p>-->
+<!--        <p class="restaurant-menu">데리야끼 버거</p>-->
+<!--        <p class="restaurant-price">11,000원</p>-->
+<!--        <p class="restaurant-views">조회수 15</p>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  &lt;!&ndash; 식당 등록 버튼 &ndash;&gt;-->
+<!--  <button class="add-restaurant-btn">식당 등록</button>-->
+<!--</section>-->
+
+
+<!--</body>-->
+<!--</html>-->

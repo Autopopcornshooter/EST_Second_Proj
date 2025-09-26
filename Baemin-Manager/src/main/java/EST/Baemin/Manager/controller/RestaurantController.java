@@ -7,12 +7,14 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Tag(name = "Restaurant", description = "식당 관리 API")
-@RestController
+@Controller
 @RequestMapping("/api/restaurants")
 @RequiredArgsConstructor
 public class RestaurantController {
@@ -22,19 +24,18 @@ public class RestaurantController {
     // 식당 전체 조회 기능
     @Operation(summary = "식당 전체 조회", description = "전체 식당을 조회합니다.")
     @GetMapping
-    public List<RestaurantDto> findAllRestaurants() {
-//        model.addAttribute("restaurants", restaurantService.findAllRestaurants());
-//        return "restaurants/list";
-        return restaurantService.findAllRestaurants();
+    public String showRestaurant(Model model) {
+        List<RestaurantDto> reestaurants = restaurantService.findAllRestaurants();
+        model.addAttribute("restaurants", restaurantService.findAllRestaurants());
+        return "introductionpage";
     }
 
     // 식당 아이디별 조회 기능
     @Operation(summary = "식당 아이디별 조회", description = "해당 아이디의 식당을 조회합니다.")
     @GetMapping("/{id}")
-    public ResponseEntity<RestaurantDto> findRestaurantById(@PathVariable Long id) {
-        return restaurantService.findRestaurantById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public String showRestaurantDetail(@PathVariable Long id, Model model) {
+        restaurantService.findRestaurantById(id).ifPresent(dto -> model.addAttribute("restaurant", dto));
+        return "restaurantdetail";
     }
 
     // 식당 추가 기능
