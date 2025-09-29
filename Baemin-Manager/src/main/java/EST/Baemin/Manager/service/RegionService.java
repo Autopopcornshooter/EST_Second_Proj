@@ -14,8 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class RegionService {
   private final RegionRepository regionRepository;
 
-  public Region saveRegion(RegionRequest request) {
-    return regionRepository.save(request.toEntity());
+  public void saveRegion(RegionRequest request) {
+    regionRepository.save(request.toEntity());
   }
 
   public List<Region> findAllRegion() {
@@ -32,11 +32,10 @@ public class RegionService {
   }
 
   @Transactional
-  public Region updateRegion(Long id, UpdateRegionRequest request) {
+  public void updateRegion(Long id, UpdateRegionRequest request) {
     Region region = regionRepository.findById(id)
         .orElseThrow(()-> new IllegalArgumentException("updateRegion Not Found with id : " + id));
     region.update(request.getAddress(), request.getLatitude(), request.getLongitude(), request.getGoogle_place_id());
-    return region;
   }
 
 }
