@@ -21,14 +21,15 @@ spring:
       client:
         registration:
           google:
-            client-id: ${GOOGLE_OAUTH_API_KEY}
+            client-id: ${GOOGLE_OAUTH_CLIENT_ID}
             client-secret: ${GOOGLE_OAUTH_SECRET_PW}
+            redirect-uri: "http://localhost:8080/login/oauth2/code/google"
             scope:
               - email
               - profile
         provider:
           google:
-            authorization-uri: https://accounts.google.com/o/oauth2/auth
+            authorization-uri: https://accounts.google.com/o/oauth2/v2/auth
             token-uri: https://oauth2.googleapis.com/token
             user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
             user-name-attribute: sub
