@@ -8,19 +8,13 @@ import EST.Baemin.Manager.service.RegionService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 @Controller
 @RequiredArgsConstructor
@@ -45,26 +39,31 @@ public class RegionController {
   }
 
   // RegionUpdatepage.html
-  @GetMapping("/regions/update/{id}")
+  @GetMapping("/update/{id}")
   public String getRegionForUpdate(@PathVariable Long id, Model model) {
     Region region = regionService.findById(id); // RegionService에 findById 메서드 필요
     model.addAttribute("region", new RegionResponse(region));
     model.addAttribute("apiKey", apiKey); // 뷰로 API Key 전달
-    return "RegionUpdatepage"; // templates/RegionUpdatepage.html
+    return "RegionUpdatepage";
   }
 
   // 등록 (폼 제출)
   @PostMapping
   public String createRegion(@ModelAttribute RegionRequest request) {
     regionService.saveRegion(request);
-    return "redirect:/regions"; // 등록 후 목록 페이지로 리다이렉트
+    return "redirect:/api/regions"; // 등록 후 목록 페이지로 리다이렉트
   }
 
   // 수정 (폼 제출)
   @PostMapping("/update/{id}")
-  public String updateRegion(@PathVariable Long id, @ModelAttribute UpdateRegionRequest request) {
+  public String updateRegion(@PathVariable Long id, @ModelAttribute UpdateRegionRequest request, Model model) {
     regionService.updateRegion(id, request);
-    return "redirect:/regions";
+
+    Region updatedRegion = regionService.findById(id);
+    model.addAttribute("region", new RegionResponse(updatedRegion));
+    model.addAttribute("apiKey", apiKey);
+
+    return "RegionUpdatepage";
   }
 
   // 삭제
