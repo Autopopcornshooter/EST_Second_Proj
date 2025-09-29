@@ -214,9 +214,11 @@ body {
     text-decoration: underline;
 }
 
-/* 반응형: 좁은 화면에서 여백 보정 */
+
+
 @media (max-width: 420px) {
     .form {
         padding: 18px;
     }
 }
+
