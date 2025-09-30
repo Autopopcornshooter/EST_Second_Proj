@@ -3,6 +3,7 @@ package EST.Baemin.Manager.service;
 import EST.Baemin.Manager.domain.Restaurant;
 import EST.Baemin.Manager.dto.RestaurantDto;
 import EST.Baemin.Manager.repository.RestaurantRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -38,7 +39,7 @@ public class RestaurantService {
                 .description(dto.getDescription())
                 .address(dto.getAddress())
                 .price(dto.getPrice())
-                .view(dto.getView())
+                .view(dto.getView() != null ? dto.getView() : 0)    // null 값이면 0으로
 //                .imageUrl(dto.getImageUrl())
                 .build();
 
@@ -80,4 +81,22 @@ public class RestaurantService {
 //            return restaurantRepository.save(r);
 //        });
 //    }
+
+    // 조회수 증가 기능
+    @Transactional
+    public void increaseView(Long id) {
+        restaurantRepository.findById(id).ifPresent(restaurant -> {
+            restaurant.setView(restaurant.getView() + 1);
+            restaurantRepository.save(restaurant);
+        });
+    }
+
+    // 검색 기능 추가
+    public List<RestaurantDto> searchRestaurant(String keyword) {
+        return restaurantRepository
+                .findByNameContainingIgnoreCaseOrMainMenuContainingIgnoreCase(keyword, keyword)
+                .stream()
+                .map(RestaurantDto::new)
+                .toList();
+    }
 }

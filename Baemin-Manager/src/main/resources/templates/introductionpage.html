@@ -17,7 +17,9 @@
         </nav>
     </div>
     <div class="topbar-right">
-        <input type="text" placeholder="찾는 메뉴가 뭐예요?">
+        <form th:action="@{/api/restaurants/search}" method="get" class="search-form">
+            <input type="text" name="q" placeholder="찾는 메뉴가 뭐예요?">
+        </form>
         <button>채팅하기</button>
         <button>로그아웃</button>
     </div>
@@ -49,14 +51,20 @@
             <div class="restaurant-info">
                 <p class="restaurant-name" th:text="${restaurant.name}">식당명</p>
                 <p class="restaurant-menu" th:text="${restaurant.mainMenu}">대표 메뉴</p>
-                <span th:text="${#numbers.formatDecimal(restaurant.price, 0, 'COMMA', 0, 'POINT')}"></span>
+                <span th:text="${#numbers.formatDecimal(restaurant.price, 0, 'COMMA', 0, 'POINT') +'원'}"></span>
                 <p class="restaurant-views" th:text="'조회수 ' + ${restaurant.view}">조회수</p>
             </div>
         </div>
     </div>
 
+    <!--리스트가 비어 있을 때-->
+    <p th:if="${restaurants.size() == 0}" class="no-restaurant" style="color: #666666">
+        현 지역에 등록되어 있는 식당이 없어요...
+    </p>
+
+
     <!-- 식당 등록 버튼 -->
-    <button class="add-restaurant-btn">식당 등록</button>
+    <button class="add-restaurant-btn" onclick="window.location.href='/api/restaurants/restaurant-form'">식당 등록</button>
 </section>
 
 </body>

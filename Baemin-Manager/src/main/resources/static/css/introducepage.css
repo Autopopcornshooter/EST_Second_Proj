@@ -97,6 +97,13 @@ body {
   margin-bottom: 20px;
 }
 
+.no-restaurant {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666666;
+}
+
 .restaurant-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -112,7 +119,7 @@ body {
 .restaurant-img {
   background-color: #ccc;
   width: 100%;
-  padding-top: 100%; /* 정사각형 비율 */
+  padding-top: 100%;
   border-radius: 10px;
 }
 
