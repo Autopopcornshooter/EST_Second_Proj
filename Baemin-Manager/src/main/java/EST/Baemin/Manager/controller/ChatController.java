@@ -2,13 +2,16 @@ package EST.Baemin.Manager.controller;
 
 import EST.Baemin.Manager.domain.Chat;
 import EST.Baemin.Manager.domain.ChatRoom;
+import EST.Baemin.Manager.domain.User;
 import EST.Baemin.Manager.dto.ChatRequest;
 import EST.Baemin.Manager.dto.ChatRoomResponse;
 import EST.Baemin.Manager.service.ChatService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.HashMap;
 import java.util.List;
@@ -22,49 +25,79 @@ public class ChatController {
     this.chatService = chatService;
   }
 
+  // 채팅방 조회, 없으면 생성
+  @PostMapping("/api/chat/start/{otherUserId}")
+  public String startChat(@PathVariable Long otherUserId,
+                          Authentication authentication,
+                          RedirectAttributes redirectAttributes) {
+    User user = (User) authentication.getPrincipal();
+
+    // 채팅방 조회 or 생성
+    Long roomId = chatService.getOrCreateChatRoom(user.getId(), otherUserId);
+
+    redirectAttributes.addFlashAttribute("roomId", roomId);
+
+    return "redirect:/chat";
+  }
 
   @GetMapping("/chat")
-  public String chatPage(Model model) {
-    Long loggedInUserId = 101L; // 현재 로그인 유저
-    String myNickname = "홍길동";
+  public String chatPage(@RequestParam(required = false) Long roomId,
+                         Model model,
+                         Authentication authentication) {
+    User user = (User) authentication.getPrincipal();
+    model.addAttribute("loginUser", user);
 
-    // DB에서 채팅방 조회 (채팅방 하나라고 가정)
-    List<ChatRoom> chatRooms = chatService.getChatRoomsByUserId(loggedInUserId);
-
-    // 임시 상대방 닉네임
-    Map<Long, String> roomOtherNicknames = new HashMap<>();
-    for (ChatRoom room : chatRooms) {
-      String otherNickname = room.getUser1Id().equals(loggedInUserId)
-                                     ? "상대방닉네임1"
-                                     : "상대방닉네임2";
-      roomOtherNicknames.put(room.getId(), otherNickname);
-    }
-
-    model.addAttribute("myId", loggedInUserId);
-    model.addAttribute("myNickname", myNickname);
+    List<ChatRoomResponse> chatRooms = chatService.getChatRoomsByUserId(user.getId());
     model.addAttribute("chatRooms", chatRooms);
-    model.addAttribute("roomOtherNicknames", roomOtherNicknames);
 
-    // 선택된 채팅방을 chatRooms[0]으로
-    if (!chatRooms.isEmpty()) {
-      model.addAttribute("selectedRoom", chatRooms.get(0));
+    if (roomId != null) {
+      model.addAttribute("selectedRoom", chatService.findById(roomId));
+    } else {
+      model.addAttribute("selectedRoom", null); // 빈 화면
     }
 
     return "chat";
   }
 
   @GetMapping("/api/chat/{roomId}")
-  public String getChatRoom(@PathVariable Long roomId, Model model) {
-    ChatRoomResponse chatroom = chatService.findById(roomId);
-    model.addAttribute("chatRoom", chatroom);
+  public String getChatRoom(@PathVariable Long roomId, Model model,
+                            Authentication authentication) {
+    User user = (User) authentication.getPrincipal();
+    model.addAttribute("loginUser", user);
+
+    ChatRoomResponse chatRoom = chatService.findById(roomId);
+    System.out.println(chatRoom.getUser1().getNickname());
+    System.out.println(chatRoom.getUser2().getNickname());
+    model.addAttribute("selectedRoom", chatRoom);
     return "chat :: chatFragment";
   }
 
-  // 2) 채팅 추가
+  // 채팅 추가
   @PostMapping("/api/chats")
   public ResponseEntity<Chat> addChat(@RequestBody ChatRequest request) {
     Chat savedChat = chatService.saveChat(request);
     return ResponseEntity.ok(savedChat);
+  }
+
+  // 롱폴링
+  @GetMapping("/api/chat/updates/{roomId}")
+  @ResponseBody
+  public ResponseEntity<List<Chat>> getNewChats(
+          @PathVariable Long roomId,
+          @RequestParam(required = false) Long lastChatId) throws InterruptedException {
+    long startTime = System.currentTimeMillis();
+    long maxWait = 30_000; // 최대 30초 대기
+    List<Chat> newChats;
+
+    while (System.currentTimeMillis() - startTime < maxWait) {
+      newChats = chatService.getChatsAfterId(roomId, lastChatId);
+      if (!newChats.isEmpty()) {
+        return ResponseEntity.ok(newChats);
+      }
+      Thread.sleep(1000); // 1초 대기 후 재조회
+    }
+
+    return ResponseEntity.ok(List.of());
   }
 
 }
