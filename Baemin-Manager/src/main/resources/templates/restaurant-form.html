@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>식당 등록 작성 페이지</title>
-    <link rel="stylesheet" href="../static/css/restaurantapplicationpage.css">
+    <link rel="stylesheet" th:href="@{/css/restaurant-form.css}">
 </head>
 <body>
 <!-- 상단 메뉴 -->
 <header class="topbar">
     <div class="topbar-left">
-        <img src="../static/images/BaeMin_Logo.jpeg" class="logo" alt="로고">
+        <img th:src="@{/images/BaeMin_Logo.jpeg}" class="logo" alt="로고">
         <nav>
             <a href="#">동네소개</a>
             <a href="#">동네인증</a>
@@ -25,12 +25,12 @@
 
 <!--메인 컨테이너-->
 <div class="form-container">
-    <form class="restaurant-form">
+    <form class="restaurant-form" id="restaurantForm">
         <!-- 이미지 업로드 -->
         <div class="form-group image-upload">
             <label for="imageInput">
                 <div class="image-box">
-                    <img src="../static/images/camera-icon.png" alt="카메라 아이콘" class="camera-icon">
+                    <img th:src="@{/images/camera-icon.png}" alt="카메라 아이콘" class="camera-icon">
                 </div>
             </label>
             <input type="file" id="imageInput" accept="image/*" hidden>
@@ -39,20 +39,20 @@
         <!-- 대표 메뉴 -->
         <div class="form-group menu-info">
             <label for="menuName">대표 메뉴</label>
-            <input type="text" id="menuName" placeholder="메뉴">
-            <input type="text" id="menuPrice" placeholder="가격">
+            <input type="text" id="menuName" name="mainMenu" placeholder="메뉴">
+            <input type="text" id="menuPrice" name="price" placeholder="가격">
         </div>
 
         <!-- 대표 메뉴 설명 -->
         <div class="form-group">
             <label for="menuDesc">대표 메뉴 설명</label>
-            <textarea id="menuDesc" placeholder="대표 메뉴에 대한 설명을 적어주세요."></textarea>
+            <textarea id="menuDesc" name="description" placeholder="대표 메뉴에 대한 설명을 적어주세요."></textarea>
         </div>
 
         <!-- 가게 위치 -->
         <div class="form-group">
             <label for="location">가게 위치</label>
-            <input type="text" id="location" placeholder="ex) 서울시 강서구 화곡동">
+            <input type="text" id="location" name="address" placeholder="ex) 서울시 강서구 화곡동">
         </div>
 
         <!-- 완료 버튼 -->
@@ -61,5 +61,7 @@
         </div>
     </form>
 </div>
+
+<script th:src="@{/js/restaurant.js}"></script>
 </body>
 </html>
