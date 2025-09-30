@@ -20,14 +20,13 @@ public class UserController {
     public String login() {
         return "login";
     }
+
     @GetMapping("/signup")
     public String signup(Model model) {
 
         model.addAttribute("formData",new AddUserRequest());
         return "signup";
     }
-
-
 
     @PostMapping("/signup")
     public String signup(AddUserRequest request, Model model){

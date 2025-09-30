@@ -11,6 +11,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -28,37 +29,44 @@ public class User implements UserDetails {
     @Column(name = "user_id", nullable = false, updatable = false)
     private Long id;
 
-    @Column(name = "nickname")
+    @Column(name = "nickname", nullable = false)
     private String nickname;
-    @Column(name="login_id")
+
+    @Column(name = "login_id", nullable = false)
     private String loginId;
-    @Column(name = "password")
+
+    @Column(name = "password", nullable = false)
     private String password;
+
     @CreatedDate
-    @Column(name = "created_at", updatable = false)
+    @Column(name = "created_at", updatable = false, nullable = false)
     private LocalDateTime createdAt;
+
     @LastModifiedDate
-    @Column(name="updated_at",updatable = false)
+    @Column(name = "updated_at", updatable = false, nullable = false)
     private LocalDateTime updatedAt;
+
     @Column(name = "store_name")
     private String storeName;
+
+    @OneToMany(mappedBy = "user")
+    private List<Restaurant> restaurants = new ArrayList<>();
     //TODO
-    /*
-    @Column(name="region_id")
-    private Region region;
-     */
+//    @Column(name = "region_id")
+//    private Region region;
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities(){
+    public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
     @Override
-    public String getPassword(){
+    public String getPassword() {
         return password;
     }
+
     @Override
-    public String getUsername(){
+    public String getUsername() {
         return loginId;
     }
 }

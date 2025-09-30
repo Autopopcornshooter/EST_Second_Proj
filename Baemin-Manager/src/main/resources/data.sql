@@ -17,4 +17,5 @@ VALUES
 --     aabbccDD12#
     (CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,'firetruck433','이경원','$2a$10$eftwQu.3tfqZ43Eoc0wZc.t5wB31SSaoBGAH9m7Nk13wI73zp8eRG','땅땅치킨'),
 --     abcD1@3
-    (CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,'abcd111','김철수','	$2a$10$joAuRtdFdo1dkuMqIlV8zOMCO7Y.aJd02jvgKwbSADoLFAqHmR4eS','노랑통닭')
+    (CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,'abcd111','김철수','$2a$10$joAuRtdFdo1dkuMqIlV8zOMCO7Y.aJd02jvgKwbSADoLFAqHmR4eS','노랑통닭'),
+(CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,'firetruck433@gmail.com','이경원 (자동팝콘발사기)',null,null)

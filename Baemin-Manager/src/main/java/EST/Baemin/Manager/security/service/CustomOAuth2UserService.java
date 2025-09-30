@@ -1,10 +1,8 @@
-package EST.Baemin.Manager.service;
+package EST.Baemin.Manager.security.service;
 
 import EST.Baemin.Manager.domain.User;
 import EST.Baemin.Manager.repository.UserRepository;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;

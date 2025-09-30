@@ -1,6 +1,7 @@
-package EST.Baemin.Manager.configure;
+package EST.Baemin.Manager.config;
 
-import EST.Baemin.Manager.service.CustomOAuth2UserService;
+import EST.Baemin.Manager.security.handler.OAuth2LoginSuccessHandler;
+import EST.Baemin.Manager.security.service.CustomOAuth2UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,9 +10,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
-import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.SecurityFilterChain;
 
 
@@ -23,6 +21,7 @@ import static org.springframework.boot.autoconfigure.security.servlet.PathReques
 @AllArgsConstructor
 public class WebSecurityConfig {
 private final CustomOAuth2UserService customOAuth2UserService;
+private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
     @Bean
     public WebSecurityCustomizer configure(){
         return web->web.ignoring()
@@ -44,10 +43,10 @@ private final CustomOAuth2UserService customOAuth2UserService;
                         .requestMatchers("/.well-known/**").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(auth-> auth.loginPage("/login")
-                        .defaultSuccessUrl("/api/regions",true))
+                        .successHandler(oAuth2LoginSuccessHandler))
                 .oauth2Login(oauth2->oauth2
                         .loginPage("/login")
-                        .defaultSuccessUrl("/api/regions",true)
+                        .successHandler(oAuth2LoginSuccessHandler)
                         .userInfoEndpoint(userInfo->userInfo
                                 .userService(customOAuth2UserService)))// 구글 로그인 DB 연동 처리
                 .logout(auth->auth
@@ -55,8 +54,8 @@ private final CustomOAuth2UserService customOAuth2UserService;
                         .invalidateHttpSession(true)
                         .clearAuthentication(true));
 
-        httpSecurity.csrf(csrf -> csrf.ignoringRequestMatchers(toH2Console())); // ✅ CSRF 무시
-        httpSecurity.headers(headers -> headers.frameOptions(frame -> frame.sameOrigin())); // ✅ frame 허용
+        httpSecurity.csrf(csrf -> csrf.ignoringRequestMatchers(toH2Console()));
+        httpSecurity.headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()));
         return httpSecurity.build();
     }
 
