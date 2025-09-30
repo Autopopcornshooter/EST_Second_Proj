@@ -88,6 +88,30 @@ public class RestaurantController {
         // templetes/restaurantapplicationpage.html 랜더링
     }
 
+    // 식당 수정 페이지 (기존 레스토랑 수정)
+        // 수정 페이지 접근
+    @GetMapping("/{id}/edit")
+    public String editRestaurant(@PathVariable Long id, Model model) {
+        RestaurantDto restaurant = restaurantService.findRestaurantById(id)
+                .orElseThrow(() -> new RuntimeException("식당을 찾을 수 없습니다."));
+        model.addAttribute("restaurant", restaurant);   // 기존 데이터 폼에 채우기
+        return "restaurant-form";
+    }
+
+        // 폼 제출 처리
+    @PostMapping("/save")
+    public String saveRestaurant(RestaurantDto dto) {
+        if (dto.getId() == null) {
+            throw new RuntimeException("수정할 식당 id가 없습니다.");
+        }
+        
+        restaurantService.updateRestaurant(dto.getId(), dto)
+                .orElseThrow(() -> new RuntimeException("해당 식당을 찾을 수 없습니다."));
+
+        return "redirect:/api/restaurants";
+    }
+
+
     // 식당 수정 폼 페이지 (기존 레스토랑 수정)
 //    public String showEditForm(@PathVariable Long id, Model model) {
 //        RestaurantDto restaurant = restaurantService.findRestaurantById(id)

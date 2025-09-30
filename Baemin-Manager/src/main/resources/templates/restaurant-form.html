@@ -25,7 +25,9 @@
 
 <!--메인 컨테이너-->
 <div class="form-container">
-    <form class="restaurant-form" id="restaurantForm">
+    <!--등록/수정 구분-->
+    <form th:action="@{/api/restaurants/save}" method="post" class="restaurant-form" id="restaurantForm"
+    th:attr="data-id=${restaurant != null} ? ${restaurant.id} : null">
         <!-- 이미지 업로드 -->
         <div class="form-group image-upload">
             <label for="imageInput">
@@ -39,21 +41,25 @@
         <!-- 대표 메뉴 -->
         <div class="form-group menu-info">
             <label for="menuName">대표 메뉴</label>
-            <input type="text" id="menuName" name="mainMenu" placeholder="메뉴">
-            <input type="text" id="menuPrice" name="price" placeholder="가격">
+            <input type="text" id="menuName" name="mainMenu" placeholder="메뉴" th:value="${restaurant != null} ? ${restaurant.mainMenu} : '' ">
+            <input type="text" id="menuPrice" name="price" placeholder="가격" th:value="${restaurant != null} ? ${restaurant.price} : '' ">
         </div>
 
         <!-- 대표 메뉴 설명 -->
         <div class="form-group">
             <label for="menuDesc">대표 메뉴 설명</label>
-            <textarea id="menuDesc" name="description" placeholder="대표 메뉴에 대한 설명을 적어주세요."></textarea>
+            <textarea id="menuDesc" name="description" placeholder="대표 메뉴에 대한 설명을 적어주세요."
+                      th:text="${restaurant != null} ? ${restaurant.description} : '' "></textarea>
         </div>
 
         <!-- 가게 위치 -->
         <div class="form-group">
             <label for="location">가게 위치</label>
-            <input type="text" id="location" name="address" placeholder="ex) 서울시 강서구 화곡동">
+            <input type="text" id="location" name="address" placeholder="ex) 서울시 강서구 화곡동" th:value="${restaurant != null} ? ${restaurant.address} : '' ">
         </div>
+
+        <!--게시글 id -->
+        <input type="hidden" name="id" th:value="${restaurant != null} ? ${restaurant.id} : '' ">
 
         <!-- 완료 버튼 -->
         <div class="form-actions">
