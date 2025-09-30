@@ -34,6 +34,10 @@ public class RestaurantController {
     @Operation(summary = "식당 아이디별 조회", description = "해당 아이디의 식당을 조회합니다.")
     @GetMapping("/{id}")
     public String showRestaurantDetail(@PathVariable Long id, Model model) {
+        // 조회수 로직
+        restaurantService.increaseView(id);
+
+        // DB 조회하고 최신 데이터 가져오기
         RestaurantDto restaurant = restaurantService.findRestaurantById(id)
                 .orElseThrow(() -> new RuntimeException("식당을 찾을 수 없습니다."));
         model.addAttribute("restaurant", restaurant);
@@ -75,4 +79,31 @@ public class RestaurantController {
 //            return ResponseEntity.badRequest().build();
 //        }
 //    }
+
+    // 식당 등록 폼 페이지 (새 레스토랑 등록)
+    @Operation(summary = "식당 등록", description = "식당 정보를 등록합니다.")
+    @GetMapping("/restaurant-form")
+    public String restaurantForm() {
+        return "restaurant-form";
+        // templetes/restaurantapplicationpage.html 랜더링
+    }
+
+    // 식당 수정 폼 페이지 (기존 레스토랑 수정)
+//    public String showEditForm(@PathVariable Long id, Model model) {
+//        RestaurantDto restaurant = restaurantService.findRestaurantById(id)
+//                .orElseThrow(() -> new RuntimeException("식당을 찾을 수 없습니다."));
+//        model.addAttribute("restaurant", restaurant); // 기존 데이터
+//        model.addAttribute("idEdit", true); // 수정 모든 표시
+//        return "restaurantform";
+//    }
+
+    // 식당 검색 기능
+    @GetMapping("/search")
+    public String search(@RequestParam("q") String keyword, Model model) {
+        List<RestaurantDto> restaurants = restaurantService.searchRestaurant(keyword);
+        model.addAttribute("results", restaurants);
+        model.addAttribute("keyword", keyword);
+        return "restaurant-search";
+    }
+
 }
