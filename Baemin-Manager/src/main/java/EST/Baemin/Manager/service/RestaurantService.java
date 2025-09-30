@@ -1,8 +1,12 @@
 package EST.Baemin.Manager.service;
 
 import EST.Baemin.Manager.domain.Restaurant;
+import EST.Baemin.Manager.domain.User;
 import EST.Baemin.Manager.dto.RestaurantDto;
 import EST.Baemin.Manager.repository.RestaurantRepository;
+import EST.Baemin.Manager.repository.UserRepository;
+import EST.Baemin.Manager.util.SecurityUtil;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +17,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class RestaurantService {
     private final RestaurantRepository restaurantRepository;
+    private final UserRepository userRepository;
 
     // 식당 조회 기능
     public List<RestaurantDto> findAllRestaurants() {
@@ -31,17 +36,23 @@ public class RestaurantService {
     }
 
     // 식당 추가 기능
+    // feat: 식당에 user 필드 추가, user에 식당 리스트 필드 추가로 인한 수정
+    @Transactional
     public RestaurantDto createRestaurant(RestaurantDto dto) {
+        User user = userRepository.findByLoginId(SecurityUtil.getCurrentUsername()).orElseThrow(() -> new IllegalArgumentException("findById Not Found with id : " + SecurityUtil.getCurrentUsername()));
+
         Restaurant restaurant = Restaurant.builder()
                 .name(dto.getName())
                 .mainMenu(dto.getMainMenu())
                 .description(dto.getDescription())
                 .address(dto.getAddress())
                 .price(dto.getPrice())
+                .user(user)
 //                .imageUrl(dto.getImageUrl())
                 .build();
-
+        user.addRestaurant(restaurant);
         Restaurant saved = restaurantRepository.save(restaurant);
+
 
         return new RestaurantDto(saved);
     }
@@ -50,15 +61,15 @@ public class RestaurantService {
     public Optional<RestaurantDto> updateRestaurant(Long id, RestaurantDto dto) {
         return restaurantRepository.findById(id)
                 .map(r -> {
-            // PutMapping 할 때 들어온값이 null이면 기존 데이터 유지
+                    // PutMapping 할 때 들어온값이 null이면 기존 데이터 유지
                     if (dto.getName() != null) r.setName(dto.getName());
                     if (dto.getMainMenu() != null) r.setMainMenu(dto.getMainMenu());
                     if (dto.getDescription() != null) r.setDescription(dto.getDescription());
                     if (dto.getAddress() != null) r.setAddress(dto.getAddress());
                     if (dto.getPrice() != null) r.setPrice(dto.getPrice());
 //                  r.setImageUrl(dto.getImageUrl());
-                 return restaurantRepository.save(r);
-        })
+                    return restaurantRepository.save(r);
+                })
                 .map(RestaurantDto::new);
     }
 

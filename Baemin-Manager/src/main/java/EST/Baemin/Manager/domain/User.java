@@ -3,7 +3,6 @@ package EST.Baemin.Manager.domain;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
@@ -35,7 +34,7 @@ public class User implements UserDetails {
     @Column(name = "login_id", nullable = false)
     private String loginId;
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "password")
     private String password;
 
     @CreatedDate
@@ -51,9 +50,22 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user")
     private List<Restaurant> restaurants = new ArrayList<>();
+
     //TODO
-//    @Column(name = "region_id")
-//    private Region region;
+    @OneToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name = "region_id")
+    private Region region;
+
+
+
+    public void updateRegion(Region region){
+        this.region=region;
+    }
+
+    public void addRestaurant(Restaurant restaurant){
+        this.restaurants.add(restaurant);
+    }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

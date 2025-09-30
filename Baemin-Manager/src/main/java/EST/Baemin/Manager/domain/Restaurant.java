@@ -36,6 +36,10 @@ public class Restaurant {
     @Column(nullable = false)
     private Integer price;  // 가격
 
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="user_id")
+    private User user;
+
     private String imageUrl;    // 이미지
 
     @CreationTimestamp
