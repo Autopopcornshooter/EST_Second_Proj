@@ -104,22 +104,12 @@ public class RestaurantController {
         if (dto.getId() == null) {
             throw new RuntimeException("수정할 식당 id가 없습니다.");
         }
-        
+
         restaurantService.updateRestaurant(dto.getId(), dto)
                 .orElseThrow(() -> new RuntimeException("해당 식당을 찾을 수 없습니다."));
 
         return "redirect:/api/restaurants";
     }
-
-
-    // 식당 수정 폼 페이지 (기존 레스토랑 수정)
-//    public String showEditForm(@PathVariable Long id, Model model) {
-//        RestaurantDto restaurant = restaurantService.findRestaurantById(id)
-//                .orElseThrow(() -> new RuntimeException("식당을 찾을 수 없습니다."));
-//        model.addAttribute("restaurant", restaurant); // 기존 데이터
-//        model.addAttribute("idEdit", true); // 수정 모든 표시
-//        return "restaurantform";
-//    }
 
     // 식당 검색 기능
     @GetMapping("/search")
