@@ -62,12 +62,15 @@ public class ChatController {
   // 초기 채팅 내용 조회 (AJAX용, 화면 렌더링)
   @GetMapping("/api/chat/{roomId}")
   public String getChatRoom(@PathVariable Long roomId, Model model,
-                            Authentication authentication) {
+                            Authentication authentication,
+                            HttpSession session) {
     User user = (User) authentication.getPrincipal();
     model.addAttribute("loginUser", user);
 
     ChatRoomResponse chatRoom = chatService.findById(roomId);
     model.addAttribute("selectedRoom", chatRoom);
+
+    session.setAttribute("selectedRoomId", roomId);
 
     return "chat :: chatFragment"; // Thymeleaf fragment
   }
