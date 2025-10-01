@@ -21,7 +21,8 @@ public class Restaurant {
     @Column(updatable = false)  // 들어간 값 수정 X
     private Long id;    // restaurant_id
 
-    @Column(nullable = false)
+    // 우선은 Null로 진행, 유저의 데이터 정보에서 가게 정보를 빼와야 사용 가능
+//    @Column(nullable = false)
     private String name;    // 가게명
 
     @Column(nullable = false)
@@ -36,11 +37,13 @@ public class Restaurant {
     @Column(nullable = false)
     private Integer price;  // 가격
 
+    @Column(nullable = false)
+    private Integer view = 0; // 조회수 초기값은 0
+
     private String imageUrl;    // 이미지
 
     @CreationTimestamp
     private LocalDateTime createdAt = LocalDateTime.now();
     @UpdateTimestamp
     private LocalDateTime updatedAt = LocalDateTime.now();
-
 }

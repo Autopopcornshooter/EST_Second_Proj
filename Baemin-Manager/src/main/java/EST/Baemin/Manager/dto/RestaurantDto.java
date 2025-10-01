@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class RestaurantDto {
+    private Long id;
     private String name;
     private String mainMenu;
     private String description;
@@ -20,9 +21,11 @@ public class RestaurantDto {
     private Integer price;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private Integer view;
     private String imageUrl;
 
     public RestaurantDto(Restaurant restaurant) {
+        this.id = restaurant.getId();
         this.name = restaurant.getName();
         this.mainMenu = restaurant.getMainMenu();
         this.description = restaurant.getDescription();
@@ -30,6 +33,7 @@ public class RestaurantDto {
         this.price = restaurant.getPrice();
         this.createdAt = restaurant.getCreatedAt();
         this.updatedAt = restaurant.getUpdatedAt();
+        this.view = restaurant.getView();
         this.imageUrl = restaurant.getImageUrl();
     }
 }
