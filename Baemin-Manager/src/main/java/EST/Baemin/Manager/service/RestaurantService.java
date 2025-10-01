@@ -5,6 +5,8 @@ import EST.Baemin.Manager.dto.RestaurantDto;
 import EST.Baemin.Manager.repository.RestaurantRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,12 +18,16 @@ public class RestaurantService {
     private final RestaurantRepository restaurantRepository;
 
     // 식당 조회 기능
-    public List<RestaurantDto> findAllRestaurants() {
+    public Page<RestaurantDto> findAllRestaurants(Pageable pageable) {
 
-        return restaurantRepository.findAll()
-                .stream()
-                .map(RestaurantDto::new)
-                .toList();
+        return restaurantRepository.findAll(pageable)
+                .map(RestaurantDto::new);    // DTO 변환 예시
+
+
+//        return restaurantRepository.findAll()
+//                .stream()
+//                .map(RestaurantDto::new)
+//                .toList();
     }
 
     // 식당 아이디별 조회 기능

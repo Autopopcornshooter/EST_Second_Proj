@@ -58,37 +58,3 @@ function deleteRestaurant(id) {
             alert("서버 오류가 발생으로 인하여 등록할 수 없습니다.");
         });
 }
-
-// 등록/수정 구분 로직
-// document.getElementById("restaurantForm").addEventListener("submit", async function(event) {
-//     event.preventDefault();
-//
-//     const id = this.getAttribute("data-id"); // 수정할 때는 id 있음
-//     const data = {
-//         mainMenu: document.getElementById("menuName").value,
-//         price: document.getElementById("menuPrice").value,
-//         description: document.getElementById("menuDesc").value,
-//         address: document.getElementById("location").value
-//     };
-//
-//     const url = id ? `/api/restaurants/${id}` : "/api/restaurants";
-//     const method = id ? "PUT" : "POST";
-//
-//     try {
-//         const response = await fetch(url, {
-//             method: method,
-//             headers: { "Content-Type": "application/json" },
-//             body: JSON.stringify(data)
-//         });
-//
-//         if (response.ok) {
-//             alert(id ? "수정 성공!" : "등록 성공!");
-//             window.location.href = "/api/restaurants";
-//         } else {
-//             alert("실패: " + response.status);
-//         }
-//     } catch (error) {
-//         console.error("에러 발생:", error);
-//         alert("서버 오류 발생");
-//     }
-// });
