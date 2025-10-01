@@ -27,7 +27,6 @@ public class UserResponse {
                 .loginId(user.getLoginId())
                 .passWord(user.getPassword())
                 .createdAt(user.getCreatedAt())
-                .storeName(user.getStoreName())
                 .build();
     }
 

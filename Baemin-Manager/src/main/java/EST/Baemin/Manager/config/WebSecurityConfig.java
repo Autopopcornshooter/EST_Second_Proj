@@ -34,48 +34,48 @@ private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
     }
 
     //배포용 보안 설정
+//    @Bean
+//    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception{
+//        httpSecurity
+//                .authorizeHttpRequests(auth->
+//                auth.requestMatchers("/home","/login","/signup").permitAll()// 로그인, 회원가입은 인증 없이 접근 가능
+//                        .requestMatchers(toH2Console()).permitAll()
+//                        .requestMatchers("/.well-known/**").permitAll()
+//                        .anyRequest().authenticated())
+//                .formLogin(auth-> auth.loginPage("/login")
+//                        .successHandler(oAuth2LoginSuccessHandler))
+//                .oauth2Login(oauth2->oauth2
+//                        .loginPage("/login")
+//                        .successHandler(oAuth2LoginSuccessHandler)
+//                        .userInfoEndpoint(userInfo->userInfo
+//                                .userService(customOAuth2UserService)))// 구글 로그인 DB 연동 처리
+//                .logout(auth->auth
+//                        .logoutSuccessUrl("/login")
+//                        .invalidateHttpSession(true)
+//                        .clearAuthentication(true));
+//
+//        httpSecurity.csrf(csrf -> csrf.ignoringRequestMatchers(toH2Console()));
+//        httpSecurity.headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()));
+//        return httpSecurity.build();
+//    }
+
+
+
+    //개발용 보안 설정
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception{
-        httpSecurity
-                .authorizeHttpRequests(auth->
-                auth.requestMatchers("/home","/login","/signup").permitAll()// 로그인, 회원가입은 인증 없이 접근 가능
-                        .requestMatchers(toH2Console()).permitAll()
-                        .requestMatchers("/.well-known/**").permitAll()
-                        .anyRequest().authenticated())
+        httpSecurity.authorizeHttpRequests(auth->auth.anyRequest().permitAll())
                 .formLogin(auth-> auth.loginPage("/login")
-                        .successHandler(oAuth2LoginSuccessHandler))
-                .oauth2Login(oauth2->oauth2
-                        .loginPage("/login")
-                        .successHandler(oAuth2LoginSuccessHandler)
-                        .userInfoEndpoint(userInfo->userInfo
-                                .userService(customOAuth2UserService)))// 구글 로그인 DB 연동 처리
-                .logout(auth->auth
-                        .logoutSuccessUrl("/login")
+                        .defaultSuccessUrl("/api/regions",true))
+                .logout(auth->auth.logoutSuccessUrl("/login")
                         .invalidateHttpSession(true)
                         .clearAuthentication(true));
-
-        httpSecurity.csrf(csrf -> csrf.ignoringRequestMatchers(toH2Console()));
-        httpSecurity.headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()));
+        httpSecurity.csrf(csrf -> csrf.ignoringRequestMatchers(toH2Console())); // ✅ CSRF 무시
+        httpSecurity.headers(headers -> headers.frameOptions(frame -> frame.sameOrigin())); // ✅ frame 허용
         return httpSecurity.build();
     }
 
 
 
-    //개발용 보안 설정
-//    @Bean
-//    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception{
-//        httpSecurity.authorizeHttpRequests(auth->auth.anyRequest().permitAll())
-//                .formLogin(auth-> auth.loginPage("/login")
-//                        .defaultSuccessUrl("/api/regions",true))
-//                .logout(auth->auth.logoutSuccessUrl("/login")
-//                        .invalidateHttpSession(true)
-//                        .clearAuthentication(true));
-//        httpSecurity.csrf(csrf -> csrf.ignoringRequestMatchers(toH2Console())); // ✅ CSRF 무시
-//        httpSecurity.headers(headers -> headers.frameOptions(frame -> frame.sameOrigin())); // ✅ frame 허용
-//        return httpSecurity.build();
-//    }
-//
-//
-//
 }
 

@@ -73,7 +73,5 @@ public class RegionController {
         regionService.deleteRegion(id);
         return "redirect:/regions";
     }
-
-
 }
 

@@ -28,7 +28,7 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
         if(user.getRegion()==null) {
             getRedirectStrategy().sendRedirect(request, response, "/api/regions");
         }else{
-
+            getRedirectStrategy().sendRedirect(request, response, "/api/restaurants");
         }
     }
 }

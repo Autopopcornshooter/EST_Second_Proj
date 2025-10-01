@@ -23,13 +23,17 @@ public class UserController {
 
     @GetMapping("/signup")
     public String signup(Model model) {
-
         model.addAttribute("formData",new AddUserRequest());
         return "signup";
     }
 
+    @GetMapping("/mainpage")
+    public String toMainpage(){
+        return "mainpage";
+    }
 
-    @PostMapping("/signup")
+
+    @PostMapping("/api/signup")
     public String signup(AddUserRequest request, Model model){
         if(!request.getPassword().equals( request.getConfirmPassword())){
             model.addAttribute("formData",request);
