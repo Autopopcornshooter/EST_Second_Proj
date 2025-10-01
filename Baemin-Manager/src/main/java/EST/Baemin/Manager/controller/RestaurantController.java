@@ -30,7 +30,9 @@ public class RestaurantController {
     @Operation(summary = "식당 전체 조회", description = "전체 식당을 조회합니다.")
     @GetMapping
     public String showRestaurant(
+            // 페이지 변호 0부터 시작
             @RequestParam(defaultValue = "0") int page,
+            // 한 페이지에 16개 식당 보여줌
             @RequestParam(defaultValue = "16") int size,
             Model model) {
         // 페이지 번호와 페이지 크기를 기반으로 pageable 생성
