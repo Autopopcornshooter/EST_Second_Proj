@@ -39,7 +39,7 @@ public class RestaurantService {
     // feat: 식당에 user 필드 추가, user에 식당 리스트 필드 추가로 인한 수정
     @Transactional
     public RestaurantDto createRestaurant(RestaurantDto dto) {
-        User user = userRepository.findByLoginId(SecurityUtil.getCurrentUsername()).orElseThrow(() -> new IllegalArgumentException("findById Not Found with id : " + SecurityUtil.getCurrentUsername()));
+        User user = userRepository.findByLoginId(SecurityUtil.getCurrentUserLoginId()).orElseThrow(() -> new IllegalArgumentException("findById Not Found with id : " + SecurityUtil.getCurrentUserLoginId()));
 
         Restaurant restaurant = Restaurant.builder()
                 .name(dto.getName())

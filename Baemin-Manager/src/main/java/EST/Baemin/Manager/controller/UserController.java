@@ -28,6 +28,7 @@ public class UserController {
         return "signup";
     }
 
+
     @PostMapping("/signup")
     public String signup(AddUserRequest request, Model model){
         if(!request.getPassword().equals( request.getConfirmPassword())){
@@ -37,5 +38,12 @@ public class UserController {
         userService.save(request);
         return "redirect:/login";
     }
+
+    @PostMapping("/logout")
+    public void logout(){
+        throw new IllegalStateException("Spring Security 에서 자동으로 로그아웃 수행함");
+    }
+
+
 
 }

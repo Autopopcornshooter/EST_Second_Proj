@@ -4,7 +4,6 @@ import EST.Baemin.Manager.domain.Region;
 import EST.Baemin.Manager.dto.AddUserRequest;
 import EST.Baemin.Manager.domain.User;
 import EST.Baemin.Manager.dto.RegionRequest;
-import EST.Baemin.Manager.repository.RegionRepository;
 import EST.Baemin.Manager.repository.UserRepository;
 import EST.Baemin.Manager.util.SecurityUtil;
 import jakarta.transaction.Transactional;
@@ -16,7 +15,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
-    private final RegionRepository regionRepository;
+    private final RegionService regionService;
     private PasswordEncoder encoder;
 
     public User save(AddUserRequest request){
@@ -25,16 +24,32 @@ public class UserService {
                         .loginId(request.getUsername())
                         .password(encoder.encode(request.getPassword()))
                         .nickname(request.getNickname())
-                        .storeName(request.getStoreName())
                         .build()
         );
     }
+    public User findById(String loginID){
+        return userRepository.findByLoginId(loginID).orElseThrow(()->new IllegalArgumentException("findById Not Found with id: "+loginID));
 
+    }
+    //User의 지역 업데이트
+    // 현재 지역을 지역 테이블에서 삭제 후 새로운 지역 삽입 및 User필드에 삽입
     @Transactional
-    public void addRegionToUser(RegionRequest request){
-        User user= userRepository.findByLoginId(SecurityUtil.getCurrentUsername()).orElseThrow(()->new IllegalArgumentException("User Not Found at id : "+SecurityUtil.getCurrentUsername()));
-        Region region=regionRepository.save(request.toEntity());
+    public void updateRegionToUser(RegionRequest request){
+        User user= userRepository.findByLoginId(SecurityUtil.getCurrentUserLoginId()).orElseThrow(()->new IllegalArgumentException("User Not Found at id : "+SecurityUtil.getCurrentUserLoginId()));
+        regionService.deleteRegion(user.getRegion().getId());
+        Region region = regionService.save(request);
         user.updateRegion(region);
     }
+
+    //사용자가 선택한 지역 삭제
+    //지역 테이블에서 지역 삭제
+//    @Transactional
+//    public void deleteRegion(){
+//        User user=userRepository.findByLoginId(SecurityUtil.getCurrentUserLoginId())
+//                .orElseThrow(()->new IllegalArgumentException("findById Not Found with id: "+SecurityUtil.getCurrentUserLoginId()));
+//        regionService.deleteRegion(user.getRegion().getId());
+//        user.updateRegion(null);
+//    }
+
 
 }

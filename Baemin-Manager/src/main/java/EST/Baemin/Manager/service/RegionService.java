@@ -15,10 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class RegionService {
-    private final UserRepository userRepository;
     private final RegionRepository regionRepository;
-
-    //기능 추가(이경원): User와의 join을 위해 지역 저장 할 때 현재 로그인 된 user 엔티티의 필드에 Region 삽입
 
     public Region save(RegionRequest request) {
         return regionRepository.save(request.toEntity());

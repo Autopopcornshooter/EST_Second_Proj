@@ -11,8 +11,6 @@ import java.util.List;
 import EST.Baemin.Manager.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -58,7 +56,7 @@ public class RegionController {
     @PostMapping
     public String createRegion(@ModelAttribute RegionRequest request) {
 //    regionService.save(request);
-        userService.addRegionToUser(request);
+        userService.updateRegionToUser(request);
         return "redirect:/regions"; // 등록 후 목록 페이지로 리다이렉트
     }
 
@@ -75,5 +73,7 @@ public class RegionController {
         regionService.deleteRegion(id);
         return "redirect:/regions";
     }
+
+
 }
 

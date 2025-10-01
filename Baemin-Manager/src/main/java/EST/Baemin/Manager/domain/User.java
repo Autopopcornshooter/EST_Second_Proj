@@ -45,8 +45,6 @@ public class User implements UserDetails {
     @Column(name = "updated_at", updatable = false, nullable = false)
     private LocalDateTime updatedAt;
 
-    @Column(name = "store_name")
-    private String storeName;
 
     @OneToMany(mappedBy = "user")
     private List<Restaurant> restaurants = new ArrayList<>();
