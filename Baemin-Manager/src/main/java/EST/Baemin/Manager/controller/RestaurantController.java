@@ -3,6 +3,7 @@ package EST.Baemin.Manager.controller;
 import EST.Baemin.Manager.domain.Restaurant;
 import EST.Baemin.Manager.dto.RestaurantDto;
 import EST.Baemin.Manager.service.RestaurantService;
+import EST.Baemin.Manager.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

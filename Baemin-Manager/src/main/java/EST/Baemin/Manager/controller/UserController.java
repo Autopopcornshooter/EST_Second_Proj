@@ -5,6 +5,7 @@ import EST.Baemin.Manager.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -19,15 +20,20 @@ public class UserController {
     public String login() {
         return "login";
     }
+
     @GetMapping("/signup")
     public String signup(Model model) {
-
         model.addAttribute("formData",new AddUserRequest());
         return "signup";
     }
 
+    @GetMapping("/mainpage")
+    public String toMainpage(){
+        return "mainpage";
+    }
 
-    @PostMapping("/signup")
+
+    @PostMapping("/api/signup")
     public String signup(AddUserRequest request, Model model){
         if(!request.getPassword().equals( request.getConfirmPassword())){
             model.addAttribute("formData",request);
@@ -36,4 +42,12 @@ public class UserController {
         userService.save(request);
         return "redirect:/login";
     }
+
+    @PostMapping("/logout")
+    public void logout(){
+        throw new IllegalStateException("Spring Security 에서 자동으로 로그아웃 수행함");
+    }
+
+
+
 }

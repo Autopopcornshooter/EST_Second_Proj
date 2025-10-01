@@ -4,7 +4,6 @@
     <meta charset="UTF-8"/>
     <title>배달의민족 로그인</title>
     <link rel="stylesheet" th:href="@{/css/login.css}">
-    <!-- 선택: 한글 가독성 좋은 폰트 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
@@ -14,7 +13,7 @@
 <!-- 헤더: 좌측 로고/브랜딩 -->
 <header class="gnb">
     <button type="button" class="brand__logo-btn" aria-label="배달의민족 홈"
-            onclick="location.href='/'"></button>
+            th:onclick="|location.href='@{/mainpage}'|"></button>
 
 </header>
 
@@ -57,7 +56,17 @@
             배달의민족 회원이 아니신가요?
             <a class="helper__link" th:href="@{/signup}">회원가입</a>
         </p>
+        <br>
+        <button class="btn btn--primary form--submit" onclick="location.href='/oauth2/authorization/google'">
+            <img src="https://img.icons8.com/?size=512&id=17949&format=png" alt="Google" width="20" height="20">
+            <span>Google 계정으로 로그인</span>
+        </button>
     </section>
 </main>
+<script>
+    window.addEventListener("load", () => {
+        console.log("리소스 로드 완료");
+    });
+</script>
 </body>
 </html>
