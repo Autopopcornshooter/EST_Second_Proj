@@ -50,8 +50,8 @@ public class RegionController {
   // 등록 (폼 제출)
   @PostMapping
   public String createRegion(@ModelAttribute RegionRequest request) {
-    regionService.saveRegion(request);
-    return "redirect:/api/regions"; // 등록 후 목록 페이지로 리다이렉트
+    Region savedRegion = regionService.saveRegion(request);
+    return "redirect:/api/regions/update/" + savedRegion.getId();
   }
 
   // 수정 (폼 제출)
