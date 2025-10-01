@@ -40,6 +40,13 @@ public class User implements UserDetails {
     @Column(name="store_name")
     private String storeName;
 
+    @Column(name="profile_icon")
+    private String userIconUrl;
+
+    public void updateUserIcon(String userIconUrl){
+        this.userIconUrl =userIconUrl;
+    }
+
     @CreatedDate
     @Column(name = "created_at", updatable = false, nullable = false)
     private LocalDateTime createdAt;
