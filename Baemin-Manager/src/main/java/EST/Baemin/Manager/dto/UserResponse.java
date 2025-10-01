@@ -26,6 +26,7 @@ public class UserResponse {
                 .nickname(user.getNickname())
                 .loginId(user.getLoginId())
                 .passWord(user.getPassword())
+                .storeName(user.getStoreName())
                 .createdAt(user.getCreatedAt())
                 .build();
     }

@@ -37,6 +37,9 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
+    @Column(name="store_name")
+    private String storeName;
+
     @CreatedDate
     @Column(name = "created_at", updatable = false, nullable = false)
     private LocalDateTime createdAt;

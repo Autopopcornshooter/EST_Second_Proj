@@ -24,6 +24,7 @@ public class UserService {
                         .loginId(request.getUsername())
                         .password(encoder.encode(request.getPassword()))
                         .nickname(request.getNickname())
+                        .storeName(request.getStoreName())
                         .build()
         );
     }
