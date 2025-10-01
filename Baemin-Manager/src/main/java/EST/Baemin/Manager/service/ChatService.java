@@ -29,7 +29,6 @@ public class ChatService {
     this.userRepository = userRepository;
   }
 
-  // Create Chat
   public Chat saveChat(ChatRequest request) {
     ChatRoom chatRoom = chatRoomRepository.findById(request.getChatRoomId())
                                 .orElseThrow(() -> new ChatRoomNotFoundException(request.getChatRoomId()));
@@ -49,12 +48,7 @@ public class ChatService {
   public ChatRoomResponse findById(long id) {
     ChatRoom chatRoom = chatRoomRepository.findById(id)
                                 .orElseThrow(() -> new ChatRoomNotFoundException(id));
-    chatRoom.getChats();
-    System.out.println("실행되나?");
-    System.out.println(chatRoom.getUser1().getNickname());
-    System.out.println(chatRoom.getUser1().getStoreName());
-    System.out.println(chatRoom.getUser2().getNickname());
-    System.out.println(chatRoom.getUser2().getStoreName());
+    chatRoom.getChats(); // 초기화
 
     return ChatRoomResponse.from(chatRoom);
   }
@@ -92,13 +86,4 @@ public class ChatService {
     return newRoom.getId();
   }
 
-  // 마지막 채팅 ID 이후 새 채팅 조회 (롱폴링용)
-  public List<Chat> getChatsAfterId(Long roomId, Long lastChatId) {
-    if (lastChatId == null) {
-      // 처음 조회하는 경우, 방의 모든 채팅 반환
-      return chatRepository.findByChatRoomIdOrderByCreatedAtAsc(roomId);
-    }
-    // 마지막 ID 이후의 새 채팅만 반환
-    return chatRepository.findByChatRoomIdAndIdGreaterThanOrderByCreatedAtAsc(roomId, lastChatId);
-  }
 }

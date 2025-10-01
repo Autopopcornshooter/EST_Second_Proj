@@ -17,8 +17,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 @Controller
 public class ChatController {
+
   private final ChatService chatService;
 
   public ChatController(ChatService chatService) {
@@ -32,14 +34,13 @@ public class ChatController {
                           RedirectAttributes redirectAttributes) {
     User user = (User) authentication.getPrincipal();
 
-    // 채팅방 조회 or 생성
     Long roomId = chatService.getOrCreateChatRoom(user.getId(), otherUserId);
-
     redirectAttributes.addFlashAttribute("roomId", roomId);
 
     return "redirect:/chat";
   }
 
+  // 채팅 페이지
   @GetMapping("/chat")
   public String chatPage(@RequestParam(required = false) Long roomId,
                          Model model,
@@ -53,12 +54,13 @@ public class ChatController {
     if (roomId != null) {
       model.addAttribute("selectedRoom", chatService.findById(roomId));
     } else {
-      model.addAttribute("selectedRoom", null); // 빈 화면
+      model.addAttribute("selectedRoom", null);
     }
 
     return "chat";
   }
 
+  // 초기 채팅 내용 조회 (AJAX용, 화면 렌더링)
   @GetMapping("/api/chat/{roomId}")
   public String getChatRoom(@PathVariable Long roomId, Model model,
                             Authentication authentication) {
@@ -66,38 +68,9 @@ public class ChatController {
     model.addAttribute("loginUser", user);
 
     ChatRoomResponse chatRoom = chatService.findById(roomId);
-    System.out.println(chatRoom.getUser1().getNickname());
-    System.out.println(chatRoom.getUser2().getNickname());
     model.addAttribute("selectedRoom", chatRoom);
-    return "chat :: chatFragment";
-  }
 
-  // 채팅 추가
-  @PostMapping("/api/chats")
-  public ResponseEntity<Chat> addChat(@RequestBody ChatRequest request) {
-    Chat savedChat = chatService.saveChat(request);
-    return ResponseEntity.ok(savedChat);
-  }
-
-  // 롱폴링
-  @GetMapping("/api/chat/updates/{roomId}")
-  @ResponseBody
-  public ResponseEntity<List<Chat>> getNewChats(
-          @PathVariable Long roomId,
-          @RequestParam(required = false) Long lastChatId) throws InterruptedException {
-    long startTime = System.currentTimeMillis();
-    long maxWait = 30_000; // 최대 30초 대기
-    List<Chat> newChats;
-
-    while (System.currentTimeMillis() - startTime < maxWait) {
-      newChats = chatService.getChatsAfterId(roomId, lastChatId);
-      if (!newChats.isEmpty()) {
-        return ResponseEntity.ok(newChats);
-      }
-      Thread.sleep(1000); // 1초 대기 후 재조회
-    }
-
-    return ResponseEntity.ok(List.of());
+    return "chat :: chatFragment"; // Thymeleaf fragment
   }
 
 }
