@@ -28,7 +28,7 @@ public class ChatController {
   }
 
   // 채팅방 조회, 없으면 생성
-  @PostMapping("/api/chat/start/{otherUserId}")
+  @GetMapping("/api/chat/start/{otherUserId}")
   public String startChat(@PathVariable Long otherUserId,
                           Authentication authentication,
                           RedirectAttributes redirectAttributes) {
