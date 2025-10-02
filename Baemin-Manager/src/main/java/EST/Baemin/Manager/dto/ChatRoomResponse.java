@@ -28,7 +28,13 @@ public class ChatRoomResponse {
     response.setId(chatRoom.getId());
     response.setUser1(chatRoom.getUser1());
     response.setUser2(chatRoom.getUser2());
-    response.setChats(chatRoom.getChats());
+    response.setChats(chatRoom.getChats().stream()
+                              .map(chat -> {
+                                chat.setMessage(chat.getMessage().replace("\n", "<br>"));
+                                return chat;
+                              })
+                              .toList()
+    );
     if (!chatRoom.getChats().isEmpty()) {
       response.setLastChat(chatRoom.getChats().get(chatRoom.getChats().size() - 1).getMessage());
     }

@@ -41,6 +41,10 @@
   color: #666;
   font-size: 0.9em;
   margin-top: 2px;
+  width: 250px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .chatting-list-item {

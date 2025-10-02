@@ -1,21 +1,17 @@
 package EST.Baemin.Manager.controller;
 
-import EST.Baemin.Manager.domain.Chat;
-import EST.Baemin.Manager.domain.ChatRoom;
 import EST.Baemin.Manager.domain.User;
-import EST.Baemin.Manager.dto.ChatRequest;
 import EST.Baemin.Manager.dto.ChatRoomResponse;
 import EST.Baemin.Manager.service.ChatService;
-import org.springframework.http.ResponseEntity;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 @Controller
@@ -31,18 +27,19 @@ public class ChatController {
   @GetMapping("/api/chat/start/{otherUserId}")
   public String startChat(@PathVariable Long otherUserId,
                           Authentication authentication,
-                          RedirectAttributes redirectAttributes) {
+                          HttpSession session) {
     User user = (User) authentication.getPrincipal();
 
     Long roomId = chatService.getOrCreateChatRoom(user.getId(), otherUserId);
-    redirectAttributes.addFlashAttribute("roomId", roomId);
+
+    session.setAttribute("selectedRoomId", roomId);
 
     return "redirect:/chat";
   }
 
   // 채팅 페이지
   @GetMapping("/chat")
-  public String chatPage(@RequestParam(required = false) Long roomId,
+  public String chatPage(HttpSession session,
                          Model model,
                          Authentication authentication) {
     User user = (User) authentication.getPrincipal();
@@ -50,6 +47,8 @@ public class ChatController {
 
     List<ChatRoomResponse> chatRooms = chatService.getChatRoomsByUserId(user.getId());
     model.addAttribute("chatRooms", chatRooms);
+
+    Long roomId = (Long) session.getAttribute("selectedRoomId");
 
     if (roomId != null) {
       model.addAttribute("selectedRoom", chatService.findById(roomId));
@@ -63,12 +62,15 @@ public class ChatController {
   // 초기 채팅 내용 조회 (AJAX용, 화면 렌더링)
   @GetMapping("/api/chat/{roomId}")
   public String getChatRoom(@PathVariable Long roomId, Model model,
-                            Authentication authentication) {
+                            Authentication authentication,
+                            HttpSession session) {
     User user = (User) authentication.getPrincipal();
     model.addAttribute("loginUser", user);
 
     ChatRoomResponse chatRoom = chatService.findById(roomId);
     model.addAttribute("selectedRoom", chatRoom);
+
+    session.setAttribute("selectedRoomId", roomId);
 
     return "chat :: chatFragment"; // Thymeleaf fragment
   }

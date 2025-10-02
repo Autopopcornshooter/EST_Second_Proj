@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,11 +30,14 @@ public class ChatService {
     this.userRepository = userRepository;
   }
 
+  @Transactional
   public Chat saveChat(ChatRequest request) {
     ChatRoom chatRoom = chatRoomRepository.findById(request.getChatRoomId())
                                 .orElseThrow(() -> new ChatRoomNotFoundException(request.getChatRoomId()));
 
     Chat chat = request.toEntity(chatRoom);
+
+    chatRoom.setUpdatedAt(LocalDateTime.now());
 
     return chatRepository.save(chat);
   }
@@ -56,25 +60,22 @@ public class ChatService {
   @Transactional
   public Long getOrCreateChatRoom(Long userId, Long otherUserId) {
 
-    // 1. 기존 채팅방 조회 (user1 = userId, user2 = otherUserId)
-    Optional<ChatRoom> existingRoom = chatRoomRepository
-                                              .findByUser1IdAndUser2Id(userId, otherUserId);
+    // 1. userId 기준으로 정렬
+    Long firstId = Math.min(userId, otherUserId);
+    Long secondId = Math.max(userId, otherUserId);
 
-    // 2. 없으면 반대로 조회 (user1 = otherUserId, user2 = userId)
-    if (existingRoom.isEmpty()) {
-      existingRoom = chatRoomRepository.findByUser1IdAndUser2Id(otherUserId, userId);
-    }
+    // 2. 기존 채팅방 조회 (user1 = firstId, user2 = secondId)
+    Optional<ChatRoom> existingRoom = chatRoomRepository.findByUser1IdAndUser2Id(firstId, secondId);
 
-    // 3. 있으면 반환
     if (existingRoom.isPresent()) {
       return existingRoom.get().getId();
     }
 
-    // 4. 없으면 새 채팅방 생성
-    User user1 = userRepository.findById(userId)
-                         .orElseThrow(() -> new IllegalArgumentException("User not found: " + userId));
-    User user2 = userRepository.findById(otherUserId)
-                         .orElseThrow(() -> new IllegalArgumentException("User not found: " + otherUserId));
+    // 3. 없으면 새 채팅방 생성
+    User user1 = userRepository.findById(firstId)
+                         .orElseThrow(() -> new IllegalArgumentException("User not found: " + firstId));
+    User user2 = userRepository.findById(secondId)
+                         .orElseThrow(() -> new IllegalArgumentException("User not found: " + secondId));
 
     ChatRoom newRoom = ChatRoom.builder()
                                .user1(user1)
