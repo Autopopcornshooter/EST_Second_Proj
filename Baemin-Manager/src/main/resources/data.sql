@@ -9,15 +9,22 @@ VALUES
 
 -- CHAT_ROOM 테이블용 데이터
 INSERT INTO CHAT_ROOM (USER1_ID, USER2_ID, UPDATED_AT)
-VALUES (1, 2, CURRENT_TIMESTAMP);
+VALUES (1, 2, CURRENT_TIMESTAMP),
+       (1, 3, CURRENT_TIMESTAMP);
 
--- CHAT 테이블용 데이터
-INSERT INTO CHAT (CHAT_ROOM_ID, SENDER_ID, MESSAGE, CREATED_AT)
+-- Chats
+INSERT INTO chat (chat_room_id, sender_id, message, created_at)
 VALUES
-    (1, 1, '안녕하세요!', CURRENT_TIMESTAMP),
-    (1, 2, '안녕하세요! 주문 관련 문의 드립니다.', CURRENT_TIMESTAMP),
-    (1, 1, '네, 어떤 부분이 궁금하신가요?', CURRENT_TIMESTAMP),
-    (1, 2, '상품 배송 상태를 알고 싶어요.', CURRENT_TIMESTAMP),
-    (1, 1, '확인해보니 오늘 오후 도착 예정입니다.', CURRENT_TIMESTAMP),
-    (1, 2, '좋아요, 감사합니다!', CURRENT_TIMESTAMP);
+    (1, 1, '오늘 점심은 뭐 드셨나요?', CURRENT_TIMESTAMP),
+    (1, 2, '저는 김치찌개 먹었어요.', CURRENT_TIMESTAMP),
+    (1, 1, '맛있겠네요!', CURRENT_TIMESTAMP),
+    (1, 2, '네, 홍길동님은요?', CURRENT_TIMESTAMP),
+    (1, 1, '저는 비빔밥 먹었어요.', CURRENT_TIMESTAMP);
 
+INSERT INTO chat (chat_room_id, sender_id, message, created_at)
+VALUES
+    (2, 1, '영희님, 카페 준비 완료하셨나요?', CURRENT_TIMESTAMP),
+    (2, 3, '네, 다 준비됐어요.', CURRENT_TIMESTAMP),
+    (2, 1, '좋아요. 곧 도착할게요.', CURRENT_TIMESTAMP),
+    (2, 3, '알겠습니다.', CURRENT_TIMESTAMP),
+    (2, 1, '감사합니다!', CURRENT_TIMESTAMP);
