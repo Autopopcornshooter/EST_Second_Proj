@@ -34,7 +34,7 @@ public class WebSecurityConfig {
                         .requestMatchers(toH2Console()).permitAll()
                         .anyRequest().authenticated())
                 .formLogin(auth-> auth.loginPage("/login")
-                        .defaultSuccessUrl("/location-verification"))
+                        .defaultSuccessUrl("/api/regions"))// 지역인증으로 이동
                 .logout(auth->auth.logoutSuccessUrl("/login")
                         .invalidateHttpSession(true)
                         .clearAuthentication(true));
