@@ -5,7 +5,6 @@ import EST.Baemin.Manager.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -31,7 +30,14 @@ public class UserController {
     public String toMainpage(){
         return "mainpage";
     }
-
+    @PostMapping("/api/uploadUserIcon")
+    public void uploadUserIcon(String url){
+        userService.addUserIcon(url);
+    }
+    @PostMapping("/api/defaultUserIcon")
+    public void deleteUserIcon(){
+        userService.deleteUserIcon();
+    }
 
     @PostMapping("/api/signup")
     public String signup(AddUserRequest request, Model model){

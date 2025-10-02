@@ -12,10 +12,10 @@ VALUES
     (1, 101, '확인해보니 오늘 오후 도착 예정입니다.', CURRENT_TIMESTAMP),
     (1, 102, '좋아요, 감사합니다!', CURRENT_TIMESTAMP);
 
--- INSERT INTO USERS (CREATED_AT,UPDATED_AT,LOGIN_ID, NICKNAME, PASSWORD)
--- VALUES
--- --     aabbccDD12#
---     (CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,'firetruck433','이경원','$2a$10$eftwQu.3tfqZ43Eoc0wZc.t5wB31SSaoBGAH9m7Nk13wI73zp8eRG'),
--- --     abcD1@3
---     (CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,'abcd111','김철수','$2a$10$joAuRtdFdo1dkuMqIlV8zOMCO7Y.aJd02jvgKwbSADoLFAqHmR4eS'),
--- (CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,'firetruck433@gmail.com','이경원 (자동팝콘발사기)',null,null)
+INSERT INTO USERS (CREATED_AT,UPDATED_AT,LOGIN_ID, NICKNAME, PASSWORD, STORE_NAME)
+VALUES
+--     aabbccDD12#
+    (CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,'firetruck433','이경원','$2a$10$eftwQu.3tfqZ43Eoc0wZc.t5wB31SSaoBGAH9m7Nk13wI73zp8eRG','닭꼬치'),
+--     abcD1@3
+    (CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,'abcd111','김철수','$2a$10$joAuRtdFdo1dkuMqIlV8zOMCO7Y.aJd02jvgKwbSADoLFAqHmR4eS','짜장면'),
+(CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,'firetruck433@gmail.com','이경원 (자동팝콘발사기)',null,null)
