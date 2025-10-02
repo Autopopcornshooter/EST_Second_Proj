@@ -30,8 +30,16 @@ public class UserService {
     }
     public User findById(String loginID){
         return userRepository.findByLoginId(loginID).orElseThrow(()->new IllegalArgumentException("findById Not Found with id: "+loginID));
-
     }
+    public void addUserIcon(String url){
+        User user=userRepository.findByLoginId(SecurityUtil.getCurrentUserLoginId()).orElseThrow(()->new IllegalArgumentException("findById Not Found with id: "+SecurityUtil.getCurrentUserLoginId()));
+        user.updateUserIcon(url);
+    }
+    public void deleteUserIcon(){
+        User user=userRepository.findByLoginId(SecurityUtil.getCurrentUserLoginId()).orElseThrow(()->new IllegalArgumentException("findById Not Found with id: "+SecurityUtil.getCurrentUserLoginId()));
+        user.updateUserIcon(null);
+    }
+
     //User의 지역 업데이트
     // 현재 지역을 지역 테이블에서 삭제 후 새로운 지역 삽입 및 User필드에 삽입
     @Transactional
