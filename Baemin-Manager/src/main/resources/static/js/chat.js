@@ -81,48 +81,56 @@
 $(document).ready(function() {
   var socket = new SockJS('/ws');
   var stompClient = Stomp.over(socket);
-  var currentRoomId = null;
-  var loginUserId = $("#message-input").data("sender-id"); // 로그인 사용자 ID
+  var currentRoomId = $("#message-input").data("room-id") || null;
+  var loginUserId = $("#message-input").data("sender-id");
 
   stompClient.connect({}, function(frame) {
     console.log("WebSocket connected:", frame);
 
+    // 페이지에 표시된 모든 채팅방 구독
+    $(".chatting-list-item").each(function() {
+      var roomId = $(this).find(".room-id").val();
+
+      stompClient.subscribe('/topic/' + roomId, function(message) {
+        var chat = JSON.parse(message.body);
+
+        // 사이드바 마지막 대화 내용 갱신
+        $(".chatting-list-item").each(function() {
+          if ($(this).find(".room-id").val() == roomId) {
+            $(this).find(".last-comment").text(chat.message);
+          }
+        });
+
+        // 현재 열려 있는 방이면 채팅창에도 append
+        if (currentRoomId == roomId) {
+          var isMine = chat.senderId == loginUserId;
+          var containerClass = "d-flex mb-2 " + (isMine ? "justify-content-end" : "justify-content-start");
+          var messageClass = isMine ? "chatting-item2" : "chatting-item1";
+
+          var now = new Date();
+          var hours = now.getHours();
+          var minutes = now.getMinutes().toString().padStart(2, "0");
+          var ampm = hours >= 12 ? "오후" : "오전";
+          hours = hours % 12 || 12;
+
+          var htmlMessage = chat.message.replace(/\n/g, "<br>");
+          var chatHtml = `
+            <div class="${containerClass}">
+              <div class="${messageClass}">${htmlMessage}</div>
+              <p class="time ms-1 mt-auto mb-2">${ampm} ${hours}:${minutes}</p>
+            </div>
+          `;
+          $("#chatting-content").append(chatHtml);
+          $("#chatting-content").scrollTop($("#chatting-content")[0].scrollHeight);
+        }
+      });
+    });
+
     // 채팅방 클릭 시
-    $(".chatting-list-item").on("click", function () {
+    $(document).on("click", ".chatting-list-item", function () {
       var roomId = $(this).find(".room-id").val();
       currentRoomId = roomId;
 
-      // 기존 구독 해제
-      if (stompClient.subscription) {
-        stompClient.unsubscribe(stompClient.subscription.id);
-      }
-
-      // 새 구독
-      stompClient.subscription = stompClient.subscribe('/topic/' + roomId, function(message) {
-        var chat = JSON.parse(message.body);
-
-        var isMine = chat.senderId === loginUserId;
-        var containerClass = "d-flex mb-2 " + (isMine ? "justify-content-end" : "justify-content-start");
-        var messageClass = isMine ? "chatting-item2" : "chatting-item1";
-
-        // 시간 표시
-        var now = new Date();
-        var hours = now.getHours();
-        var minutes = now.getMinutes().toString().padStart(2, "0");
-        var ampm = hours >= 12 ? "PM" : "AM";
-        hours = hours % 12 || 12;
-
-        var chatHtml = `
-                    <div class="${containerClass}">
-                        <div class="${messageClass}">${chat.message}</div>
-                        <p class="time ms-1 mt-auto mb-2">${ampm} ${hours}:${minutes}</p>
-                    </div>
-                `;
-        $("#chatting-content").append(chatHtml);
-        $("#chatting-content").scrollTop($("#chatting-content")[0].scrollHeight);
-      });
-
-      // 채팅방 선택 시 초기 채팅 로드
       $.ajax({
         url: "/api/chat/" + roomId,
         type: "GET",
@@ -135,7 +143,6 @@ $(document).ready(function() {
     // 메시지 전송
     $(document).on("click", "#send-btn", function() {
       var message = $("#message-input").val().trim();
-
       if (!message || !currentRoomId) {
         alert("메시지를 입력하고 채팅방을 선택하세요.");
         return;
@@ -148,7 +155,7 @@ $(document).ready(function() {
       };
 
       stompClient.send("/app/chat/" + currentRoomId, {}, JSON.stringify(chatRequest));
-      $("#message-input").val(""); // 입력창 초기화
+      $("#message-input").val("");
     });
   });
 });
