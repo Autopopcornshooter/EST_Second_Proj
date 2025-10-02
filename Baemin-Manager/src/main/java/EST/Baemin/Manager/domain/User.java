@@ -10,7 +10,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -56,8 +55,8 @@ public class User implements UserDetails {
     private LocalDateTime updatedAt;
 
 
-    @OneToMany(mappedBy = "user")
-    private List<Restaurant> restaurants = new ArrayList<>();
+    @OneToOne(mappedBy = "user")
+    private Restaurant restaurant;
 
     //TODO
     @OneToOne(fetch=FetchType.LAZY)
@@ -70,8 +69,8 @@ public class User implements UserDetails {
         this.region=region;
     }
 
-    public void addRestaurant(Restaurant restaurant){
-        this.restaurants.add(restaurant);
+    public void updateRestaurant(Restaurant restaurant){
+        this.restaurant=restaurant;
     }
 
 

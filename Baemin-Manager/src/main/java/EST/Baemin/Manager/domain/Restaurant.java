@@ -36,7 +36,7 @@ public class Restaurant {
     @Column(nullable = false)
     private Integer price;  // 가격
 
-    @ManyToOne(fetch=FetchType.LAZY)
+    @OneToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="user_id")
     private User user;
 

@@ -50,7 +50,7 @@ public class RestaurantService {
                 .user(user)
 //                .imageUrl(dto.getImageUrl())
                 .build();
-        user.addRestaurant(restaurant);
+        user.updateRestaurant(restaurant);
         Restaurant saved = restaurantRepository.save(restaurant);
 
 
