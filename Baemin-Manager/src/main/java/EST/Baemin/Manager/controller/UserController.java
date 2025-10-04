@@ -1,12 +1,16 @@
 package EST.Baemin.Manager.controller;
 
-import EST.Baemin.Manager.dto.AddUserRequest;
+import EST.Baemin.Manager.domain.User;
+import EST.Baemin.Manager.dto.SignupRequest;
 import EST.Baemin.Manager.service.UserService;
+import EST.Baemin.Manager.util.SecurityUtil;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @AllArgsConstructor
@@ -17,14 +21,35 @@ public class UserController {
 
     @GetMapping("/login")
     public String login() {
+        if(SecurityUtil.isAuthenticated()){
+            return "redirect:/mainpage";
+        }
         return "login";
     }
 
     @GetMapping("/signup")
     public String signup(Model model) {
-        model.addAttribute("formData",new AddUserRequest());
+        if(SecurityUtil.isAuthenticated()){
+            return "redirect:/mainpage";
+        }
+        model.addAttribute("formData",new SignupRequest());
         return "signup";
     }
+
+    @GetMapping("/storeName")
+    public String storeName(){
+        if(SecurityUtil.isAuthenticated()){
+            return "redirect:/mainpage";
+        }
+        return "storeNamePage";
+    }
+
+    @PostMapping("/api/storeName")
+    public String setStoreName(@RequestParam String storeName, Authentication authentication){
+        userService.updateStoreName(storeName,(User) authentication.getPrincipal());
+        return "RegionPage";
+    }
+
 
     @GetMapping("/mainpage")
     public String toMainpage(){
@@ -40,7 +65,7 @@ public class UserController {
     }
 
     @PostMapping("/api/signup")
-    public String signup(AddUserRequest request, Model model){
+    public String signup( SignupRequest request, Model model){
         if(!request.getPassword().equals( request.getConfirmPassword())){
             model.addAttribute("formData",request);
             return"/signup";

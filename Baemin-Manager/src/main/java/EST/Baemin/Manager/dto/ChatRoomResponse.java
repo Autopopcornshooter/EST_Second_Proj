@@ -13,7 +13,8 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
-public class ChatRoomResponse {
+public class
+ChatRoomResponse {
   private long id;
   private long user1Id;
   private long user2Id;

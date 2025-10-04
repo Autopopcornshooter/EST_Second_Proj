@@ -1,7 +1,7 @@
 package EST.Baemin.Manager.service;
 
 import EST.Baemin.Manager.domain.Region;
-import EST.Baemin.Manager.dto.AddUserRequest;
+import EST.Baemin.Manager.dto.SignupRequest;
 import EST.Baemin.Manager.domain.User;
 import EST.Baemin.Manager.dto.RegionRequest;
 import EST.Baemin.Manager.repository.UserRepository;
@@ -18,7 +18,7 @@ public class UserService {
     private final RegionService regionService;
     private PasswordEncoder encoder;
 
-    public User save(AddUserRequest request){
+    public User save(SignupRequest request){
         return userRepository.save(
                 User.builder()
                         .loginId(request.getUsername())
@@ -31,6 +31,11 @@ public class UserService {
     public User findById(String loginID){
         return userRepository.findByLoginId(loginID).orElseThrow(()->new IllegalArgumentException("findById Not Found with id: "+loginID));
     }
+
+    public void updateStoreName(String storeName,User user){
+        user.setStoreName(storeName);
+    }
+
     public void addUserIcon(String url){
         User user=userRepository.findByLoginId(SecurityUtil.getCurrentUserLoginId()).orElseThrow(()->new IllegalArgumentException("findById Not Found with id: "+SecurityUtil.getCurrentUserLoginId()));
         user.updateUserIcon(url);

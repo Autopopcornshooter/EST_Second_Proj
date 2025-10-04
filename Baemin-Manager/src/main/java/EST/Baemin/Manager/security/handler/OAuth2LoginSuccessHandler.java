@@ -24,6 +24,10 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
                                         Authentication authentication) throws IOException, ServletException {
         DefaultOAuth2User oAuth2User = (DefaultOAuth2User) authentication.getPrincipal();
         User user = userRepository.findByLoginId(oAuth2User.getAttribute("email")).orElseThrow();
+        if(user.getStoreName()==null){
+            getRedirectStrategy().sendRedirect(request, response, "api/storeName");
+            return;
+        }
         //로그인 되어 있는 상태에서 지역이 지정되지 않았다면 지역 지정 페이지로 이동
         if(user.getRegion()==null) {
             getRedirectStrategy().sendRedirect(request, response, "/api/regions");
