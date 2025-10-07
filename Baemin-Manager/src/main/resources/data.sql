@@ -4,8 +4,8 @@ VALUES
 --     aabbccDD12#
 (CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,'firetruck433','이경원','$2a$10$eftwQu.3tfqZ43Eoc0wZc.t5wB31SSaoBGAH9m7Nk13wI73zp8eRG','닭꼬치'),
 --     abcD1@3
-(CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,'abcd111','김철수','$2a$10$joAuRtdFdo1dkuMqIlV8zOMCO7Y.aJd02jvgKwbSADoLFAqHmR4eS','짜장면'),
-(CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,'firetruck433@gmail.com','이경원 (자동팝콘발사기)',null,null);
+(CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,'abcd111','김철수','$2a$10$joAuRtdFdo1dkuMqIlV8zOMCO7Y.aJd02jvgKwbSADoLFAqHmR4eS','짜장면');
+/*(CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,'firetruck433@gmail.com','이경원 (자동팝콘발사기)',null,null);
 
 -- CHAT_ROOM 테이블용 데이터
 INSERT INTO CHAT_ROOM (USER1_ID, USER2_ID, UPDATED_AT)
@@ -28,3 +28,4 @@ VALUES
     (2, 1, '좋아요. 곧 도착할게요.', CURRENT_TIMESTAMP),
     (2, 3, '알겠습니다.', CURRENT_TIMESTAMP),
     (2, 1, '감사합니다!', CURRENT_TIMESTAMP);
+*/

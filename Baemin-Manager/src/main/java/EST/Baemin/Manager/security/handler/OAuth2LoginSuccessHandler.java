@@ -7,13 +7,14 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-
+@Slf4j
 @Component
 @AllArgsConstructor
 public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
@@ -25,7 +26,7 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
         DefaultOAuth2User oAuth2User = (DefaultOAuth2User) authentication.getPrincipal();
         User user = userRepository.findByLoginId(oAuth2User.getAttribute("email")).orElseThrow();
         if(user.getStoreName()==null){
-            getRedirectStrategy().sendRedirect(request, response, "api/storeName");
+            getRedirectStrategy().sendRedirect(request, response, "/storeName");
             return;
         }
         //로그인 되어 있는 상태에서 지역이 지정되지 않았다면 지역 지정 페이지로 이동

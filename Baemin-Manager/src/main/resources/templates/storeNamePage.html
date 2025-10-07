@@ -20,14 +20,14 @@
 <!-- 배경 컨테이너 -->
 <main class="page">
     <section class="login-panel">
-        <h1 class="sr-only">로그인</h1>
+        <h1 class="sr-only">상호명</h1>
 
 
         <!-- 로그인 폼 -->
         <form class="form" th:action="@{/api/storeName}" method="post" autocomplete="on">
             <div class="form__group">
                 <label class="form__label" for="storeName">상호명</label>
-                <input class="form__input" type="password" id="storeName" name="storeName"
+                <input class="form__input" type="text" id="storeName" name="storeName"
                        placeholder="상호명을 입력해주세요" required/>
             </div>
 
@@ -39,10 +39,7 @@
             <a class="helper__link" th:href="@{/login}">로그인</a>
         </p>
         <br>
-        <button class="btn btn--primary form--submit" onclick="location.href='/oauth2/authorization/google'">
-            <img src="https://img.icons8.com/?size=512&id=17949&format=png" alt="Google" width="20" height="20">
-            <span>Google 계정으로 로그인</span>
-        </button>
+
     </section>
 </main>
 <script>

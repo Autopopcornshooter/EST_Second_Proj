@@ -3,6 +3,7 @@ package EST.Baemin.Manager.config;
 import EST.Baemin.Manager.security.handler.OAuth2LoginSuccessHandler;
 import EST.Baemin.Manager.security.service.CustomOAuth2UserService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -19,6 +20,7 @@ import static org.springframework.boot.autoconfigure.security.servlet.PathReques
 @EnableWebSecurity
 @Configuration
 @AllArgsConstructor
+@Slf4j
 public class WebSecurityConfig {
 private final CustomOAuth2UserService customOAuth2UserService;
 private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
@@ -56,6 +58,7 @@ private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
 
         httpSecurity.csrf(csrf -> csrf.ignoringRequestMatchers(toH2Console()));
         httpSecurity.headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()));
+        log.info("로그인 성공");
         return httpSecurity.build();
     }
 

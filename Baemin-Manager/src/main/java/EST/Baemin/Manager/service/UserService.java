@@ -32,8 +32,12 @@ public class UserService {
         return userRepository.findByLoginId(loginID).orElseThrow(()->new IllegalArgumentException("findById Not Found with id: "+loginID));
     }
 
-    public void updateStoreName(String storeName,User user){
+    @Transactional
+    public void updateStoreName(String storeName,String loginId){
+        User user=userRepository.findByLoginId(loginId)
+                .orElseThrow(()->new IllegalArgumentException("findById Not Found with id: "+loginId));
         user.setStoreName(storeName);
+        userRepository.save(user);
     }
 
     public void addUserIcon(String url){
