@@ -5,10 +5,10 @@ import lombok.Getter;
 
 @Getter
 public class RegionResponse {
-  private long id;
+  private Long id;
   private String address;
-  private double latitude;
-  private double longitude;
+  private Double latitude;
+  private Double longitude;
   private String google_place_id;
   private String apiKey;
 
@@ -18,10 +18,5 @@ public class RegionResponse {
     this.latitude = region.getLatitude();
     this.longitude = region.getLongitude();
     this.google_place_id = region.getGoogle_place_id();
-  }
-
-  public RegionResponse(Region region, String apiKey) {
-    this(region); // 위 생성자 재사용
-    this.apiKey = apiKey;
   }
 }

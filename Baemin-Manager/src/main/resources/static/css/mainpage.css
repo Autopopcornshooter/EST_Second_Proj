@@ -38,7 +38,7 @@ header nav a {
   font-weight: 500;
 }
 
-header .login-btn {
+header .logout-btn {
   padding: 5px 15px;
   border: 1px solid #ccc;
   border-radius: 4px;

@@ -2,10 +2,7 @@ package EST.Baemin.Manager.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -13,11 +10,13 @@ import java.util.Date;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Chat {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "chat_id")
   private Long id;
 
   @ManyToOne(fetch = FetchType.LAZY)
@@ -25,14 +24,14 @@ public class Chat {
   @JsonIgnore
   private ChatRoom chatRoom;
 
-  @Column(nullable = false)
+  @Column(name = "sender_id", nullable = false)
   private Long senderId;
 
-  @Column(nullable = false, length = 500)
+  @Column(name = "message", nullable = false, length = 500)
   private String message;
 
   @CreationTimestamp
-  @Column(nullable = false, updatable = false)
+  @Column(name = "created_at", nullable = false, updatable = false)
   private LocalDateTime createdAt;
 
   @Builder

@@ -1,0 +1,171 @@
+/* 기본 스타일 */
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: white;
+}
+
+/* 상단 메뉴 */
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 50px;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+}
+
+.topbar .logo {
+    height: 40px;
+    width: 85px;
+}
+.topbar nav {
+    margin-left: 20px;
+}
+
+.topbar nav a {
+    margin: 0 5px;
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+}
+
+.topbar-left {
+    display: flex;
+    align-items: center;
+}
+
+.topbar-right {
+    display: flex;
+    align-items: center;
+}
+
+.topbar-right input {
+    padding: 5px 10px;
+    margin-right: 10px;
+    border-radius: 10px;
+    border: none;
+    background-color: #dee2e6;
+}
+
+.topbar-right button {
+    margin-left: 5px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+/* 메인 컨테이너 */
+.form-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+/* 폼 */
+.restaurant-form {
+    width: 500px;
+    background-color: #f9f9f9;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* 공통 form-group */
+.form-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+/* 이미지 업로드 */
+.image-upload {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.image-box {
+    width: 120px;
+    height: 120px;
+    border: 2px dashed #bbb;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background-color: #fff;
+}
+
+.image-box:hover {
+    border-color: #888;
+}
+
+.camera-icon {
+    width: 40px;
+    height: 40px;
+    opacity: 0.6;
+}
+
+/* 메뉴 입력 */
+.menu-info {
+    display: flex;
+    gap: 10px;
+}
+
+.menu-info input {
+    flex: 1;
+}
+
+/* 입력 요소 공통 */
+.restaurant-form input[type="text"],
+.restaurant-form textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    font-size: 14px;
+    background-color: #fff;
+}
+
+.restaurant-form input[type="text"]:focus,
+.restaurant-form textarea:focus {
+    border-color: #00c4b3;
+}
+
+/* 텍스트 영역 */
+textarea {
+    resize: none;
+    min-height: 80px;
+}
+
+/* 완료 버튼 */
+.form-actions {
+    display: flex;
+    justify-content: center;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #00c4b3;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.submit-btn:hover {
+    background-color: #009f91;
+}

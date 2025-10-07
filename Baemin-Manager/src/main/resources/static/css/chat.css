@@ -10,8 +10,13 @@
   border-right: 1px solid #ccc;
 }
 
-#chatting-room {
+#chat-area {
   width: 75%;
+  height: 100%;
+}
+
+#chatting-room {
+  width: 100%;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -36,6 +41,10 @@
   color: #666;
   font-size: 0.9em;
   margin-top: 2px;
+  width: 250px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .chatting-list-item {
@@ -52,6 +61,7 @@
 
 #chatting-content {
   flex: 1;
+  height: 620px;
   overflow-y: auto;
   display: block;
 }
