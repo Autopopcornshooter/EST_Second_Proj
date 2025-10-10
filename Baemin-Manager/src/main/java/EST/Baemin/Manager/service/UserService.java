@@ -41,12 +41,21 @@ public class UserService {
     }
 
     public void addUserIcon(String url){
-        User user=userRepository.findByLoginId(SecurityUtil.getCurrentUserLoginId()).orElseThrow(()->new IllegalArgumentException("findById Not Found with id: "+SecurityUtil.getCurrentUserLoginId()));
-        user.updateUserIcon(url);
+        authenticatedUser().updateUserIcon(url);
     }
     public void deleteUserIcon(){
-        User user=userRepository.findByLoginId(SecurityUtil.getCurrentUserLoginId()).orElseThrow(()->new IllegalArgumentException("findById Not Found with id: "+SecurityUtil.getCurrentUserLoginId()));
-        user.updateUserIcon(null);
+        authenticatedUser().updateUserIcon(null);
+    }
+
+    public boolean isStoreNameSet(){
+        if(authenticatedUser().getStoreName()!=null){
+            return true;
+        }
+        return false;
+    }
+
+    public User authenticatedUser(){
+        return userRepository.findByLoginId(SecurityUtil.getCurrentUserLoginId()).orElseThrow(()->new IllegalArgumentException("findById Not Found with id: "+SecurityUtil.getCurrentUserLoginId()));
     }
 
     //User의 지역 업데이트

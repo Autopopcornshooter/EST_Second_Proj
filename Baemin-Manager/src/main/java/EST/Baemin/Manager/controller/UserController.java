@@ -1,12 +1,10 @@
 package EST.Baemin.Manager.controller;
 
-import EST.Baemin.Manager.domain.User;
 import EST.Baemin.Manager.dto.SignupRequest;
 import EST.Baemin.Manager.service.UserService;
 import EST.Baemin.Manager.util.SecurityUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,8 +37,14 @@ public class UserController {
 
     @GetMapping("/storeName")
     public String storeName() {
-        return "storeNamePage";
+        if(!userService.isStoreNameSet()){
+            return "storeNamePage";
+        }
+        return "redirect:/api/restaurants";
     }
+
+
+
 
     @PostMapping("/api/storeName")
     public String setStoreName(@RequestParam String storeName) {
@@ -69,7 +73,7 @@ public class UserController {
     public String signup(SignupRequest request, Model model) {
         if (!request.getPassword().equals(request.getConfirmPassword())) {
             model.addAttribute("formData", request);
-            return "/signup";
+            return "redirect:/signup";
         }
         userService.save(request);
         return "redirect:/login";
@@ -79,6 +83,7 @@ public class UserController {
     public void logout() {
         throw new IllegalStateException("Spring Security 에서 자동으로 로그아웃 수행함");
     }
+
 
 
 }
