@@ -58,3 +58,28 @@ function deleteRestaurant(id) {
             alert("서버 오류가 발생으로 인하여 등록할 수 없습니다.");
         });
 }
+
+// 좋아요 로직
+document.addEventListener("DOMContentLoaded", function () {
+    const likeBtn = document.querySelector(".like-btn");
+    const likeCountSpan = document.getElementById("like-count");
+
+    if (likeBtn) {
+        likeBtn.addEventListener("click", async () => {
+            const restaurantId = likeBtn.getAttribute("data-id");
+
+            const response = await fetch(`/api/restaurants/${restaurantId}/like`, {
+                method: "POST",
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                likeCountSpan.textContent = `좋아요 ${result.likeCount} 👍`;
+                likeBtn.textContent = result.liked ? "좋아요 취소" : "좋아요";
+            } else {
+                alert("좋아요 처리 중 오류가 발생하였습니다.");
+            }
+
+        });
+    }
+});
