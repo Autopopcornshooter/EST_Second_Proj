@@ -8,22 +8,7 @@
 </head>
 <body>
 <!-- 상단 메뉴 -->
-<header class="topbar">
-    <div class="topbar-left">
-        <img th:src="@{/images/BaeMin_Logo.jpeg}" class="logo" alt="로고">
-        <nav>
-            <a href="/api/restaurants">동네소개</a>
-            <a href="/api/regions">동네인증</a>
-        </nav>
-    </div>
-    <div class="topbar-right">
-        <form th:action="@{/api/restaurants/search}" method="get" class="search-form">
-            <input type="text" name="q" placeholder="찾는 메뉴가 뭐예요?">
-        </form>
-        <button>채팅하기</button>
-        <button>로그아웃</button>
-    </div>
-</header>
+<div th:replace="~{topbar :: topbar}"></div>
 
 <!-- 메인 섹션 -->
 <section class="main-hero">
