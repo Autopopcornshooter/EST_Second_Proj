@@ -1,7 +1,7 @@
 package EST.Baemin.Manager.service;
 
 import EST.Baemin.Manager.domain.Region;
-import EST.Baemin.Manager.dto.AddUserRequest;
+import EST.Baemin.Manager.dto.SignupRequest;
 import EST.Baemin.Manager.domain.User;
 import EST.Baemin.Manager.dto.RegionRequest;
 import EST.Baemin.Manager.repository.UserRepository;
@@ -18,7 +18,7 @@ public class UserService {
     private final RegionService regionService;
     private PasswordEncoder encoder;
 
-    public User save(AddUserRequest request){
+    public User save(SignupRequest request){
         return userRepository.save(
                 User.builder()
                         .loginId(request.getUsername())
@@ -31,13 +31,31 @@ public class UserService {
     public User findById(String loginID){
         return userRepository.findByLoginId(loginID).orElseThrow(()->new IllegalArgumentException("findById Not Found with id: "+loginID));
     }
+
+    @Transactional
+    public void updateStoreName(String storeName,String loginId){
+        User user=userRepository.findByLoginId(loginId)
+                .orElseThrow(()->new IllegalArgumentException("findById Not Found with id: "+loginId));
+        user.setStoreName(storeName);
+        userRepository.save(user);
+    }
+
     public void addUserIcon(String url){
-        User user=userRepository.findByLoginId(SecurityUtil.getCurrentUserLoginId()).orElseThrow(()->new IllegalArgumentException("findById Not Found with id: "+SecurityUtil.getCurrentUserLoginId()));
-        user.updateUserIcon(url);
+        authenticatedUser().updateUserIcon(url);
     }
     public void deleteUserIcon(){
-        User user=userRepository.findByLoginId(SecurityUtil.getCurrentUserLoginId()).orElseThrow(()->new IllegalArgumentException("findById Not Found with id: "+SecurityUtil.getCurrentUserLoginId()));
-        user.updateUserIcon(null);
+        authenticatedUser().updateUserIcon(null);
+    }
+
+    public boolean isStoreNameSet(){
+        if(authenticatedUser().getStoreName()!=null){
+            return true;
+        }
+        return false;
+    }
+
+    public User authenticatedUser(){
+        return userRepository.findByLoginId(SecurityUtil.getCurrentUserLoginId()).orElseThrow(()->new IllegalArgumentException("findById Not Found with id: "+SecurityUtil.getCurrentUserLoginId()));
     }
 
     //User의 지역 업데이트

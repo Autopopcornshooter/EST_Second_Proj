@@ -16,7 +16,8 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ChatRoomResponse {
+public class
+ChatRoomResponse {
   private long id;
   private User user1;
   private User user2;
