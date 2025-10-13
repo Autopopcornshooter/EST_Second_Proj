@@ -13,30 +13,32 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Slf4j
 @RequestMapping("/admin")
 public class AdminController {
-    @GetMapping("login")
+    @GetMapping("/login")
     public String adminPage() {
-        return "adminLoginpage";
+        return "adminLoginPage";
     }
 
     @GetMapping("/users")
     public String userPage(HttpServletRequest request, Model model) {
-model.addAttribute("currentPath",request.getRequestURI());
+        model.addAttribute("currentPath", request.getRequestURI());
         return "admin-users";
 
     }
 
     @GetMapping("/articles")
-    public String articlesPage() {
+    public String articlesPage(HttpServletRequest request,Model model) {
+        model.addAttribute("currentPath", request.getRequestURI());
         return "admin-articles";
     }
 
-    @GetMapping("/stastics")
-    public String stasticsPage() {
-        return "admin-stastics";
+    @GetMapping("/statistics")
+    public String statisticsPage(HttpServletRequest request, Model model) {
+        model.addAttribute("currentPath", request.getRequestURI());
+        return "admin-statistics";
     }
 
-    @GetMapping("/sidebar")
-    public String sidebarPage(){
-        return "sidebar";
-    }
+//    @GetMapping("/sidebar")
+//    public String sidebarPage(){
+//        return "admin-sidebar";
+//    }
 }

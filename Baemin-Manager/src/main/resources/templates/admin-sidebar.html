@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="sidebar">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/admin-sidebar.css}">
+
+</head>
+<body>
+<nav class="sidebar" >
+
+    <ul class="sidebar__menu">
+        <li>
+            <a th:href="@{/admin/users}"
+               th:classappend="${currentPath != null and currentPath.startsWith('/admin/users')} ? 'active'">
+                유저
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/admin/articles}"
+               th:classappend="${currentPath != null and currentPath.startsWith('/admin/articles')} ? 'active'">
+                게시물
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/admin/statistics}"
+               th:classappend="${currentPath != null and currentPath.startsWith('/admin/statistics')} ? 'active'">
+                통계
+            </a>
+        </li>
+    </ul>
+</nav>
+</body>
+</html>

@@ -1,50 +1,72 @@
 .sidebar {
+    width: 200px;
+    height: 100vh;
+    background-color: #ffffff;
+    border-right: 1px solid #e0e0e0;
     position: fixed;
     top: 0;
     left: 0;
-    height: 100vh;
-    width: 200px;
-    background-color: #f8f9fa;
-    border-right: 1px solid #e0e0e0;
-    padding-top: 60px; /* 상단바 높이만큼 여백 */
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: start;
+    padding-top: 24px;
 }
 
 
+.sidebar__logo {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 32px;
+}
 
-.sidebar ul {
+.logo-img {
+    width: 120px;
+    height: auto;
+}
+
+.sidebar__menu {
     list-style: none;
-    width: 100%;
     padding: 0;
-    margin: 0;
-}
-
-.sidebar li {
     width: 100%;
 }
 
+.sidebar__menu li {
+    width: 100%;
+}
 
-.sidebar a {
+.sidebar__menu a {
     display: block;
-    width: 100%;
     padding: 14px 24px;
     text-decoration: none;
     color: #333;
     font-size: 16px;
-    transition: background 0.2s, color 0.2s;
+    font-weight: bolder;
+    transition: all 0.2s ease-in-out;
+    border-left: 4px solid transparent;
 }
 
 
-.sidebar a:hover {
-    background-color: #e9ecef;
-    color: #007bff;
+.sidebar__menu a:hover {
+    background-color: #f4f7ff;
+    color: #0066ff;
 }
 
 
-.sidebar a.active {
-    background-color: #007bff;
-    color: #fff;
-    font-weight: bold;
+.sidebar__menu a.active {
+    background-color: #f0f5ff;
+    color: #0066ff;
+    font-weight: 600;
+    border-left: 4px solid #0066ff;
+}
+
+
+@media screen and (max-width: 768px) {
+    .sidebar {
+        width: 160px;
+    }
+
+    .sidebar__menu a {
+        font-size: 14px;
+        padding: 12px 20px;
+    }
 }
