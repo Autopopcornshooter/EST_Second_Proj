@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class RegionController {
 
   private final RegionService regionService;
+  private final UserService userService;
 
   @Value("${GOOGLE_MAPS_API_KEY}")
   private String apiKey; // API Key 필드 추가
@@ -54,6 +55,7 @@ public class RegionController {
   @PostMapping
   public String createRegion(@ModelAttribute RegionRequest request) {
     Region savedRegion = regionService.saveRegion(request);
+    userService.updateRegionToUser(savedRegion);
     return "redirect:/api/regions/update/" + savedRegion.getId();
   }
 

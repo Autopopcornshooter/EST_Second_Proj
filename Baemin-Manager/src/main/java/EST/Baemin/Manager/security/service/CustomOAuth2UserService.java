@@ -1,5 +1,6 @@
 package EST.Baemin.Manager.security.service;
 
+import EST.Baemin.Manager.domain.Role;
 import EST.Baemin.Manager.domain.User;
 import EST.Baemin.Manager.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -31,6 +32,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                         User.builder()
                                 .loginId(email)
                                 .nickname(name)
+                                .role(Role.ROLE_USER)
                                 .build()
                 );
             }
