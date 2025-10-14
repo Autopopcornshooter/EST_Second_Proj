@@ -1,6 +1,9 @@
 package EST.Baemin.Manager.controller;
 
+import EST.Baemin.Manager.domain.User;
+import EST.Baemin.Manager.repository.UserRepository;
 import EST.Baemin.Manager.service.LikeService;
+import EST.Baemin.Manager.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
