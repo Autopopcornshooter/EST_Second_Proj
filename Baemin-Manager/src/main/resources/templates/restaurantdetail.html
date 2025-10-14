@@ -8,20 +8,8 @@
 </head>
 <body>
 <!-- 상단 메뉴 -->
-<header class="topbar">
-    <div class="topbar-left">
-        <img th:src="@{/images/BaeMin_Logo.jpeg}" class="logo">
-        <nav>
-            <a th:href="@{/neighborhood}">동네소개</a>
-            <a th:href="@{/neighborhood-auth}">동네인증</a>
-        </nav>
-    </div>
-    <div class="topbar-right">
-        <input type="text" placeholder="찾는 메뉴가 뭐예요?">
-        <button>채팅하기</button>
-        <button th:href="@{/logout}">로그아웃</button>
-    </div>
-</header>
+<div th:replace="~{topbar :: topbar}"></div>
+
 <!--식당 세부 사항 -->
 <div class="store-card">
     <div class="store-image">
@@ -53,57 +41,3 @@
 <script th:src="@{/js/restaurant.js}"></script>
 </body>
 </html>
-
-
-
-<!--<!DOCTYPE html>-->
-<!--<html lang="en">-->
-<!--<head>-->
-<!--  <meta charset="UTF-8">-->
-<!--  <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
-<!--  <title>식당 세부 페이지</title>-->
-<!--  <link rel="stylesheet" href="../static/css/restaurantdetail.css">-->
-<!--</head>-->
-<!--<body>-->
-<!--&lt;!&ndash; 상단 메뉴 &ndash;&gt;-->
-<!--<header class="topbar">-->
-<!--  <div class="topbar-left">-->
-<!--    <img src="../static/images/BaeMin_Logo.jpeg" class="logo">-->
-<!--    <nav>-->
-<!--      <a href="#">동네소개</a>-->
-<!--      <a href="#">동네인증</a>-->
-<!--    </nav>-->
-<!--  </div>-->
-<!--  <div class="topbar-right">-->
-<!--    <input type="text" placeholder="찾는 메뉴가 뭐예요?">-->
-<!--    <button>채팅하기</button>-->
-<!--    <button>로그아웃</button>-->
-<!--  </div>-->
-<!--</header>-->
-
-<!--&lt;!&ndash;식당 세부 사항 &ndash;&gt;-->
-<!--<div class="store-card">-->
-<!--  <div class="store-image">-->
-<!--    <img src="../static/images/restauarnt.jpg" alt="OK Burger">-->
-<!--  </div>-->
-<!--  <div class="store-info">-->
-<!--    <h2 class="store-name">OK Burger</h2>-->
-<!--    <div class="store-stats">-->
-<!--      <span>조회수 15</span>-->
-<!--      <span>좋아요 20 👍</span>-->
-<!--      <button class="chat-btn">채팅하기</button>-->
-<!--    </div>-->
-<!--    <p class="menu-name">데리야끼 스테이크</p>-->
-<!--    <p class="menu-desc">스테이크 200g 위 양상추, 토마토로 당일 생산합니다.</p>-->
-<!--    <p class="store-location">장소 | 강서구 화곡동</p>-->
-<!--    <p class="menu-price">11,000원</p>-->
-<!--    <div class="action-btns">-->
-<!--      <button class="edit-btn">수정하기</button>-->
-<!--      <button class="delete-btn">삭제하기</button>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
-
-
-<!--</body>-->
-<!--</html>-->

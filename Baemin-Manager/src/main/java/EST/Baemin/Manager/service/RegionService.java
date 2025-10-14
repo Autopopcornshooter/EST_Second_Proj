@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class RegionService {
     private final RegionRepository regionRepository;
 
-    public Region save(RegionRequest request) {
+    public Region saveRegion(RegionRequest request) {
         return regionRepository.save(request.toEntity());
     }
 

@@ -20,7 +20,7 @@ public class UserResponse {
     private final String storeName;
 
 
-    public UserResponse from(User user){
+    public static UserResponse from(User user){
         return UserResponse.builder()
                 .id(user.getId())
                 .nickname(user.getNickname())
