@@ -13,7 +13,15 @@
   <link rel="stylesheet" href="/css/chat.css" />
 </head>
 <body>
-<header></header>
+<header>
+  <div class="logo">
+    <img th:src="@{/images/BaeMin_Logo.jpeg}" alt="배달의민족 로고">
+  </div>
+  <form th:action="@{/logout}" method="post">
+    <button type="submit" class="logout-btn">로그아웃</button>
+  </form>
+</header>
+
 <main id="main-content" class="d-flex">
   <div id="chatting-list">
     <div id="nickname-area" class="p-2">
