@@ -23,9 +23,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class User implements UserDetails {
-    public enum Role {
-        USER, ADMIN
-    }
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,9 +45,9 @@ public class User implements UserDetails {
     @Column(name = "profile_icon")
     private String userIconUrl;
 
-//    @Enumerated(EnumType.STRING)
-//    @Column(nullable = false)
-//    private Role role;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
 
     public void updateUserIcon(String userIconUrl) {
         this.userIconUrl = userIconUrl;
@@ -84,7 +82,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        return List.of(new SimpleGrantedAuthority(getRole().name()));
     }
 
     @Override

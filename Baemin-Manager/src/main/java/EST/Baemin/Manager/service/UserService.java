@@ -1,6 +1,7 @@
 package EST.Baemin.Manager.service;
 
 import EST.Baemin.Manager.domain.Region;
+import EST.Baemin.Manager.domain.Role;
 import EST.Baemin.Manager.dto.SignupRequest;
 import EST.Baemin.Manager.domain.User;
 import EST.Baemin.Manager.dto.UserResponse;
@@ -14,14 +15,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Service
 @AllArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
-    private final RegionService regionService;
     private PasswordEncoder encoder;
 
     public User save(SignupRequest request){
@@ -31,6 +28,7 @@ public class UserService {
                         .password(encoder.encode(request.getPassword()))
                         .nickname(request.getNickname())
                         .storeName(request.getStoreName())
+                        .role(Role.ROLE_USER)
                         .build()
         );
     }
@@ -70,11 +68,10 @@ public class UserService {
     //User의 지역 업데이트
     // 현재 지역을 지역 테이블에서 삭제 후 새로운 지역 삽입 및 User필드에 삽입
     @Transactional
-    public void updateRegionToUser(RegionRequest request){
+    public Region updateRegionToUser(Region region){
         User user= authenticatedUser();
-        regionService.deleteRegion(user.getRegion().getId());
-        Region region = regionService.saveRegion(request);
         user.updateRegion(region);
+        return region;
     }
 
     //사용자가 선택한 지역 삭제
