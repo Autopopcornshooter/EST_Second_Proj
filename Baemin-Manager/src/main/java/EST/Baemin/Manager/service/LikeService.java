@@ -2,7 +2,6 @@ package EST.Baemin.Manager.service;
 
 import EST.Baemin.Manager.domain.Like;
 import EST.Baemin.Manager.domain.Restaurant;
-import EST.Baemin.Manager.domain.User;
 import EST.Baemin.Manager.repository.LikeRepository;
 import EST.Baemin.Manager.repository.RestaurantRepository;
 import lombok.RequiredArgsConstructor;

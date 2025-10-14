@@ -1,7 +1,5 @@
 package EST.Baemin.Manager.controller;
 
-import EST.Baemin.Manager.domain.User;
-import EST.Baemin.Manager.repository.UserRepository;
 import EST.Baemin.Manager.service.LikeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +7,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 import java.util.HashMap;
 import java.util.Map;
