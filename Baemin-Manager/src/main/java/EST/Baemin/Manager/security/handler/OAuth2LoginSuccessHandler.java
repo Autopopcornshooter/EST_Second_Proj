@@ -3,6 +3,7 @@ package EST.Baemin.Manager.security.handler;
 import EST.Baemin.Manager.domain.User;
 import EST.Baemin.Manager.repository.UserRepository;
 import EST.Baemin.Manager.security.service.CustomOAuth2UserService;
+import EST.Baemin.Manager.util.SecurityUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -23,8 +24,8 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
-        DefaultOAuth2User oAuth2User = (DefaultOAuth2User) authentication.getPrincipal();
-        User user = userRepository.findByLoginId(oAuth2User.getAttribute("email")).orElseThrow();
+
+        User user = userRepository.findByLoginId(SecurityUtil.getCurrentUserLoginId()).orElseThrow();
         if(user.getStoreName()==null){
             getRedirectStrategy().sendRedirect(request, response, "/storeName");
             return;
