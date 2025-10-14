@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>배달의 민족</title>
-  <link rel="stylesheet" href="../static/css/mainpage.css">
+  <link rel="stylesheet" th:href="@{css/mainpage.css}">
 </head>
 <body>
 
@@ -12,7 +13,11 @@
   <div class="logo">
     <img src="../static/images/BaeMin_Logo.jpeg" alt="배달의민족 로고">
   </div>
-  <button class="login-btn">로그인</button>
+  <button class="login-btn" th:onclick="|location.href='@{/login}'|" sec:authorize="isAnonymous()">로그인</button>
+    <form th:action="@{/logout}" method="post">
+        <button type="submit" class="login-btn"  sec:authorize="isAuthenticated()">로그아웃</button>
+    </form>
+
 </header>
 
 <section class="main-section">

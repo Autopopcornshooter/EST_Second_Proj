@@ -37,6 +37,10 @@ public class Restaurant {
     @Column(nullable = false)
     private Integer price;  // 가격
 
+    @OneToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="user_id")
+    private User user;
+
     @Column(nullable = false)
     private Integer view = 0; // 조회수 초기값은 0
 

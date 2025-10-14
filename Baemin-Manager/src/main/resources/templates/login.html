@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>배달의민족 로그인</title>
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+<!-- 헤더: 좌측 로고/브랜딩 -->
+<header class="gnb">
+    <button type="button" class="brand__logo-btn" aria-label="배달의민족 홈"
+            th:onclick="|location.href='@{/mainpage}'|"></button>
+
+</header>
+
+<!-- 배경 컨테이너 -->
+<main class="page">
+    <section class="login-panel">
+        <h1 class="sr-only">로그인</h1>
+
+        <!-- 알림 메시지: ?error=, ?logout= -->
+        <div th:if="${param.error}" class="alert alert--error" role="alert">
+            아이디 또는 비밀번호가 올바르지 않습니다.
+        </div>
+        <div th:if="${param.logout}" class="alert alert--info" role="status">
+            로그아웃 되었습니다.
+        </div>
+
+        <!-- 로그인 폼 -->
+        <form class="form" th:action="@{/login}" method="post" autocomplete="on">
+            <!-- CSRF -->
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+            <div class="form__group">
+                <label class="form__label" for="loginId">아이디</label>
+                <!-- Spring Security 기본 username 파라미터명: username -->
+                <input class="form__input" type="text" id="loginId" name="username"
+                       placeholder="아이디를 입력해주세요" required/>
+            </div>
+
+            <div class="form__group">
+                <label class="form__label" for="password">비밀번호</label>
+                <!-- Spring Security 기본 password 파라미터명: password -->
+                <input class="form__input" type="password" id="password" name="password"
+                       placeholder="비밀번호를 입력해주세요" required/>
+            </div>
+
+            <button class="btn btn--primary form__submit" type="submit">로그인</button>
+        </form>
+
+        <p class="helper">
+            배달의민족 회원이 아니신가요?
+            <a class="helper__link" th:href="@{/signup}">회원가입</a>
+        </p>
+        <br>
+        <button class="btn btn--primary form--submit" onclick="location.href='/oauth2/authorization/google'">
+            <img src="https://img.icons8.com/?size=512&id=17949&format=png" alt="Google" width="20" height="20">
+            <span>Google 계정으로 로그인</span>
+        </button>
+    </section>
+</main>
+<script>
+    window.addEventListener("load", () => {
+        console.log("리소스 로드 완료");
+    });
+</script>
+</body>
+</html>
