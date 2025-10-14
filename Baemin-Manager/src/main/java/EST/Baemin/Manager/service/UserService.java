@@ -55,14 +55,17 @@ public class UserService {
     }
 
     public User authenticatedUser(){
-        return userRepository.findByLoginId(SecurityUtil.getCurrentUserLoginId()).orElseThrow(()->new IllegalArgumentException("findById Not Found with id: "+SecurityUtil.getCurrentUserLoginId()));
+        return userRepository.findByLoginId(SecurityUtil.getCurrentUserLoginId())
+                .orElseThrow(
+                        ()->new IllegalArgumentException("findById Not Found with id: "+SecurityUtil.getCurrentUserLoginId()
+                        ));
     }
 
     //User의 지역 업데이트
     // 현재 지역을 지역 테이블에서 삭제 후 새로운 지역 삽입 및 User필드에 삽입
     @Transactional
     public void updateRegionToUser(RegionRequest request){
-        User user= userRepository.findByLoginId(SecurityUtil.getCurrentUserLoginId()).orElseThrow(()->new IllegalArgumentException("User Not Found at id : "+SecurityUtil.getCurrentUserLoginId()));
+        User user= authenticatedUser();
         regionService.deleteRegion(user.getRegion().getId());
         Region region = regionService.save(request);
         user.updateRegion(region);

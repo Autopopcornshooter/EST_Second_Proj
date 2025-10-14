@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
+
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "users")
@@ -22,6 +23,10 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class User implements UserDetails {
+    public enum Role {
+        USER, ADMIN
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id", nullable = false, updatable = false)
@@ -36,14 +41,18 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
-    @Column(name="store_name")
+    @Column(name = "store_name")
     private String storeName;
 
-    @Column(name="profile_icon")
+    @Column(name = "profile_icon")
     private String userIconUrl;
 
-    public void updateUserIcon(String userIconUrl){
-        this.userIconUrl =userIconUrl;
+//    @Enumerated(EnumType.STRING)
+//    @Column(nullable = false)
+//    private Role role;
+
+    public void updateUserIcon(String userIconUrl) {
+        this.userIconUrl = userIconUrl;
     }
 
     @CreatedDate
@@ -59,18 +68,17 @@ public class User implements UserDetails {
     private Restaurant restaurant;
 
     //TODO
-    @OneToOne(fetch=FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "region_id")
     private Region region;
 
 
-
-    public void updateRegion(Region region){
-        this.region=region;
+    public void updateRegion(Region region) {
+        this.region = region;
     }
 
-    public void updateRestaurant(Restaurant restaurant){
-        this.restaurant=restaurant;
+    public void updateRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
     }
 
 
