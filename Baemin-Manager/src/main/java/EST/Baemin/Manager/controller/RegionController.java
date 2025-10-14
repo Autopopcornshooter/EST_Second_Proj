@@ -42,7 +42,7 @@ public class RegionController {
     }
 
     // RegionUpdatepage.html
-    @GetMapping("/regions/update/{id}")
+    @GetMapping("/update/{id}")
     public String getRegionForUpdate(@PathVariable Long id, Model model) {
         Region region = regionService.findById(id); // RegionService에 findById 메서드 필요
         model.addAttribute("region", new RegionResponse(region));
