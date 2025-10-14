@@ -4,7 +4,6 @@
     <meta charset="UTF-8"/>
     <title>배달의민족 회원가입</title>
     <link rel="stylesheet" th:href="@{/css/login.css}">
-    <!-- 선택: 한글 가독성 좋은 폰트 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
@@ -23,10 +22,10 @@
     <section class="login-panel">
         <h1 class="sr-only">회원가입</h1>
 
-       </div>
+        </div>
 
         <!-- 회원가입 폼 -->
-        <form class="form" th:action="@{/signup}" method="post" autocomplete="on">
+        <form class="form" th:action="@{/api/signup}" method="post" autocomplete="on" id="signupForm">
             <!-- CSRF 방지-->
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 
@@ -48,19 +47,21 @@
                 <input class="form__input" type="text" id="loginId" name="username"
                        th:value="${formData.username}"
                        placeholder="아이디를 입력해주세요" required/>
+                <span id="idMessage"></span>
             </div>
             <div class="form__group">
                 <label class="form__label" for="password">비밀번호</label>
                 <input class="form__input" type="password" id="password" name="password"
                        th:value="${formData.password}"
                        placeholder="비밀번호를 입력해주세요" required/>
+                <span id="pwMessage"></span>
             </div>
             <div class="form__group">
                 <label class="form__label" for="confirmPassword">비밀번호 확인</label>
                 <input class="form__input" type="password" id="confirmPassword" name="confirmPassword"
                        th:value="${formData.confirmPassword}"
                        placeholder="비밀번호를 다시 입력해주세요" required/>
-                <span id="pwMessage"></span>
+                <span id="pwConfirmMessage"></span>
             </div>
 
             <button class="btn btn--primary form__submit" type="submit">회원가입</button>
@@ -70,21 +71,53 @@
             이미 계정이 있으신가요?
             <a class="helper__link" th:href="@{/login}">로그인</a>
         </p>
+        <a href="/oauth2/authorization/google" class="btn btn-danger">
+            <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google" width="20" height="20">
+            Google 계정으로 로그인
+        </a>
     </section>
 </main>
 
 <script>
+    const signupForm = document.getElementById("signupForm");
     const password = document.getElementById("password");
     const confirmPassword = document.getElementById("confirmPassword");
-    const pwMessage = document.getElementById("pwMessage");
+
+    const pwMessage = document.getElementById("pwMessage")
+    const pwConfirmMessage = document.getElementById("pwConfirmMessage");
+    const idMessage = document.getElementById("idMessage");
 
     confirmPassword.addEventListener("input", () => {
         if (password.value !== confirmPassword.value) {
-            pwMessage.textContent = "비밀번호가 일치하지 않습니다.";
+            pwConfirmMessage.textContent = "비밀번호가 일치하지 않습니다.";
+            pwConfirmMessage.style.color = "red";
+        } else {
+            pwConfirmMessage.textContent = "비밀번호가 일치합니다.";
+            pwConfirmMessage.style.color = "green";
+        }
+    });
+
+    signupForm.addEventListener("submit", event => {
+        const loginId = document.getElementById("loginId");
+        const idRegex = /^[A-Za-z0-9]+$/;
+        const pwRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{7,15}$/;
+        let valid = true;
+        if (!idRegex.test(loginId.value)) {
+            valid = false;
+            idMessage.textContent = "아이디에는 특수기호가 포함될 수 없습니다."
+            idMessage.style.color = "red";
+        } else {
+            idMessage.textContent = "";
+        }
+        if (!pwRegex.test(password.value)) {
+            valid = false;
+            pwMessage.textContent = "비밀번호는 최소 1개의 대문자, 숫자 및 특수기호가 포함된 7~15자여야 합니다.";
             pwMessage.style.color = "red";
         } else {
-            pwMessage.textContent = "비밀번호가 일치합니다.";
-            pwMessage.style.color = "green";
+            pwMessage.textContent = "";
+        }
+        if (!valid) {
+            event.preventDefault();
         }
     });
 </script>

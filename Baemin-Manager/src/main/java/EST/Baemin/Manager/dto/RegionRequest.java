@@ -9,10 +9,10 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class RegionRequest {
-  private long id;
+  private Long id;
   private String address;
-  private double latitude;
-  private double longitude;
+  private Double latitude;
+  private Double longitude;
   private String google_place_id;
 
   public Region toEntity(){

@@ -8,16 +8,14 @@ body {
 /* 상단 메뉴 */
 .topbar {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 0px 50px;
-  background-color: #fff;
-  border-bottom: 1px solid #ddd;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #ffffff;
 }
 
 .topbar .logo {
-  height: 40px;
-  width: 85px;
+  height: 50px;
 }
 .topbar nav {
   margin-left: 20px;
@@ -97,6 +95,13 @@ body {
   margin-bottom: 20px;
 }
 
+.no-restaurant {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666666;
+}
+
 .restaurant-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -112,7 +117,7 @@ body {
 .restaurant-img {
   background-color: #ccc;
   width: 100%;
-  padding-top: 100%; /* 정사각형 비율 */
+  padding-top: 100%;
   border-radius: 10px;
 }
 
@@ -143,5 +148,42 @@ body {
   border-radius: 100%;
   cursor: pointer;
   font-weight: bold;
-  height: 85px;
+  height: 50px;
+}
+
+/* 페이지네이션 전체 */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin: 30px 0;
+    font-family: 'Arial', sans-serif;
+}
+
+.pagination .page-btn {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 36px;
+    height: 36px;
+    background-color: #d7f5f9;
+    color: #333;
+    border-radius: 50%;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.2s;
+}
+
+.pagination .page-btn:hover {
+    background-color: #ffd600;
+    color: #000;
+    transform: scale(1.1);
+    border-color: #ffd600;
+}
+
+.pagination .page-info {
+    font-size: 16px;
+    font-weight: bold;
+    color: #666;
 }

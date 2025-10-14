@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>회원 관리</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div class="container-fluid">
+    <div class="row">
+        <!-- 왼쪽 사이드바 -->
+        <div class="col-md-2 p-0">
+            <div class="sidebar">
+                <div class="p-4">
+                    <h4 class="mb-4 text-dark">관리자</h4>
+                    <nav>
+                        <a href="#" class="sidebar-link active">유저</a>
+                        <a href="#" class="sidebar-link">게시물</a>
+                        <a href="#" class="sidebar-link">통계</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <!-- 메인 콘텐츠 영역 -->
+        <div class="col-md-10">
+            <div class="p-4">
+                <!-- 상단 검색 영역 -->
+                <div class="search-container">
+                    <div class="d-flex align-items-center gap-3">
+                        <!-- 프로필 아이콘 -->
+                        <div class="profile-icon">홍</div>
+
+                        <!-- 검색 폼 -->
+                        <form th:action="@{/management/user/search}" method="get" class="d-flex flex-grow-1 gap-3">
+                            <div class="flex-grow-1">
+                                <input type="text"
+                                       name="keyword"
+                                       th:value="${keyword}"
+                                       placeholder="유저 아이디 입력"
+                                       class="form-control form-control-lg">
+                            </div>
+                            <button type="submit"
+                                    class="btn btn-outline-primary btn-lg">
+                                검색
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- 유저 목록 테이블 -->
+                <div class="table-container">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                        <tr>
+                            <th scope="col" class="border-0"></th>
+                            <th scope="col" class="border-0">아이디</th>
+                            <th scope="col" class="border-0">상호명</th>
+                            <th scope="col" class="border-0">가입일</th>
+                            <th scope="col" class="border-0">User Agent</th>
+                            <th scope="col" class="border-0">상태</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="user, iter : ${userPage.content}">
+                            <td class="border-0" th:text="${iter.index + 1}"></td>
+                            <td class="border-0" th:text="${user.loginId}"></td>
+                            <td class="border-0" th:text="${user.storeName}"></td>
+                            <td class="border-0" th:text="${#temporals.format(user.createdAt, 'yyyy.MM.dd')}"></td>
+                            <td class="border-0 text-muted">User Agent</td>
+                            <td class="border-0">
+                                <div class="d-flex align-items-center gap-2">
+                                    <!-- 상태 아이콘 -->
+                                    <div class="status-icon">홍</div>
+                                    <span th:text="${user.status ?: '회원'}"></span>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- 데이터 없을 때 -->
+                        <tr th:if="${#lists.isEmpty(userPage.content)}">
+                            <td colspan="6" class="text-center text-muted py-5">
+                                등록된 회원이 없습니다.
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- 페이지네이션 -->
+                <div class="pagination-container">
+                    <!-- 검색 상태가 아닐 때의 페이지네이션 -->
+                    <div th:if="${!isSearch}">
+                        <a th:if="${userPage.hasPrevious()}"
+                           th:href="@{'/management/user/' + (${currentPage} - 1)}"
+                           class="pagination-link">&lt;</a>
+
+                        <span class="pagination-link" th:text="${currentPage}"></span>
+                        <span class="text-muted mx-2">/</span>
+                        <span th:text="${userPage.totalPages}"></span>
+
+                        <a th:if="${userPage.hasNext()}"
+                           th:href="@{'/management/user/' + (${currentPage} + 1)}"
+                           class="pagination-link">&gt;</a>
+                    </div>
+
+                    <!-- 검색 상태일 때의 페이지네이션 -->
+                    <div th:if="${isSearch}">
+                        <a th:if="${userPage.hasPrevious()}"
+                           th:href="@{'/management/user/search?keyword=' + ${keyword} + '&page=' + (${currentPage} - 1)}"
+                           class="pagination-link">&lt;</a>
+
+                        <span class="pagination-link" th:text="${currentPage}"></span>
+                        <span class="text-muted mx-2">/</span>
+                        <span th:text="${userPage.totalPages}"></span>
+
+                        <a th:if="${userPage.hasNext()}"
+                           th:href="@{'/management/user/search?keyword=' + ${keyword} + '&page=' + (${currentPage} + 1)}"
+                           class="pagination-link">&gt;</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

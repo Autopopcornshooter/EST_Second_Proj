@@ -1,4 +1,4 @@
-package EST.Baemin.Manager.configure;
+package EST.Baemin.Manager.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;

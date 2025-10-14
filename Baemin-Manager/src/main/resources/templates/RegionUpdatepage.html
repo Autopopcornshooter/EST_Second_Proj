@@ -4,19 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>동네 수정</title>
-  <style>
-    #map { height: 50vh; width: 100%; margin-top: 10px; }
-    header { display: flex; justify-content: space-between; align-items: center; padding: 10px; }
-    .text { margin: 15px 0; }
-  </style>
+  <link rel="stylesheet" th:href="@{/css/region.css}">
 </head>
 <body>
 
 <header>
   <div class="logo">
-    <img src="../static/images/BaeMin_Logo.jpeg" alt="배달의민족 로고" width="100">
+    <img th:src="@{/images/BaeMin_Logo.jpeg}" alt="배달의민족 로고">
   </div>
-  <button class="login-btn">로그인</button>
+  <form th:action="@{/logout}" method="post">
+    <button type="submit" class="logout-btn">로그아웃</button>
+  </form>
 </header>
 
 <section class="main-section">
@@ -31,10 +29,19 @@
     <div id="map"></div>
     <label id="location-firstlabel">현재 위치는 <span th:text="${region.address}">서울 강서구 화곡동</span>입니다.</label>
     <br>
-    <label id="location-secondlabel">현재 위치가 내 동네 설정과 같습니다.</label>
+    <label id="location-secondlabel">현재 위치를 확인 중...</label>
+    <br>
     <button id="verify-btn" name="verify-location">동네인증 완료하기</button>
   </div>
 </section>
+
+<form id="location-form" th:action="@{/api/regions/update/{id}(id=${region.id})}" method="post">
+  <input type="hidden" name="address" id="form-address">
+  <input type="hidden" name="latitude" id="form-latitude">
+  <input type="hidden" name="longitude" id="form-longitude">
+  <input type="hidden" name="google_place_id" id="form-google_place_id">
+  <input type="hidden" id="saved-address" th:value="${region.address}">
+</form>
 
 <script>
   let map;
@@ -46,8 +53,39 @@
     map = new google.maps.Map(document.getElementById("map"), { center: seoul, zoom: 14 });
     marker = new google.maps.Marker({ position: seoul, map: map });
     geocoder = new google.maps.Geocoder();
+
+    // DB에서 저장된 내 동네 주소
+    const savedAddress = document.getElementById("saved-address").value;
+
+    function extractDong(address) {
+      const match = address.match(/([가-힣]+구 [가-힣]+동)/);
+      return match ? match[1] : "";
+    }
+
+    const savedDong = extractDong(savedAddress);
+
+    if (navigator.geolocation && savedDong) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const userLocation = { lat: position.coords.latitude, lng: position.coords.longitude };
+        map.setCenter(userLocation);
+        marker.setPosition(userLocation);
+
+        geocoder.geocode({ location: userLocation }, (results, status) => {
+          if (status === "OK" && results[0]) {
+            const currentAddress = results[0].formatted_address;
+            const currentDong = extractDong(currentAddress);
+
+            if (currentDong && currentDong === savedDong) {
+              document.getElementById("location-secondlabel").innerText =
+                  "현재 위치가 내 동네 설정과 같습니다.";
+            }
+          }
+        });
+      });
+    }
   }
 
+  // 내 동네 수정 버튼
   document.getElementById("Myposition-btn").addEventListener("click", () => {
     const address = document.getElementById("address-input").value;
     if (!address) { alert("주소를 입력해주세요!"); return; }
@@ -65,24 +103,51 @@
     });
   });
 
+  // 동네인증 완료버튼
   document.getElementById("verify-btn").addEventListener("click", () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        const userLocation = { lat: position.coords.latitude, lng: position.coords.longitude };
-        map.setCenter(userLocation);
-        marker.setPosition(userLocation);
+    if (!navigator.geolocation) {
+      alert("이 브라우저는 위치 정보를 지원하지 않습니다.");
+      return;
+    }
 
-        geocoder.geocode({ location: userLocation }, (results, status) => {
-          if (status === "OK" && results[0]) {
-            document.getElementById("location-secondlabel").innerText =
-                "현재 위치는 " + results[0].formatted_address + "입니다.";
-          } else {
-            document.getElementById("location-secondlabel").innerText =
-                "현재 위치 정보를 불러올 수 없습니다.";
-          }
+    navigator.geolocation.getCurrentPosition((position) => {
+      const userLocation = { lat: position.coords.latitude, lng: position.coords.longitude };
+      map.setCenter(userLocation);
+      marker.setPosition(userLocation);
+
+      geocoder.geocode({ location: userLocation }, (results, status) => {
+        // 반드시 여기서 addressText, placeId를 정의해야 함
+        let addressText = "";
+        let placeId = "";
+
+        if (status === "OK" && results[0]) {
+          addressText = results[0].formatted_address;
+          placeId = results[0].place_id;
+          document.getElementById("location-secondlabel").innerText =
+              "현재 위치는 " + addressText + "입니다.";
+        } else {
+          document.getElementById("location-secondlabel").innerText =
+              "현재 위치 정보를 불러올 수 없습니다.";
+        }
+
+        // === 폼 필드에 값 채우기 ===
+        document.getElementById("form-address").value = addressText;
+        document.getElementById("form-latitude").value = userLocation.lat;
+        document.getElementById("form-longitude").value = userLocation.lng;
+        document.getElementById("form-google_place_id").value = placeId;
+
+        // 디버그: 제출 전에 값 확인 (개발 중에만 사용)
+        console.log("submit payload:", {
+          address: addressText, latitude: userLocation.lat, longitude: userLocation.lng, placeId
         });
+
+        // === 폼 제출 ===
+        document.getElementById("location-form").submit();
       });
-    } else { alert("이 브라우저는 위치 정보를 지원하지 않습니다."); }
+    }, (err) => {
+      console.error(err);
+      alert("현재 위치를 가져오지 못했습니다: " + (err.message || err.code));
+    });
   });
 </script>
 
