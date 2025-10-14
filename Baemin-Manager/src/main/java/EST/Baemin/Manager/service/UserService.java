@@ -64,7 +64,7 @@ public class UserService {
     public void updateRegionToUser(RegionRequest request){
         User user= userRepository.findByLoginId(SecurityUtil.getCurrentUserLoginId()).orElseThrow(()->new IllegalArgumentException("User Not Found at id : "+SecurityUtil.getCurrentUserLoginId()));
         regionService.deleteRegion(user.getRegion().getId());
-        Region region = regionService.save(request);
+        Region region = regionService.saveRegion(request);
         user.updateRegion(region);
     }
 
