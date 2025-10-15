@@ -46,7 +46,7 @@ public class WebSecurityConfig {
                 .securityMatcher("/admin/**")
                 .authorizeHttpRequests(auth ->
                         auth
-                                .requestMatchers("/admin/login").permitAll()// 관리자 페이지는 로그인 페이지에만 접근 가능
+                                .requestMatchers("/admin/login","/access-denied").permitAll()// 관리자 페이지는 로그인 페이지에만 접근 가능
                                 .requestMatchers(toH2Console()).permitAll()
                                 .requestMatchers("/.well-known/**").permitAll()
                                 .anyRequest().hasRole(Role.ROLE_ADMIN.name().replace("ROLE_", "")))
@@ -56,6 +56,7 @@ public class WebSecurityConfig {
                                 .defaultSuccessUrl("/admin/users",true))
                 .logout(auth ->
                         auth
+                                .logoutUrl("/admin/logout")
                                 .logoutSuccessUrl("/admin/login")
                                 .invalidateHttpSession(true)
                                 .clearAuthentication(true))
@@ -73,9 +74,10 @@ public class WebSecurityConfig {
     @Order(2)
     public SecurityFilterChain userSecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
+                .securityMatcher("/**")
                 .authorizeHttpRequests(auth ->
                         auth
-                                .requestMatchers("/mainpage", "/login", "/signup").permitAll()// 로그인, 회원가입은 인증 없이 접근 가능
+                                .requestMatchers("/mainpage", "/login", "/signup","/access-denied").permitAll()// 로그인, 회원가입은 인증 없이 접근 가능
                                 .requestMatchers(toH2Console()).permitAll()
                                 .requestMatchers("/.well-known/**").permitAll()
                                 .anyRequest().hasRole(Role.ROLE_USER.name().replace("ROLE_", "")))
