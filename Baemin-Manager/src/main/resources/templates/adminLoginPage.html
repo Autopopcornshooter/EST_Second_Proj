@@ -23,15 +23,26 @@
         <h1 class="sr-only">관리자 로그인</h1>
 
 
+        <div th:if="${param.error}" class="alert alert--error" role="alert">
+            비밀번호가 올바르지 않습니다
+        </div>
+        <div th:if="${param.logout}" class="alert alert--info" role="status">
+            로그아웃 되었습니다.
+        </div>
         <!-- 로그인 폼 -->
-        <form class="form" th:action="@{/admin/api/login}" method="post" autocomplete="on">
+        <form class="form" th:action="@{/admin/login}" method="post" autocomplete="on">
+            <!--CSRF 토큰-->
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
             <div class="form__group">
-                <label class="form__label" for="adminPassword">관리자님 안녕하세요</label>
-                <input class="form__input" type="text" id="adminPassword" name="adminPassword"
+                <label class="form__label" for="password">관리자님 안녕하세요</label>
+                <input type="hidden" name="username" value="ADMIN">
+                <input class="form__input" type="password" id="password" name="password"
                        placeholder="관리자 암호 입력" required/>
             </div>
 
             <button class="btn btn--primary form__submit" type="submit">로그인</button>
+
         </form>
 
     </section>

@@ -2,6 +2,7 @@ package EST.Baemin.Manager.controller;
 
 import EST.Baemin.Manager.dto.UserResponse;
 import EST.Baemin.Manager.service.UserService;
+import EST.Baemin.Manager.util.SecurityUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -29,7 +30,10 @@ public class AdminController {
     }
 
     @GetMapping("/login")
-    public String adminPage() {
+    public String adminPage(HttpServletRequest request) {
+        if(SecurityUtil.isAuthenticated()){
+            return "redirect:/admin/users";
+        }
         return "adminLoginPage";
     }
 

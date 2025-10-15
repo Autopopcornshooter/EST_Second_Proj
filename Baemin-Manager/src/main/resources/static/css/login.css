@@ -214,8 +214,6 @@ body {
     text-decoration: underline;
 }
 
-
-
 @media (max-width: 420px) {
     .form {
         padding: 18px;

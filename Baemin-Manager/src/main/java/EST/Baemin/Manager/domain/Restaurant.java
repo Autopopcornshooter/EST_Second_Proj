@@ -25,7 +25,7 @@ public class Restaurant {
 //    @Column(nullable = false)
     private String name;    // 가게명
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private String mainMenu;    // 대표메뉴
 
     @Column(length = 500)   // 500자 까지
@@ -50,4 +50,8 @@ public class Restaurant {
     private LocalDateTime createdAt = LocalDateTime.now();
     @UpdateTimestamp
     private LocalDateTime updatedAt = LocalDateTime.now();
+
+//    @OneToOne
+//    @JoinColumn(name = "user_id")
+//    private User user;
 }
