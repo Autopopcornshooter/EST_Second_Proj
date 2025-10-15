@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--    CSRF 메타 태그-->
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
     <title>식당 세부 페이지</title>
     <link rel="stylesheet" th:href="@{/css/restaurantdetail.css}">
 </head>
@@ -19,8 +22,12 @@
         <h2 class="store-name" th:text="${restaurant.name}">식당 이름</h2>
         <div class="store-stats">
             <span th:text="'조회수 ' + ${restaurant.view}">조회수</span>
-<!--                좋아요 엔티티 아직 추가안함-->
-<!--            <span th:text="'좋아요 ' + ${restaurant.like} + ' 👍'">좋아요</span>-->
+            <!-- 좋아요 표시 & 버튼 -->
+            <span id="like-count" th:text="'좋아요 ' + ${likeCount} + ' 👍'">좋아요</span>
+            <button class="like-btn"
+                    th:attr="data-id=${restaurant.id}, data-liked=${userLiked}">
+                <span th:text="${userLiked} ? '좋아요 취소' : '좋아요'">좋아요</span>
+            </button>
             <button class="chat-btn">채팅하기</button>
         </div>
         <p class="menu-name" th:text="${restaurant.mainMenu}">메뉴 이름</p>
