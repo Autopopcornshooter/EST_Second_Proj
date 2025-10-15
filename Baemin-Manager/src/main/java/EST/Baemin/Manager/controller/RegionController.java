@@ -68,7 +68,7 @@ public class RegionController {
     model.addAttribute("region", new RegionResponse(updatedRegion));
     model.addAttribute("apiKey", apiKey);
 
-    return "RegionUpdatepage";
+    return "redirect:/api/restaurants";
   }
 
   // 삭제

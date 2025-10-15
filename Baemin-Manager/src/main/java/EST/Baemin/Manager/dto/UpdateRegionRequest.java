@@ -4,10 +4,10 @@ import lombok.Getter;
 
 @Getter
 public class UpdateRegionRequest {
-  private String address;
-  private Double latitude;
-  private Double longitude;
-  private String google_place_id;
+  private final String address;
+  private final Double latitude;
+  private final Double longitude;
+  private final String google_place_id;
 
   public UpdateRegionRequest(String address, Double latitude, Double longitude, String google_place_id) {
     this.address = address;
