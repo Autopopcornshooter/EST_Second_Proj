@@ -48,7 +48,7 @@ public class RestaurantService {
         User user = userRepository.findByLoginId(SecurityUtil.getCurrentUserLoginId()).orElseThrow(() -> new IllegalArgumentException("findById Not Found with id : " + SecurityUtil.getCurrentUserLoginId()));
 
         Restaurant restaurant = Restaurant.builder()
-                .name(dto.getName())
+                .name(dto.getName() != null && !dto.getName().isEmpty() ? dto.getName() : user.getStoreName())
                 .mainMenu(dto.getMainMenu())
                 .description(dto.getDescription())
                 .address(dto.getAddress())
