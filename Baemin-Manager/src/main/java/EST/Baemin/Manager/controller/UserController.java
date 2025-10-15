@@ -44,6 +44,10 @@ public class UserController {
     }
 
 
+    @GetMapping("/access-denied")
+    public String accessDenied(){
+        return "accessDeniedPage";
+    }
 
 
     @PostMapping("/api/storeName")
