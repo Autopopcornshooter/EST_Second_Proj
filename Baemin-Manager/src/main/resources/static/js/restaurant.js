@@ -66,6 +66,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (response.ok) {
                     alert("삭제 성공!");
                     window.location.href = "/api/restaurants";
+                } else if(response.status === 403) {
+                    alert("삭제 실패: + 삭제할 권한이 없습니다.");
                 } else {
                     alert("삭제 실패: " + response.status);
                 }

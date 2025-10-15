@@ -82,7 +82,14 @@ public class RestaurantService {
 
     // 식당 삭제 기능
     public void deleteRestaurant(Long id) {
-        restaurantRepository.deleteById(id);
+        restaurantRepository.findById(id).ifPresent(restaurant -> {
+            User user = restaurant.getUser();
+            if (user != null) {
+                user.setRestaurant(null);   // User와의 연관 끊기
+            }
+            restaurant.setUser(null);   // Restaurant에서 User 연관 끊기
+            restaurantRepository.delete(restaurant);
+        });
     }
 
 //    // 이미지 업로드 기능
@@ -120,5 +127,12 @@ public class RestaurantService {
     public Page<RestaurantDto> findRestaurantsByCity(String city, Pageable pageable) {
         return restaurantRepository.findByAddressContaining(city, pageable)
                 .map(RestaurantDto::new);
+    }
+
+    // 권한 체크 메서드
+    public boolean isOwner(Long restaurantId, Long userId) {
+        return restaurantRepository.findById(restaurantId)
+                .map(r -> r.getUser().getId().equals(userId))
+                .orElse(false);
     }
 }
