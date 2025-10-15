@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>관리자 통계 페이지</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="/static/css/administratorstatistics.css" />
+</head>
+<body>
+<!-- 사이드바 -->
+
+<!-- 상단바 -->
+<header class="topbar">
+</header>
+
+<!-- 본문 -->
+<main class="content">
+    <div class="stats-box">
+        <div class="stats-list">
+            <div>서울특별시 &nbsp;&nbsp;&nbsp; 3300</div>
+            <div>인천광역시 &nbsp;&nbsp;&nbsp; 1500</div>
+            <div>부산광역시 &nbsp;&nbsp;&nbsp; 1800</div>
+        </div>
+        <div class="chart-container">
+            <canvas id="regionChart"></canvas>
+        </div>
+    </div>
+</main>
+
+<script src="/static/js/administratorstatistics.js"></script>
+</body>
+</html>
