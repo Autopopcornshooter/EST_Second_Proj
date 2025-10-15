@@ -26,6 +26,7 @@ import java.util.List;
 public class RestaurantController {
 
     private final RestaurantService restaurantService;
+    private final UserService userService;
 
     // 식당 전체 조회 기능
     @Operation(summary = "식당 전체 조회", description = "전체 식당을 조회합니다.")
@@ -39,15 +40,39 @@ public class RestaurantController {
         // 페이지 번호와 페이지 크기를 기반으로 pageable 생성
         Pageable pageable = PageRequest.of(page, size);
 
+        // 로그인한 유저의 지역 정보 가져오기
+        String userAddress = userService.getLoggedInUserAddress();
+
+        // 시/도 단위만 추출
+        String userCity = extractCity(userAddress); // ex) 인천광역시
+
+        // 해당 지역의 식당만 필터링
         // 서비스에서 Page<RestaurantDto> 반환
         Page<RestaurantDto> restaurantPage = restaurantService.findAllRestaurants(pageable);
+        List<RestaurantDto> filteredRestaurants = restaurantPage.getContent().stream()
+                .filter(r -> {
+                    String restaurantCity = extractCity(r.getAddress());
+                    return restaurantCity.equals(userCity);
+                })
+                .toList();
 
         // model에 restaurants라는 이름으로 Page 객체를 전달
-        model.addAttribute("restaurants", restaurantPage);
+        model.addAttribute("restaurants", filteredRestaurants);
 
 //        List<RestaurantDto> reestaurants = restaurantService.findAllRestaurants();
 //        model.addAttribute("restaurants", restaurantService.findAllRestaurants());
         return "introductionpage";
+    }
+
+    // 주소에서 시 단위만 추출하는 메서드
+    private String extractCity(String address) {
+        if (address == null) return "";
+        String[] parts =  address.split(" ");
+        if (parts.length > 0) {
+            return parts[0];
+        }
+
+        return address;
     }
 
     // 식당 아이디별 조회 기능
