@@ -115,4 +115,10 @@ public class RestaurantService {
                 .map(RestaurantDto::new)
                 .toList();
     }
+
+    // address 기반 주소 추출
+    public Page<RestaurantDto> findRestaurantsByCity(String city, Pageable pageable) {
+        return restaurantRepository.findByAddressContaining(city, pageable)
+                .map(RestaurantDto::new);
+    }
 }

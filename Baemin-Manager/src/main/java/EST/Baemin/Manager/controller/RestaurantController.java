@@ -48,16 +48,18 @@ public class RestaurantController {
 
         // 해당 지역의 식당만 필터링
         // 서비스에서 Page<RestaurantDto> 반환
-        Page<RestaurantDto> restaurantPage = restaurantService.findAllRestaurants(pageable);
-        List<RestaurantDto> filteredRestaurants = restaurantPage.getContent().stream()
-                .filter(r -> {
-                    String restaurantCity = extractCity(r.getAddress());
-                    return restaurantCity.equals(userCity);
-                })
-                .toList();
+        Page<RestaurantDto> restaurantPage = restaurantService.findRestaurantsByCity(userCity,pageable);
+//        List<RestaurantDto> filteredRestaurants = restaurantPage.getContent().stream()
+//                .filter(r -> {
+//                    String restaurantCity = extractCity(r.getAddress());
+//                    return restaurantCity.equals(userCity);
+//                })
+//                .toList();
 
         // model에 restaurants라는 이름으로 Page 객체를 전달
-        model.addAttribute("restaurants", filteredRestaurants);
+        model.addAttribute("restaurants", restaurantPage); //.getContent()
+        model.addAttribute("currentPage", page);
+//        model.addAttribute("totalPages", restaurantPage.getTotalPages());
 
 //        List<RestaurantDto> reestaurants = restaurantService.findAllRestaurants();
 //        model.addAttribute("restaurants", restaurantService.findAllRestaurants());
@@ -66,13 +68,15 @@ public class RestaurantController {
 
     // 주소에서 시 단위만 추출하는 메서드
     private String extractCity(String address) {
-        if (address == null) return "";
+        if (address == null || address.isEmpty()) return "";
         String[] parts =  address.split(" ");
-        if (parts.length > 0) {
-            return parts[0];
+        if (parts.length >= 2) {
+            // parts[0] = 시, parts[1] = 구
+            return parts[0] +  " " + parts[1];
         }
 
-        return address;
+        // 주소가 시만 있을 경우 시만 뽑기
+        return parts[0];
     }
 
     // 식당 아이디별 조회 기능
