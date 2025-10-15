@@ -1,10 +1,88 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>사용자 관리</title>
+    <link rel="stylesheet" href="/css/region.css">
+    <link rel="stylesheet" href="/css/admin.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" crossorigin="anonymous"></script>
 </head>
 <body>
-<div th:replace="~{admin-sidebar :: sidebar}"></div>
+
+<header>
+    <div class="logo">
+        <img th:src="@{/images/BaeMin_Logo.jpeg}" alt="배달의민족 로고">
+    </div>
+    <form th:action="@{/logout}" method="post">
+        <button type="submit" class="logout-btn">로그아웃</button>
+    </form>
+</header>
+
+<div class="container">
+    <div th:replace="~{admin-sidebar :: sidebar}"></div>
+    
+    <div class="main">
+        <div class="search-bar">
+            <form id="searchForm" method="get" onsubmit="submitSearch(); return false;">
+                <input type="text" id="keywordInput" placeholder="닉네임 입력" th:value="${keyword}"/>
+                <button type="submit">검색</button>
+            </form>
+        </div>
+        
+        <div class="table">
+            <table>
+                <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>닉네임</th>
+                    <th>로그인 ID</th>
+                    <th>상호명</th>
+                    <th>가입일</th>
+                    <th>상태</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="user, iterStat : ${userList}">
+                    <td th:text="${userPage.number * userPage.size + iterStat.index + 1}"></td>
+                    <td th:text="${user.nickname}"></td>
+                    <td th:text="${user.loginId}"></td>
+                    <td th:text="${user.storeName != null ? user.storeName : '-'}"></td>
+                    <td th:text="${#temporals.format(user.createdAt, 'yyyy.MM.dd')}"></td>
+                    <td th:text="${user.isActive} ? '회원' : '탈퇴'" th:data-id="${user.id}" class="status-cell"></td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(userList)}">
+                    <td colspan="5" style="text-align: center;">등록된 사용자가 없습니다.</td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="pagination">
+                <!-- 이전 버튼: 검색 모드 -->
+                <a th:if="${isSearch and userPage.hasPrevious()}"
+                    th:href="@{/admin/users/search/{keyword}/{page}(keyword=${keyword}, page=${currentPage - 1})}"
+                    class="prev pagination-btn">&lt;</a>
+                
+                <!-- 이전 버튼: 일반 모드 -->
+                <a th:if="${!isSearch and userPage.hasPrevious()}"
+                    th:href="@{/admin/users/{page}(page=${currentPage - 1})}"
+                    class="prev pagination-btn">&lt;</a>
+                
+                <span th:text="${currentPage} + ' / ' + ${userPage.totalPages}"></span>
+                
+                <!-- 다음 버튼: 검색 모드 -->
+                <a th:if="${isSearch and userPage.hasNext()}"
+                    th:href="@{/admin/users/search/{keyword}/{page}(keyword=${keyword}, page=${currentPage + 1})}"
+                    class="next pagination-btn">&gt;</a>
+                
+                <!-- 다음 버튼: 일반 모드 -->
+                <a th:if="${!isSearch and userPage.hasNext()}"
+                    th:href="@{/admin/users/{page}(page=${currentPage + 1})}"
+                    class="next pagination-btn">&gt;</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/js/admin-users.js"></script>
 </body>
 </html>

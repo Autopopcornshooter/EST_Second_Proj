@@ -18,6 +18,7 @@ public class UserResponse {
     private final String passWord;
     private final LocalDateTime createdAt;
     private final String storeName;
+    private final boolean isActive;
 
 
     public static UserResponse from(User user){
@@ -27,6 +28,7 @@ public class UserResponse {
                 .loginId(user.getLoginId())
                 .passWord(user.getPassword())
                 .storeName(user.getStoreName())
+                .isActive(user.isActive())
                 .createdAt(user.getCreatedAt())
                 .build();
     }

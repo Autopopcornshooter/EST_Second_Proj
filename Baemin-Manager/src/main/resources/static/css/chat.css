@@ -1,6 +1,28 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #ddd;
+}
+
+header img {
+  height: 50px;
+}
+
+.logout-btn {
+  padding: 6px 12px;
+  color: #dfdfdf;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
 #main-content {
   width: 1440px;
-  height: 960px;
+  height: 720px;
   margin: 10px auto;
   border: 1px solid #ccc;
 }
@@ -61,7 +83,7 @@
 
 #chatting-content {
   flex: 1;
-  height: 620px;
+  height: 400px;
   overflow-y: auto;
   display: block;
 }
@@ -88,7 +110,7 @@
 }
 
 #chatting-input-area {
-  height: 200px;
+  height: 180px;
   background-color: #f2f3f6;
   border-radius: 10px;
   flex-shrink: 0;
@@ -96,7 +118,7 @@
 
 #message-input {
   width: 100%;
-  height: 140px;
+  height: 120px;
   resize: none;
   border: none;
   background-color: #f2f3f6;

@@ -73,15 +73,16 @@ tr:last-child td {
   font-size: 14px;
 }
 
-.pagination button {
+.pagination-btn {
   padding: 5px 10px;
   margin: 0 5px;
   cursor: pointer;
   border: 1px solid #ccc;
   background-color: #fff;
   border-radius: 4px;
+  text-decoration: none;
 }
 
-.pagination button:hover {
+.pagination-btn:hover {
   background-color: #f0f0f0;
 }
