@@ -1,30 +1,44 @@
-
+-- Region
+INSERT INTO region (address, latitude, longitude, google_place_id)
+VALUES ('서울특별시 강남구 테헤란로 1', 37.4979, 127.0276, 'place_001'),
+       ('서울특별시 종로구 세종대로 175', 37.5735, 126.9780, 'place_002'),
+       ('서울특별시 마포구 독막로 12', 37.5500, 126.9137, 'place_003'),
+       ('서울특별시 송파구 백제고분로 123', 37.5145, 127.1052, 'place_004'),
+       ('서울특별시 구로구 구로동 45', 37.4955, 126.8870, 'place_005'),
+       ('서울특별시 강서구 화곡로 100', 37.5420, 126.8410, 'place_006'),
+       ('서울특별시 서초구 서초대로 200', 37.4920, 127.0150, 'place_007'),
+       ('서울특별시 용산구 이태원로 50', 37.5340, 126.9940, 'place_008'),
+       ('서울특별시 동작구 상도로 120', 37.5050, 126.9490, 'place_009'),
+       ('서울특별시 영등포구 여의대로 24', 37.5210, 126.9240, 'place_010'),
+       ('서울특별시 은평구 불광로 87', 37.6190, 126.9230, 'place_011'),
+       ('서울특별시 노원구 동일로 890', 37.6540, 127.0560, 'place_012');
 -- User
-INSERT INTO users (nickname, login_id, password, store_name, profile_icon, created_at, updated_at, region_id)
+INSERT INTO users (nickname, login_id, password, store_name, profile_icon, created_at, updated_at, region_id, role,
+                   is_active)
 VALUES ('김철수', 'kimcs', '$2a$10$Am..pIExx64m8n7mgtiMb.BtPqq3UWZ3bQsgW2n5OgaUZzZUx7g4G', '철수분식', '/img/profile1.png',
-        CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1),
+        CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 'ROLE_USER', true),
        ('이영희', 'leeyh', '$2a$10$Am..pIExx64m8n7mgtiMb.BtPqq3UWZ3bQsgW2n5OgaUZzZUx7g4G', '영희카페', '/img/profile2.png',
-        CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 2),
+        CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 2, 'ROLE_USER', true),
        ('박민수', 'parkms', '$2a$10$Am..pIExx64m8n7mgtiMb.BtPqq3UWZ3bQsgW2n5OgaUZzZUx7g4G', '민수식당', '/img/profile3.png',
-        CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 3),
+        CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 3, 'ROLE_USER', true),
        ('최지훈', 'choijh', '$2a$10$Am..pIExx64m8n7mgtiMb.BtPqq3UWZ3bQsgW2n5OgaUZzZUx7g4G', '지훈치킨', '/img/profile4.png',
-        CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 4),
+        CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 4, 'ROLE_USER', true),
        ('정은지', 'jungej', '$2a$10$Am..pIExx64m8n7mgtiMb.BtPqq3UWZ3bQsgW2n5OgaUZzZUx7g4G', '은지쌀국수', '/img/profile5.png',
-        CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 5),
+        CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 5, 'ROLE_USER', true),
        ('한수연', 'hansy', '$2a$10$Am..pIExx64m8n7mgtiMb.BtPqq3UWZ3bQsgW2n5OgaUZzZUx7g4G', '수연카페', '/img/profile6.png',
-        CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 6),
+        CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 6, 'ROLE_USER', true),
        ('윤도현', 'yoondh', '$2a$10$Am..pIExx64m8n7mgtiMb.BtPqq3UWZ3bQsgW2n5OgaUZzZUx7g4G', '도현김밥', '/img/profile7.png',
-        CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 7),
+        CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 7, 'ROLE_USER', true),
        ('조현우', 'chohwu', '$2a$10$Am..pIExx64m8n7mgtiMb.BtPqq3UWZ3bQsgW2n5OgaUZzZUx7g4G', '현우돈까스', '/img/profile8.png',
-        CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 8),
+        CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 8, 'ROLE_USER', true),
        ('오세진', 'ohsj', '$2a$10$Am..pIExx64m8n7mgtiMb.BtPqq3UWZ3bQsgW2n5OgaUZzZUx7g4G', '세진커피', '/img/profile9.png',
-        CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 9),
+        CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 9, 'ROLE_USER', true),
        ('이서준', 'leesej', '$2a$10$Am..pIExx64m8n7mgtiMb.BtPqq3UWZ3bQsgW2n5OgaUZzZUx7g4G', '서준버거', '/img/profile10.png',
-        CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 10),
+        CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 10, 'ROLE_USER', true),
        ('배지민', 'baejm', '$2a$10$Am..pIExx64m8n7mgtiMb.BtPqq3UWZ3bQsgW2n5OgaUZzZUx7g4G', '지민족발', '/img/profile11.png',
-        CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 11),
+        CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 11, 'ROLE_USER', true),
        ('홍다연', 'hongdy', '$2a$10$Am..pIExx64m8n7mgtiMb.BtPqq3UWZ3bQsgW2n5OgaUZzZUx7g4G', '다연샌드위치', '/img/profile12.png',
-        CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 12),
+        CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 12, 'ROLE_USER', true);
 
 INSERT INTO USERS (CREATED_AT, UPDATED_AT, LOGIN_ID, NICKNAME, PASSWORD, STORE_NAME, ROLE, IS_ACTIVE)
 VALUES
@@ -66,16 +80,34 @@ VALUES ('철수분식', '떡볶이', '매콤달콤한 즉석 떡볶이', '서울
         CURRENT_TIMESTAMP);
 
 -- ChatRoom
-    (1, 2, CURRENT_TIMESTAMP)
-    , (1, 3, CURRENT_TIMESTAMP), (1, 4, CURRENT_TIMESTAMP),
-(2, 3, CURRENT_TIMESTAMP), (2, 5, CURRENT_TIMESTAMP), (2, 6, CURRENT_TIMESTAMP),
-(3, 4, CURRENT_TIMESTAMP), (3, 7, CURRENT_TIMESTAMP), (3, 8, CURRENT_TIMESTAMP),
-(4, 5, CURRENT_TIMESTAMP), (4, 9, CURRENT_TIMESTAMP), (4, 10, CURRENT_TIMESTAMP),
-(5, 6, CURRENT_TIMESTAMP), (5, 11, CURRENT_TIMESTAMP), (5, 12, CURRENT_TIMESTAMP),
-(6, 7, CURRENT_TIMESTAMP), (6, 8, CURRENT_TIMESTAMP), (6, 9, CURRENT_TIMESTAMP),
-(7, 8, CURRENT_TIMESTAMP), (7, 10, CURRENT_TIMESTAMP), (7, 11, CURRENT_TIMESTAMP),
-(8, 9, CURRENT_TIMESTAMP), (8, 12, CURRENT_TIMESTAMP), (9, 10, CURRENT_TIMESTAMP),
-(9, 11, CURRENT_TIMESTAMP), (10, 12, CURRENT_TIMESTAMP), (11, 12, CURRENT_TIMESTAMP);
+INSERT INTO chat_room (user1_id, user2_id, updated_at)
+VALUES (1, 2, CURRENT_TIMESTAMP),
+       (1, 3, CURRENT_TIMESTAMP),
+       (1, 4, CURRENT_TIMESTAMP),
+       (2, 3, CURRENT_TIMESTAMP),
+       (2, 5, CURRENT_TIMESTAMP),
+       (2, 6, CURRENT_TIMESTAMP),
+       (3, 4, CURRENT_TIMESTAMP),
+       (3, 7, CURRENT_TIMESTAMP),
+       (3, 8, CURRENT_TIMESTAMP),
+       (4, 5, CURRENT_TIMESTAMP),
+       (4, 9, CURRENT_TIMESTAMP),
+       (4, 10, CURRENT_TIMESTAMP),
+       (5, 6, CURRENT_TIMESTAMP),
+       (5, 11, CURRENT_TIMESTAMP),
+       (5, 12, CURRENT_TIMESTAMP),
+       (6, 7, CURRENT_TIMESTAMP),
+       (6, 8, CURRENT_TIMESTAMP),
+       (6, 9, CURRENT_TIMESTAMP),
+       (7, 8, CURRENT_TIMESTAMP),
+       (7, 10, CURRENT_TIMESTAMP),
+       (7, 11, CURRENT_TIMESTAMP),
+       (8, 9, CURRENT_TIMESTAMP),
+       (8, 12, CURRENT_TIMESTAMP),
+       (9, 10, CURRENT_TIMESTAMP),
+       (9, 11, CURRENT_TIMESTAMP),
+       (10, 12, CURRENT_TIMESTAMP),
+       (11, 12, CURRENT_TIMESTAMP);
 
 -- Chat
 INSERT INTO chat (chat_room_id, sender_id, message, created_at)
@@ -269,20 +301,7 @@ VALUES
 (27, 12, '홍보와 시식 행사 병행합니다.', CURRENT_TIMESTAMP),
 (27, 9, '감사합니다.', CURRENT_TIMESTAMP);
 
--- Region
-INSERT INTO region (id, address, latitude, longitude, google_place_id)
-VALUES ('서울특별시 강남구 테헤란로 1', 37.4979, 127.0276, 'place_001'),
-       ('서울특별시 종로구 세종대로 175', 37.5735, 126.9780, 'place_002'),
-       ('서울특별시 마포구 독막로 12', 37.5500, 126.9137, 'place_003'),
-       ('서울특별시 송파구 백제고분로 123', 37.5145, 127.1052, 'place_004'),
-       ('서울특별시 구로구 구로동 45', 37.4955, 126.8870, 'place_005'),
-       ('서울특별시 강서구 화곡로 100', 37.5420, 126.8410, 'place_006'),
-       ('서울특별시 서초구 서초대로 200', 37.4920, 127.0150, 'place_007'),
-       ('서울특별시 용산구 이태원로 50', 37.5340, 126.9940, 'place_008'),
-       ('서울특별시 동작구 상도로 120', 37.5050, 126.9490, 'place_009'),
-       ('서울특별시 영등포구 여의대로 24', 37.5210, 126.9240, 'place_010'),
-       ('서울특별시 은평구 불광로 87', 37.6190, 126.9230, 'place_011'),
-       ('서울특별시 노원구 동일로 890', 37.6540, 127.0560, 'place_012');
+
 -- INSERT INTO article (id, restaurant_name, main_menu, userid, region_id, insert_at, state)
 -- VALUES (1, 'OK Burger', '데리야끼 버거', 'abc123', NULL, '2024.05.24', '비공개'),
 --        (2, 'OK Burger', '치즈버거', '오르미@화이팅.com', NULL, '2024.05.29', '공개'),

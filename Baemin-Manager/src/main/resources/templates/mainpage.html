@@ -2,68 +2,71 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>배달의 민족</title>
-  <link rel="stylesheet" th:href="@{css/mainpage.css}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>배달의 민족</title>
+    <link rel="stylesheet" th:href="@{css/mainpage.css}">
 </head>
 <body>
 
 <header>
-  <div class="logo">
-    <img src="../static/images/BaeMin_Logo.jpeg" alt="배달의민족 로고">
-  </div>
-  <button class="login-btn" th:onclick="|location.href='@{/login}'|" sec:authorize="isAnonymous()">로그인</button>
-    <form th:action="@{/logout}" method="post">
-        <button type="submit" class="login-btn"  sec:authorize="isAuthenticated()">로그아웃</button>
-    </form>
+    <div class="logo">
+        <img th:src="@{/images/BaeMin_Logo.jpeg}" alt="배달의민족 로고">
+    </div>
+    <flex>
+        <button class="login-btn" th:onclick="|location.href='@{/login}'|" sec:authorize="isAnonymous()">로그인</button>
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="login-btn" sec:authorize="isAuthenticated()">로그아웃</button>
+        </form>
+    </flex>
+
 
 </header>
 
 <section class="main-section">
-  <div class="text">
-    <h1>세상 모든<br>사장님을 위해</h1>
-    <p>서비스합니다.</p>
-  </div>
-  <div class="image" style="background-image: url('../static/images/main1.jpg');"></div>
+    <div class="text">
+        <h1>세상 모든<br>사장님을 위해</h1>
+        <p>서비스합니다.</p>
+    </div>
+    <img class="image" th:src="@{/images/main1.jpg}" alt="mainImg1"></img>
 </section>
 
 <section class="intro-section">
-  <div class="intro-image" style="background-image: url('../static/images/main2.png');"></div>
-  <div class="intro-text">
-    <h2>우리 동네 식당 소개</h2>
-    <p>인기 순위대로 랭킹됩니다.</p>
-  </div>
+    <img class="intro-image" th:src="@{/images/main2.png}" alt="mainImg2"></img>
+    <div class="intro-text">
+        <h2>우리 동네 <br>식당 소개</h2>
+        <p>인기 순위대로 랭킹됩니다.</p>
+    </div>
 </section>
 
 <section class="business-section">
-  <div class="text">
-    <h2>이웃 사장님과 함께 하는 비즈니스</h2>
-    <p>우리 동네의 다양한 이야기를 이웃과 함께 나누어요.<br>사장님들만의 다양한 고충을 함께 나누어요.</p>
-    <div class="icons">
-      <div>
-        <img src="../static/images/mailbox.png" alt="" width="40">
-        <span style="margin-top: 10px">(우리 동네질문)</span>
-        <span style="width: 100px">궁금한 게 있을 땐 이웃에게 물어보세요.</span>
-      </div>
-      <div>
-        <img src="../static/images/relationship.png" alt="" width="40">
-        <span style="margin-top: 10px">(동네모임)</span>
-        <span style="width: 100px">관심사가 비슷한 이웃과 온오프라인으로 만나요.</span>
-      </div>
+    <div class="text">
+        <h2>이웃 사장님과 함께 하는 비즈니스</h2>
+        <p>우리 동네의 다양한 이야기를 이웃과 함께 나누어요.<br>사장님들만의 다양한 고충을 함께 나누어요.</p>
+        <div class="icons">
+            <div>
+                <img th:src="@{/images/mailbox.png}" alt="" width="40">
+                <span style="margin-top: 10px">(우리 동네질문)</span>
+                <span style="width: 100px">궁금한 게 있을 땐 이웃에게 물어보세요.</span>
+            </div>
+            <div>
+                <img th:src="@{/images/relationship.png}" alt="" width="40">
+                <span style="margin-top: 10px">(동네모임)</span>
+                <span style="width: 100px">관심사가 비슷한 이웃과 온오프라인으로 만나요.</span>
+            </div>
+        </div>
     </div>
-  </div>
-  <div class="illustration" style="background-image: url('../static/images/main3.png');"></div>
+    <img class="illustration" th:src="@{/images/main3.png}" alt="mainImg3"></img>
 </section>
 
 <footer>
-  <div>
-    <a href="#">동네소개</a>
-    <a href="#">동네인증</a>
-  </div>
-  <div>
-    (주) DEV의 민족
-  </div>
+    <div>
+        <a href="#">동네소개</a>
+        <a href="#">동네인증</a>
+    </div>
+    <div>
+        (주) DEV의 민족
+    </div>
 </footer>
 
 </body>
