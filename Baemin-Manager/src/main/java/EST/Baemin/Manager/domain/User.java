@@ -42,6 +42,9 @@ public class User implements UserDetails {
     @Column(name="profile_icon")
     private String userIconUrl;
 
+    @Column(name="is_active")
+    private boolean isActive;
+
     public void updateUserIcon(String userIconUrl){
         this.userIconUrl =userIconUrl;
     }

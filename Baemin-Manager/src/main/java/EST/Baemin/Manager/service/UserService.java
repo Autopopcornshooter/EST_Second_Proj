@@ -94,4 +94,15 @@ public class UserService {
         return userRepository.findByNicknameContaining(keyword, pageable)
                        .map(UserResponse::from);
     }
+
+    @Transactional
+    public UserResponse updateUserStatus(Long id) {
+        User user = userRepository.findById(id)
+                            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
+
+        user.setActive(!user.isActive());
+        userRepository.save(user);
+
+        return UserResponse.from(user);
+    }
 }
