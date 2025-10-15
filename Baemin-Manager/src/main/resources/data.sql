@@ -23,19 +23,20 @@ VALUES
     (2, 1, '감사합니다!', CURRENT_TIMESTAMP);
 */
 -- Region
-INSERT INTO region (id, address, latitude, longitude, google_place_id)
-VALUES (1, '서울특별시 강남구 테헤란로 1', 37.4979, 127.0276, 'place_001'),
-       (2, '서울특별시 종로구 세종대로 175', 37.5735, 126.9780, 'place_002'),
-       (3, '서울특별시 마포구 독막로 12', 37.5500, 126.9137, 'place_003'),
-       (4, '서울특별시 송파구 백제고분로 123', 37.5145, 127.1052, 'place_004'),
-       (5, '서울특별시 구로구 구로동 45', 37.4955, 126.8870, 'place_005'),
-       (6, '서울특별시 강서구 화곡로 100', 37.5420, 126.8410, 'place_006'),
-       (7, '서울특별시 서초구 서초대로 200', 37.4920, 127.0150, 'place_007'),
-       (8, '서울특별시 용산구 이태원로 50', 37.5340, 126.9940, 'place_008'),
-       (9, '서울특별시 동작구 상도로 120', 37.5050, 126.9490, 'place_009'),
-       (10, '서울특별시 영등포구 여의대로 24', 37.5210, 126.9240, 'place_010'),
-       (11, '서울특별시 은평구 불광로 87', 37.6190, 126.9230, 'place_011'),
-       (12, '서울특별시 노원구 동일로 890', 37.6540, 127.0560, 'place_012');
+INSERT INTO region ( address, latitude, longitude, google_place_id)
+VALUES ( '서울특별시 강남구 테헤란로 1', 37.4979, 127.0276, 'place_001'),
+       ( '서울특별시 종로구 세종대로 175', 37.5735, 126.9780, 'place_002'),
+       ( '서울특별시 마포구 독막로 12', 37.5500, 126.9137, 'place_003'),
+       ( '서울특별시 송파구 백제고분로 123', 37.5145, 127.1052, 'place_004'),
+       ( '서울특별시 구로구 구로동 45', 37.4955, 126.8870, 'place_005'),
+       ( '서울특별시 강서구 화곡로 100', 37.5420, 126.8410, 'place_006'),
+       ( '서울특별시 서초구 서초대로 200', 37.4920, 127.0150, 'place_007'),
+       ( '서울특별시 용산구 이태원로 50', 37.5340, 126.9940, 'place_008'),
+       ( '서울특별시 동작구 상도로 120', 37.5050, 126.9490, 'place_009'),
+       ( '서울특별시 영등포구 여의대로 24', 37.5210, 126.9240, 'place_010'),
+       ( '서울특별시 은평구 불광로 87', 37.6190, 126.9230, 'place_011'),
+       ( '서울특별시 노원구 동일로 890', 37.6540, 127.0560, 'place_012'),
+       ( '인천광역시 서구 청마로 92', 37.586, 126.6742, 'place_013');
 
 -- User
 INSERT INTO users (nickname, login_id, password, store_name, profile_icon, created_at, updated_at, region_id,
@@ -61,50 +62,65 @@ VALUES ('김철수', 'kimcs', '$2a$10$Am..pIExx64m8n7mgtiMb.BtPqq3UWZ3bQsgW2n5Og
        ('이서준', 'leesej', '$2a$10$Am..pIExx64m8n7mgtiMb.BtPqq3UWZ3bQsgW2n5OgaUZzZUx7g4G', '서준버거',
         '/img/profile10.png', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 10, 'ROLE_USER', true),
        ('배지민', 'baejm', '$2a$10$Am..pIExx64m8n7mgtiMb.BtPqq3UWZ3bQsgW2n5OgaUZzZUx7g4G', '지민족발',
-        '/img/profile11.png', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 11, 'ROLE_USER', true),
-       ('홍다연', 'hongdy', '$2a$10$Am..pIExx64m8n7mgtiMb.BtPqq3UWZ3bQsgW2n5OgaUZzZUx7g4G', '다연샌드위치',
-        '/img/profile12.png', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 12, 'ROLE_USER', true);
+        '/img/profile11.png', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 11, 'ROLE_USER', true);
+--        ('홍다연', 'hongdy', '$2a$10$Am..pIExx64m8n7mgtiMb.BtPqq3UWZ3bQsgW2n5OgaUZzZUx7g4G', '다연샌드위치',
+--         '/img/profile12.png', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 12, 'ROLE_USER', true);
 
-INSERT INTO USERS (CREATED_AT, UPDATED_AT, LOGIN_ID, NICKNAME, PASSWORD, STORE_NAME, ROLE, IS_ACTIVE)
+-- INSERT INTO USERS (CREATED_AT, UPDATED_AT, LOGIN_ID, NICKNAME, PASSWORD, STORE_NAME, ROLE, IS_ACTIVE)
+-- VALUES
+-- --     aabbccDD12#
+-- (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'firetruck433', '이경원',
+--  '$2a$10$eftwQu.3tfqZ43Eoc0wZc.t5wB31SSaoBGAH9m7Nk13wI73zp8eRG', '닭꼬치', 'ROLE_USER', true),
+-- --     aabbccDD12#
+-- (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'dlsdnd122', '정인웅',
+--  '$2a$10$eftwQu.3tfqZ43Eoc0wZc.t5wB31SSaoBGAH9m7Nk13wI73zp8eRG', '치킨', 'ROLE_USER', true),
+-- --     abcD1@3
+-- (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'abcd111', '김철수', '$2a$10$joAuRtdFdo1dkuMqIlV8zOMCO7Y.aJd02jvgKwbSADoLFAqHmR4eS',
+--  '짜장면', 'ROLE_USER', true),
+-- --     abcD1@3
+-- (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'ADMIN', '관리자', '$2a$10$joAuRtdFdo1dkuMqIlV8zOMCO7Y.aJd02jvgKwbSADoLFAqHmR4eS',
+--  '관리자용', 'ROLE_ADMIN', true);
+
+INSERT INTO USERS (CREATED_AT, UPDATED_AT, REGION_ID, LOGIN_ID, NICKNAME, PASSWORD, STORE_NAME, ROLE, IS_ACTIVE)
 VALUES
---     aabbccDD12#
-(CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'firetruck433', '이경원',
- '$2a$10$eftwQu.3tfqZ43Eoc0wZc.t5wB31SSaoBGAH9m7Nk13wI73zp8eRG', '닭꼬치', 'ROLE_USER', true),
 --     abcD1@3
-(CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'abcd111', '김철수', '$2a$10$joAuRtdFdo1dkuMqIlV8zOMCO7Y.aJd02jvgKwbSADoLFAqHmR4eS',
- '짜장면', 'ROLE_USER', true),
+(CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 12,'dlsdnd7928', '서울정인웅', '$2a$10$joAuRtdFdo1dkuMqIlV8zOMCO7Y.aJd02jvgKwbSADoLFAqHmR4eS',
+ '서울짜장면', 'ROLE_USER', true),
 --     abcD1@3
-(CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'ADMIN', '관리자', '$2a$10$joAuRtdFdo1dkuMqIlV8zOMCO7Y.aJd02jvgKwbSADoLFAqHmR4eS',
- '관리자용', 'ROLE_ADMIN', true);
-
+(CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 13,'dlsdnd123', '인천정인웅', '$2a$10$joAuRtdFdo1dkuMqIlV8zOMCO7Y.aJd02jvgKwbSADoLFAqHmR4eS',
+ '인천짜장면', 'ROLE_USER', true);
 
 -- Restrant
-INSERT INTO restaurant (id, name, main_menu, description, address, price, user_id, view, image_url, created_at,
+INSERT INTO restaurant ( name, main_menu, description, address, price, user_id, view, image_url, created_at,
                         updated_at)
-VALUES (1, '철수분식', '떡볶이', '매콤달콤한 즉석 떡볶이', '서울 강남구 테헤란로 1', 5000, 1, 0, '/img/res1.jpg', CURRENT_TIMESTAMP,
+VALUES ( '철수분식', '떡볶이', '매콤달콤한 즉석 떡볶이', '서울특별시 강남구 테헤란로 1', 5000, 1, 0, '/img/res1.jpg', CURRENT_TIMESTAMP,
         CURRENT_TIMESTAMP),
-       (2, '영희카페', '아메리카노', '신선한 원두로 내린 커피', '서울 종로구 세종대로 175', 4500, 2, 0, '/img/res2.jpg', CURRENT_TIMESTAMP,
+       ( '영희카페', '아메리카노', '신선한 원두로 내린 커피', '서울특별시 종로구 세종대로 175', 4500, 2, 0, '/img/res2.jpg', CURRENT_TIMESTAMP,
         CURRENT_TIMESTAMP),
-       (3, '민수식당', '김치찌개', '얼큰한 돼지고기 김치찌개', '서울 마포구 독막로 12', 7000, 3, 0, '/img/res3.jpg', CURRENT_TIMESTAMP,
+       ( '민수식당', '김치찌개', '얼큰한 돼지고기 김치찌개', '서울특별시 마포구 독막로 12', 7000, 3, 0, '/img/res3.jpg', CURRENT_TIMESTAMP,
         CURRENT_TIMESTAMP),
-       (4, '지훈치킨', '양념치킨', '바삭하고 달콤한 치킨', '서울 송파구 백제고분로 123', 16000, 4, 0, '/img/res4.jpg', CURRENT_TIMESTAMP,
+       ( '지훈치킨', '양념치킨', '바삭하고 달콤한 치킨', '서울특별시 송파구 백제고분로 123', 16000, 4, 0, '/img/res4.jpg', CURRENT_TIMESTAMP,
         CURRENT_TIMESTAMP),
-       (5, '은지쌀국수', '소고기쌀국수', '진한 육수의 베트남식 쌀국수', '서울 구로구 구로동 45', 9000, 5, 0, '/img/res5.jpg', CURRENT_TIMESTAMP,
+       ( '은지쌀국수', '소고기쌀국수', '진한 육수의 베트남식 쌀국수', '서울특별시 구로구 구로동 45', 9000, 5, 0, '/img/res5.jpg', CURRENT_TIMESTAMP,
         CURRENT_TIMESTAMP),
-       (6, '수연카페', '라떼', '부드러운 우유 라떼', '서울 강서구 화곡로 100', 4800, 6, 0, '/img/res6.jpg', CURRENT_TIMESTAMP,
+       ( '수연카페', '라떼', '부드러운 우유 라떼', '서울특별시 강서구 화곡로 100', 4800, 6, 0, '/img/res6.jpg', CURRENT_TIMESTAMP,
         CURRENT_TIMESTAMP),
-       (7, '도현김밥', '참치김밥', '든든한 참치마요 김밥', '서울 서초구 서초대로 200', 3500, 7, 0, '/img/res7.jpg', CURRENT_TIMESTAMP,
+       ( '도현김밥', '참치김밥', '든든한 참치마요 김밥', '서울특별시 서초구 서초대로 200', 3500, 7, 0, '/img/res7.jpg', CURRENT_TIMESTAMP,
         CURRENT_TIMESTAMP),
-       (8, '현우돈까스', '치즈돈까스', '고소한 치즈가 듬뿍', '서울 용산구 이태원로 50', 9500, 8, 0, '/img/res8.jpg', CURRENT_TIMESTAMP,
+       ( '현우돈까스', '치즈돈까스', '고소한 치즈가 듬뿍', '서울특별시 용산구 이태원로 50', 9500, 8, 0, '/img/res8.jpg', CURRENT_TIMESTAMP,
         CURRENT_TIMESTAMP),
-       (9, '세진커피', '카푸치노', '부드러운 거품의 커피', '서울 동작구 상도로 120', 4800, 9, 0, '/img/res9.jpg', CURRENT_TIMESTAMP,
+--        ( '세진커피', '카푸치노', '부드러운 거품의 커피', '서울특별시 동작구 상도로 120', 4800, 9, 0, '/img/res9.jpg', CURRENT_TIMESTAMP,
+--         CURRENT_TIMESTAMP),
+--        ( '서준버거', '불고기버거', '직접 구운 패티의 수제버거', '서울특별시 영등포구 여의대로 24', 8800, 10, 0, '/img/res10.jpg', CURRENT_TIMESTAMP,
+--         CURRENT_TIMESTAMP),
+--        ( '지민족발', '족발', '윤기가 흐르는 냄새 좋은 족발', '서울특별시 은평구 불광로 87', 25000, 11, 0, '/img/res11.jpg', CURRENT_TIMESTAMP,
+--         CURRENT_TIMESTAMP),
+       ( '인웅족발', '족발', '윤기가 흐르는 냄새 좋은 족발', '서울특별시 노원구 ~~로 ~~~', 25000, 9, 0, '/img/res11.jpg', CURRENT_TIMESTAMP,
+         CURRENT_TIMESTAMP),
+       ( '다연샌드위치', '클럽샌드위치', '든든한 점심 한 끼', '인천광역시 서구 청마로 93', 6500, 10, 0, '/img/res12.jpg', CURRENT_TIMESTAMP,
         CURRENT_TIMESTAMP),
-       (10, '서준버거', '불고기버거', '직접 구운 패티의 수제버거', '서울 영등포구 여의대로 24', 8800, 10, 0, '/img/res10.jpg', CURRENT_TIMESTAMP,
-        CURRENT_TIMESTAMP),
-       (11, '지민족발', '족발', '윤기가 흐르는 냄새 좋은 족발', '서울 은평구 불광로 87', 25000, 11, 0, '/img/res11.jpg', CURRENT_TIMESTAMP,
-        CURRENT_TIMESTAMP),
-       (12, '다연샌드위치', '클럽샌드위치', '든든한 점심 한 끼', '서울 노원구 동일로 890', 6500, 12, 0, '/img/res12.jpg', CURRENT_TIMESTAMP,
-        CURRENT_TIMESTAMP);
+       ( '아이스께끼', '아이스크림', '맛잇는 아이스크림', '인천광역시 서구 ~~로 ~~~', 25000, 11, 0, '/img/res11.jpg', CURRENT_TIMESTAMP,
+         CURRENT_TIMESTAMP);
 
 -- ChatRoom
 INSERT INTO chat_room (chat_room_id, user1_id, user2_id, updated_at)
