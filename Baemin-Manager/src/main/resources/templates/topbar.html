@@ -1,16 +1,21 @@
 <header th:fragment="topbar" class="topbar">
   <div class="topbar-left">
-    <img th:src="@{/images/BaeMin_Logo.jpeg}" class="logo">
+      <a th:href="@{/api/restaurants}">
+          <img th:src="@{/images/BaeMin_Logo.jpeg}" class="logo" alt="배민 로고">
+      </a>
     <nav>
-      <a th:href="@{/restaurants}">동네소개</a>
-      <a th:href="@{/Regionpage}">동네인증</a>
+      <a th:href="@{/api/restaurants}">동네소개</a>
+      <a th:href="@{/api/regions/update}">동네인증</a>
     </nav>
   </div>
   <div class="topbar-right">
-    <input type="text" placeholder="찾는 메뉴가 뭐예요?">
+      <form th:action="@{/api/restaurants/search}" method="get" class="search-form">
+          <input type="text" name="q" placeholder="찾는 메뉴가 뭐예요?" required>
+      </form>
     <button>채팅하기</button>
     <form th:action="@{/logout}" method="post">
       <button type="submit" class="logout-btn">로그아웃</button>
     </form>
   </div>
 </header>
+<script th:src="@{/js/restaurant.js}"></script>
