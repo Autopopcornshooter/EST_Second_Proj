@@ -4,8 +4,10 @@ import EST.Baemin.Manager.domain.User;
 import EST.Baemin.Manager.repository.UserRepository;
 import EST.Baemin.Manager.service.LikeService;
 import EST.Baemin.Manager.repository.UserRepository;
+import EST.Baemin.Manager.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,15 +22,13 @@ import java.util.Map;
 public class LikeController {
     private final LikeService likeService;
     private final UserRepository userRepository;
+    private final UserService userService;
 
     @PostMapping("/{id}/like")
-    public ResponseEntity<Map<String, Object>> toggleLike(
-            @PathVariable Long id
-//            @AuthenticationPrincipal User user
-    ) {
-        // 테스트용: DB에서 id=1인 유저 가져오기
-        User user = userRepository.findById(1L)
-                .orElseThrow(() -> new RuntimeException("테스트 유저가 존재하지 않습니다."));
+    public ResponseEntity<Map<String, Object>> toggleLike(@PathVariable Long id) {
+
+        // 현재 로그인한 유저 가져오기
+        User user = userService.authenticatedUser();
 
         boolean liked = likeService.toggleLike(user, id);
         int likeCount = likeService.getLikeCount(id);

@@ -55,6 +55,7 @@ public class RestaurantService {
                 .price(dto.getPrice())
                 .view(dto.getView() != null ? dto.getView() : 0)    // null 값이면 0으로
                 .user(user)
+                .state(dto.getState())
 //                .imageUrl(dto.getImageUrl())
                 .build();
         user.updateRestaurant(restaurant);
@@ -74,6 +75,7 @@ public class RestaurantService {
                     if (dto.getDescription() != null) r.setDescription(dto.getDescription());
                     if (dto.getAddress() != null) r.setAddress(dto.getAddress());
                     if (dto.getPrice() != null) r.setPrice(dto.getPrice());
+                    if (dto.getState() != null) r.setState(dto.getState());
 //                  r.setImageUrl(dto.getImageUrl());
                     return restaurantRepository.save(r);
                 })
