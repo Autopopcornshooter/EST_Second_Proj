@@ -6,6 +6,7 @@ import EST.Baemin.Manager.dto.RegionResponse;
 import EST.Baemin.Manager.dto.UpdateRegionRequest;
 import EST.Baemin.Manager.service.RegionService;
 import jakarta.servlet.http.HttpSession;
+
 import java.util.List;
 
 import EST.Baemin.Manager.service.UserService;
@@ -24,11 +25,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/api/regions")
 public class RegionController {
 
-  private final RegionService regionService;
-  private final UserService userService;
+    private final RegionService regionService;
+    private final UserService userService;
 
-  @Value("${GOOGLE_MAPS_API_KEY}")
-  private String apiKey; // API Key 필드 추가
+    @Value("${GOOGLE_MAPS_API_KEY}")
+    private String apiKey; // API Key 필드 추가
 
     // Regionpage.html
     @GetMapping
@@ -51,31 +52,30 @@ public class RegionController {
         return "RegionUpdatepage"; // templates/RegionUpdatepage.html
     }
 
-  // 등록 (폼 제출)
-  @PostMapping
-  public String createRegion(@ModelAttribute RegionRequest request) {
-    Region savedRegion = regionService.saveRegion(request);
-    userService.updateRegionToUser(savedRegion);
-    return "redirect:/api/regions/update/" + savedRegion.getId();
-  }
+    // 등록 (폼 제출)
+    @PostMapping
+    public String createRegion(@ModelAttribute RegionRequest request) {
+        Region savedRegion = regionService.saveRegion(request);
+        userService.updateRegionToUser(savedRegion);
+        return "redirect:/api/regions/update/" + savedRegion.getId();
+    }
 
-  // 수정 (폼 제출)
-  @PostMapping("/update/{id}")
-  public String updateRegion(@PathVariable Long id, @ModelAttribute UpdateRegionRequest request, Model model) {
-    regionService.updateRegion(id, request);
-
-    Region updatedRegion = regionService.findById(id);
-    model.addAttribute("region", new RegionResponse(updatedRegion));
-    model.addAttribute("apiKey", apiKey);
+    // 수정 (폼 제출)
+    @PostMapping("/update/{id}")
+    public String updateRegion(@PathVariable Long id, @ModelAttribute UpdateRegionRequest request, Model model) {
+        regionService.updateRegion(id, request);
+        Region updatedRegion = regionService.findById(id);
+        model.addAttribute("region", new RegionResponse(updatedRegion));
+        model.addAttribute("apiKey", apiKey);
 
     return "redirect:/api/restaurants";
   }
 
-  // 삭제
-  @PostMapping("/delete/{id}")
-  public String deleteRegion(@PathVariable Long id) {
-    regionService.deleteRegion(id);
-    return "redirect:/regions";
-  }
+    // 삭제
+    @PostMapping("/delete/{id}")
+    public String deleteRegion(@PathVariable Long id) {
+        regionService.deleteRegion(id);
+        return "redirect:/regions";
+    }
 }
 
