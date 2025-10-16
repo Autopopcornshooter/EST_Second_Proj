@@ -1,11 +1,15 @@
 package EST.Baemin.Manager.controller;
 
+import EST.Baemin.Manager.domain.Restaurant;
+import EST.Baemin.Manager.dto.RestaurantDto;
 import EST.Baemin.Manager.dto.UserResponse;
+import EST.Baemin.Manager.repository.RestaurantRepository;
+import EST.Baemin.Manager.service.RestaurantService;
 import EST.Baemin.Manager.service.UserService;
 import EST.Baemin.Manager.util.SecurityUtil;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,10 +28,15 @@ import org.springframework.web.bind.annotation.*;
 public class AdminController {
 
     private final UserService userService;
+    private final RestaurantService restaurantService;
+    private final RestaurantRepository restaurantRepository;
 
     @Autowired
-    public AdminController(UserService userService) {
+    public AdminController(UserService userService, RestaurantService restaurantService,
+        RestaurantRepository restaurantRepository) {
         this.userService = userService;
+      this.restaurantService = restaurantService;
+      this.restaurantRepository = restaurantRepository;
     }
 
     @GetMapping("/login")
@@ -37,11 +47,11 @@ public class AdminController {
         return "adminLoginPage";
     }
 
-    @GetMapping("/articles")
-    public String articlesPage(HttpServletRequest request,Model model) {
-        model.addAttribute("currentPath", request.getRequestURI());
-        return "admin-articles";
-    }
+//    @GetMapping("/articles")
+//    public String articlesPage(HttpServletRequest request,Model model) {
+//        model.addAttribute("currentPath", request.getRequestURI());
+//        return "admin-articles";
+//    }
 
     @GetMapping("/statistics")
     public String statisticsPage(HttpServletRequest request, Model model) {
@@ -101,4 +111,31 @@ public class AdminController {
         UserResponse updatedUser = userService.updateUserStatus(id);
         return ResponseEntity.ok(updatedUser);
     }
+
+  @GetMapping({"/articles", "/articles/{page}"})
+  public String articlesManagement(
+      // 페이지 변호 0부터 시작
+      @RequestParam(defaultValue = "0") int page,
+      // 한 페이지에 6개 식당 보여줌
+      @RequestParam(defaultValue = "6") int size,
+      Model model) {
+    // 페이지 번호와 페이지 크기를 기반으로 pageable 생성
+    Pageable pageable = PageRequest.of(page, size);
+
+    Page<RestaurantDto> restaurantPage = restaurantService.findAllRestaurants(pageable);
+    model.addAttribute("restaurants", restaurantPage);
+
+    return "admin-articles";  // 보여줄 HTML 템플릿 파일 이름
+  }
+
+  @PostMapping("/articles/{id}/toggle")
+  @Transactional
+  public String updateArticlesStatus(@PathVariable Long id) {
+    Restaurant restaurant = restaurantRepository.findById(id)
+        .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 레스토랑 id: " + id));
+
+    restaurant.setState("공개".equals(restaurant.getState()) ? "비공개" : "공개");
+
+    return "redirect:/admin/articles";
+  }
 }

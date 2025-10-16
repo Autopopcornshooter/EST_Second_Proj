@@ -23,6 +23,7 @@ public class RestaurantDto {
     private LocalDateTime updatedAt;
     private Integer view;
     private String imageUrl;
+    private String state;
 
     private Long userId;
 
@@ -38,5 +39,6 @@ public class RestaurantDto {
         this.view = restaurant.getView();
         this.imageUrl = restaurant.getImageUrl();
         this.userId = restaurant.getUser().getId();
+        this.state = restaurant.getState();
     }
 }

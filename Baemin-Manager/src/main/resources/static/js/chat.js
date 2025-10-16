@@ -131,6 +131,13 @@ $(document).ready(function() {
       var roomId = $(this).find(".room-id").val();
       currentRoomId = roomId;
 
+      // 1. 기존 선택 해제
+      $(".chatting-list-item").removeClass("selected");
+
+      // 2. 클릭한 채팅방 강조
+      $(this).addClass("selected");
+
+      // 3. 채팅 내용 AJAX 로드
       $.ajax({
         url: "/api/chat/" + roomId,
         type: "GET",
