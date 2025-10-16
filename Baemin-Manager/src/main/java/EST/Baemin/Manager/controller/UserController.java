@@ -5,6 +5,7 @@ import EST.Baemin.Manager.service.UserService;
 import EST.Baemin.Manager.util.SecurityUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,6 +45,10 @@ public class UserController {
     }
 
 
+    @GetMapping("/access-denied")
+    public String accessDenied(){
+        return "accessDeniedPage";
+    }
 
 
     @PostMapping("/api/storeName")
@@ -54,8 +59,12 @@ public class UserController {
     }
 
 
+
     @GetMapping("/mainpage")
-    public String toMainpage() {
+    public String toMainpage(Model model, Authentication authentication) {
+        if(authentication !=null && authentication.isAuthenticated()){
+            model.addAttribute("role",authentication.getAuthorities().iterator().next().getAuthority());
+        }
         return "mainpage";
     }
 
