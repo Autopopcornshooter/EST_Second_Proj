@@ -7,9 +7,13 @@ import EST.Baemin.Manager.repository.RestaurantRepository;
 import EST.Baemin.Manager.service.RestaurantService;
 import EST.Baemin.Manager.service.UserService;
 import EST.Baemin.Manager.util.SecurityUtil;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -48,8 +52,18 @@ public class AdminController {
     }
 
     @GetMapping("/statistics")
-    public String statisticsPage(HttpServletRequest request, Model model) {
-        model.addAttribute("currentPath", request.getRequestURI());
+//    public String statisticsPage(HttpServletRequest request, Model model) {
+//        model.addAttribute("currentPath", request.getRequestURI());
+//        return "admin-statistics";
+//    }
+    public String statisticsPage(Model model) throws JsonProcessingException {
+        Map<String, Long> stats = restaurantService.getCityStatistics();
+
+        ObjectMapper mapper = new ObjectMapper();
+        // 서버에서 JSON 문자열로 변환
+        model.addAttribute("regionLabels", mapper.writeValueAsString(stats.keySet()));
+        model.addAttribute("regionData", mapper.writeValueAsString(stats.values()));
+
         return "admin-statistics";
     }
     @PostMapping("/admin/logout")

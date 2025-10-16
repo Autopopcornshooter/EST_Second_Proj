@@ -2,19 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>통계</title>
+    <link rel="icon" type="image/png" th:href="@{/images/BaeMin-main.jpg}">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" th:href="@{/css/region.css}">
+    <link rel="stylesheet" th:href="@{/css/admin-statistics.css}">
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
 </head>
 <body>
-<<<<<<< Updated upstream
-<div th:replace="~{admin-sidebar :: sidebar}"></div>
-=======
 <header>
     <div class="logo">
-        <a th:href="@{/admin/users}">
+        <a th:href="@{/api/restaurants}">
             <img th:src="@{/images/BaeMin_Logo.jpeg}" alt="배달의민족 로고">
         </a>
     </div>
-    <form th:action="@{/admin/logout}" method="post">
+    <form th:action="@{/logout}" method="post">
         <button type="submit" class="logout-btn">로그아웃</button>
     </form>
 </header>
@@ -47,6 +52,5 @@
 
 <script th:src="@{/js/admin-statistics.js}"></script>
 
->>>>>>> Stashed changes
 </body>
 </html>

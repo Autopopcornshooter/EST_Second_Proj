@@ -12,8 +12,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -138,9 +141,38 @@ public class RestaurantService {
                 .orElse(false);
     }
 
-    public Page<RestaurantDto> searchRestaurantsByName(String keyword, Pageable pageable) {
-      return restaurantRepository.findByNameContainingIgnoreCase(keyword, pageable)
-          .map(RestaurantDto::new);
+    // 식당 주소에서 시 추출 후 그룹핑
+    public Map<String, Long> getCityStatistics() {
+        List<Restaurant> restaurants = restaurantRepository.findAll();
+
+        Map<String, Long> stats = restaurants.stream()
+                .map(r -> extractCityFromAddress(r.getAddress()))
+                .collect(Collectors.groupingBy(city -> city, LinkedHashMap::new, Collectors.counting()));
+
+        return sortByCountDescending(stats);
     }
 
+    // 주소에서 시만 추출
+    private  String extractCityFromAddress(String address) {
+        if (address == null || address.isBlank()) return "기타";
+        String[] parts = address.split(" ");
+        return parts.length > 1 ? parts[1] : "기타";
+    }
+
+    // 내림차순으로 정렬
+    private Map<String, Long> sortByCountDescending(Map<String, Long> unsorted) {
+        return unsorted.entrySet().stream()
+                .sorted(Map.Entry.<String, Long>comparingByValue().reversed())
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue,
+                        (e1, e2) -> e1,
+                        LinkedHashMap::new
+                ));
+    }
+
+    public Page<RestaurantDto> searchRestaurantsByName(String keyword, Pageable pageable) {
+        return restaurantRepository.findByNameContainingIgnoreCase(keyword, pageable)
+                .map(RestaurantDto::new);
+    }
 }
