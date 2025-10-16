@@ -23,11 +23,15 @@
         <div class="store-stats">
             <span th:text="'조회수 ' + ${restaurant.view}">조회수</span>
             <!-- 좋아요 표시 & 버튼 -->
-            <span id="like-count" th:text="'좋아요 ' + ${likeCount} + ' 👍'">좋아요</span>
-            <button class="like-btn"
-                    th:attr="data-id=${restaurant.id}, data-liked=${userLiked}">
+            <button class="like-btn" th:attr="data-id=${restaurant.id}, data-liked=${userLiked}">
                 <span th:text="${userLiked} ? '좋아요 취소' : '좋아요'">좋아요</span>
+                <span class="like-count" th:text="' ' + ${likeCount} + ' 👍'">0 👍</span>
             </button>
+            <!--            <span id="like-count" th:text="'좋아요 !@!@ ' + ${likeCount} + ' 👍'">좋아요</span>-->
+<!--            <button class="like-btn"-->
+<!--                    th:attr="data-id=${restaurant.id}, data-liked=${userLiked}">-->
+<!--                <span th:text="${userLiked} ? '좋아요 취소' : '좋아요'">좋아요</span>-->
+<!--            </button>-->
             <button class="chat-btn">채팅하기</button>
         </div>
         <p class="menu-name" th:text="${restaurant.mainMenu}">메뉴 이름</p>

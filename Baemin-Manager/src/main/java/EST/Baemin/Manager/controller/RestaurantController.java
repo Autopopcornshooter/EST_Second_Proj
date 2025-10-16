@@ -3,6 +3,7 @@ package EST.Baemin.Manager.controller;
 import EST.Baemin.Manager.domain.Restaurant;
 import EST.Baemin.Manager.domain.User;
 import EST.Baemin.Manager.dto.RestaurantDto;
+import EST.Baemin.Manager.service.LikeService;
 import EST.Baemin.Manager.service.RestaurantService;
 import EST.Baemin.Manager.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,6 +29,7 @@ public class RestaurantController {
 
     private final RestaurantService restaurantService;
     private final UserService userService;
+    private final LikeService likeService;
 
     // 식당 전체 조회 기능
     @Operation(summary = "식당 전체 조회", description = "전체 식당을 조회합니다.")
@@ -87,10 +89,25 @@ public class RestaurantController {
         // 조회수 로직
         restaurantService.increaseView(id);
 
-        // DB 조회하고 최신 데이터 가져오기
+        // 식당 조회
         RestaurantDto restaurant = restaurantService.findRestaurantById(id)
                 .orElseThrow(() -> new RuntimeException("식당을 찾을 수 없습니다."));
         model.addAttribute("restaurant", restaurant);
+
+        // 로그인한 유저
+        User currentUser = userService.authenticatedUser();
+
+        // 좋아요 여부 확인
+        boolean userLiked = likeService.isUserLiked(currentUser, restaurant.getId());
+        int likeCount = likeService.getLikeCount(restaurant.getId());
+
+        model.addAttribute("userLiked", userLiked);
+        model.addAttribute("likeCount", likeCount);
+
+//        // DB 조회하고 최신 데이터 가져오기
+//        RestaurantDto restaurant = restaurantService.findRestaurantById(id)
+//                .orElseThrow(() -> new RuntimeException("식당을 찾을 수 없습니다."));
+//        model.addAttribute("restaurant", restaurant);
         return "restaurantdetail";
     }
 

@@ -36,11 +36,18 @@ public class LikeService {
             return true; // 좋아요 추가됨
         }
     }
-
+    // 좋아요 수 조회
     public int getLikeCount(Long restaurantId) {
         Restaurant restaurant = restaurantRepository.findById(restaurantId)
                 .orElseThrow(() -> new RuntimeException("식당을 찾을 수 없습니다."));
         return  likeRepository.countByRestaurant(restaurant);
+    }
+
+    // 유저가 좋아요 눌렀는지 확인
+    public boolean isUserLiked(User user, Long restaurantId) {
+        Restaurant restaurant = restaurantRepository.findById(restaurantId)
+                .orElseThrow(() -> new RuntimeException("식당을 찾을 수 없습니다."));
+        return likeRepository.findByUserAndRestaurant(user, restaurant).isPresent();
     }
 
 }
