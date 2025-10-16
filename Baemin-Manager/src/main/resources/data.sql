@@ -79,7 +79,7 @@ VALUES
 
 (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'dlsdnd123', '인천정인웅', '$2a$10$joAuRtdFdo1dkuMqIlV8zOMCO7Y.aJd02jvgKwbSADoLFAqHmR4eS',
  '인천짜장면', 'ROLE_USER', true),
-
+--     abcD1@3
 (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'ADMIN', '관리자', '$2a$10$joAuRtdFdo1dkuMqIlV8zOMCO7Y.aJd02jvgKwbSADoLFAqHmR4eS',
     '관리자용', 'ROLE_ADMIN', true);
 
