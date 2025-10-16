@@ -12,7 +12,9 @@
       <form th:action="@{/api/restaurants/search}" method="get" class="search-form">
           <input type="text" name="q" placeholder="찾는 메뉴가 뭐예요?" required>
       </form>
-    <button>채팅하기</button>
+  <a href="/chat/reset">
+      <button type="button">채팅하기</button>
+  </a>
     <form th:action="@{/logout}" method="post">
       <button type="submit" class="logout-btn">로그아웃</button>
     </form>
