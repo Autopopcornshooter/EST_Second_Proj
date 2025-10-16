@@ -128,18 +128,16 @@ public class AdminController {
 
   @GetMapping({"/articles", "/articles/{page}"})
   public String articlesManagement(
-      // 페이지 변호 0부터 시작
       @RequestParam(defaultValue = "0") int page,
-      // 한 페이지에 6개 식당 보여줌
       @RequestParam(defaultValue = "6") int size,
       Model model) {
-    // 페이지 번호와 페이지 크기를 기반으로 pageable 생성
-    Pageable pageable = PageRequest.of(page, size);
 
+    Pageable pageable = PageRequest.of(page, size);
     Page<RestaurantDto> restaurantPage = restaurantService.findAllRestaurants(pageable);
     model.addAttribute("restaurants", restaurantPage);
-
-    return "admin-articles";  // 보여줄 HTML 템플릿 파일 이름
+    model.addAttribute("keyword", "");
+    model.addAttribute("isSearch", false);
+    return "admin-articles";
   }
 
   @PostMapping("/articles/{id}/toggle")
@@ -152,4 +150,26 @@ public class AdminController {
 
     return "redirect:/admin/articles";
   }
+
+  @GetMapping({"/articles/search/{keyword}","/articles/search/{keyword}/{page}"})
+  public String searchArticles(
+      @PathVariable String keyword,
+      @PathVariable(required = false) Integer page,
+      @RequestParam(defaultValue = "6") int size,
+      Model model) {
+
+    Pageable pageable = PageRequest.of((page != null ? page - 1 : 0), size);
+    Page<RestaurantDto> restaurantPage = restaurantService.searchRestaurantsByName(keyword, pageable);
+
+    if (restaurantPage.isEmpty()) {
+      return "redirect:/admin/articles";
+    }
+
+    model.addAttribute("restaurants", restaurantPage);
+    model.addAttribute("keyword", keyword);
+    model.addAttribute("isSearch", true);
+    model.addAttribute("currentPage", (page != null ? page : 1));
+    return "admin-articles";
+  }
+
 }

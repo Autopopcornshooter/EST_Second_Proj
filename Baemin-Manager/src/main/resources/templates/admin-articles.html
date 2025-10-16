@@ -25,10 +25,17 @@
     // form 안 hidden input에서 현재 상태 읽기
     let currentState = form.querySelector('input[name=state]').value.trim();
     let targetState = (currentState === '공개') ? '비공개' : '공개';
-
     return confirm("'" + targetState + "' 상태로 변경하시겠습니까?");
   }
 
+  function submitSearch() {
+    const keyword = document.getElementById('keywordInput').value.trim();
+    if (keyword === "") {
+      window.location.href = "/admin/articles";
+    } else {
+      window.location.href = `/admin/articles/search/${encodeURIComponent(keyword)}/1`;
+    }
+  }
 </script>
 
 <div class="container">
@@ -36,8 +43,10 @@
 
   <div class="main">
     <div class="search-bar">
-      <input type="text" placeholder="상호명 입력" />
-      <button>검색</button>
+      <form id="searchForm" method="get" onsubmit="submitSearch(); return false;">
+        <input type="text" id="keywordInput" placeholder="상호명 입력" th:value="${keyword}"/>
+        <button type="submit">검색</button>
+      </form>
     </div>
 
     <div class="table">
@@ -73,18 +82,29 @@
         </tr>
         </tbody>
       </table>
-
-      <div class="pagination" th:if="${restaurants.totalPages > 1}">
+      <div class="pagination">
+        <!-- 이전 버튼 -->
         <a class="prev pagination-btn"
-           th:if="${restaurants.hasPrevious()}"
+           th:if="${!isSearch} and ${restaurants.hasPrevious()}"
            th:href="@{/admin/articles(page=${restaurants.number - 1}, size=${restaurants.size})}">&lt;</a>
+
+        <a class="prev pagination-btn"
+           th:if="${isSearch} and ${restaurants.hasPrevious()}"
+           th:href="@{/admin/articles/search/{keyword}/{page}(keyword=${keyword}, page=${restaurants.number})}">&lt;</a>
 
         <span class="page-info" th:text="${restaurants.number + 1} + ' / ' + ${restaurants.totalPages}"></span>
 
+        <!-- 다음 버튼 -->
         <a class="next pagination-btn"
-           th:if="${restaurants.hasNext()}"
+           th:if="${!isSearch} and ${restaurants.hasNext()}"
            th:href="@{/admin/articles(page=${restaurants.number + 1}, size=${restaurants.size})}">&gt;</a>
+
+        <a class="next pagination-btn"
+           th:if="${isSearch} and ${restaurants.hasNext()}"
+           th:href="@{/admin/articles/search/{keyword}/{page}(keyword=${keyword}, page=${restaurants.number + 2})}">&gt;</a>
       </div>
+
+
     </div>
   </div>
 </div>

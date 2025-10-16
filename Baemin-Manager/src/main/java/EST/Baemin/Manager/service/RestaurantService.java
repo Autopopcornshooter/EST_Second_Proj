@@ -130,8 +130,8 @@ public class RestaurantService {
 
     // address 기반 주소 추출
     public Page<RestaurantDto> findRestaurantsByCity(String city, Pageable pageable) {
-        return restaurantRepository.findByAddressContaining(city, pageable)
-                .map(RestaurantDto::new);
+      return restaurantRepository.findByAddressContaining(city, pageable)
+          .map(RestaurantDto::new);
     }
 
     // 권한 체크 메서드
