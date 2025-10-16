@@ -10,6 +10,7 @@ import EST.Baemin.Manager.repository.UserRepository;
 import EST.Baemin.Manager.util.SecurityUtil;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,11 +18,14 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class UserService {
     private final UserRepository userRepository;
     private PasswordEncoder encoder;
 
     public User save(SignupRequest request){
+        log.debug(request.getUsername());
+        log.debug("DB에 데이터 삽입");
         return userRepository.save(
                 User.builder()
                         .loginId(request.getUsername())
@@ -34,6 +38,10 @@ public class UserService {
     }
     public User findById(String loginID){
         return userRepository.findByLoginId(loginID).orElseThrow(()->new IllegalArgumentException("findById Not Found with id: "+loginID));
+    }
+
+    public boolean isLoginIdExist(String loginId){
+        return userRepository.existsByLoginId(loginId);
     }
 
     @Transactional

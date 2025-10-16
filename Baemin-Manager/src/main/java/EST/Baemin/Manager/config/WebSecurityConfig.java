@@ -77,7 +77,7 @@ public class WebSecurityConfig {
                 .securityMatcher("/**")
                 .authorizeHttpRequests(auth ->
                         auth
-                                .requestMatchers("/mainpage", "/login", "/signup","/access-denied").permitAll()// 로그인, 회원가입은 인증 없이 접근 가능
+                                .requestMatchers("/mainpage", "/login", "/signup","/api/signup","/access-denied").permitAll()// 로그인, 회원가입은 인증 없이 접근 가능
                                 .requestMatchers(toH2Console()).permitAll()
                                 .requestMatchers("/.well-known/**").permitAll()
                                 .anyRequest().hasRole(Role.ROLE_USER.name().replace("ROLE_", "")))
