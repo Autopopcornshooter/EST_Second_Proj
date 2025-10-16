@@ -15,8 +15,12 @@
     </div>
     <flex>
         <button class="login-btn" th:onclick="|location.href='@{/login}'|" sec:authorize="isAnonymous()">로그인</button>
-        <form th:action="@{/logout}" method="post">
-            <button type="submit" class="login-btn" sec:authorize="isAuthenticated()">로그아웃</button>
+        <button class="login-btn" th:onclick="|location.href='@{/admin/login}'|" sec:authorize="isAnonymous()">관리자 로그인</button>
+        <form th:action="@{/logout}" method="post" th:if="${role=='ROLE_USER'}">
+            <button type="submit" class="login-btn" >로그아웃</button>
+        </form>
+        <form th:action="@{/admin/logout}" method="post" th:if="${role=='ROLE_ADMIN'}">
+            <button type="submit" class="login-btn" >로그아웃</button>
         </form>
     </flex>
 
@@ -46,13 +50,15 @@
         <div class="icons">
             <div>
                 <img th:src="@{/images/mailbox.png}" alt="" width="40">
-                <span style="margin-top: 10px">(우리 동네질문)</span>
-                <span style="width: 100px">궁금한 게 있을 땐 이웃에게 물어보세요.</span>
+                <span style="margin-top: 10px; font-size: 15px;">(우리 동네질문)</span>
+                <br>
+                <span style="width: 150px; font-size: 15px;">궁금한 게 있을 땐 이웃에게 물어보세요.</span>
             </div>
             <div>
                 <img th:src="@{/images/relationship.png}" alt="" width="40">
-                <span style="margin-top: 10px">(동네모임)</span>
-                <span style="width: 100px">관심사가 비슷한 이웃과 온오프라인으로 만나요.</span>
+                <span style="margin-top: 10px; font-size: 15px;">(동네모임)</span>
+                <br>
+                <span style="width: 150px; font-size: 15px;">관심사가 비슷한 이웃과 온오프라인으로 만나요.</span>
             </div>
         </div>
     </div>
@@ -61,8 +67,8 @@
 
 <footer>
     <div>
-        <a href="#">동네소개</a>
-        <a href="#">동네인증</a>
+        <a th:href="@{/api/restaurants}">동네소개</a>
+        <a th:href="@{/api/regions}">동네인증</a>
     </div>
     <div>
         (주) DEV의 민족
