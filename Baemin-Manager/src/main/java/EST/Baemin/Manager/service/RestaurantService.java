@@ -170,4 +170,9 @@ public class RestaurantService {
                         LinkedHashMap::new
                 ));
     }
+
+    public Page<RestaurantDto> searchRestaurantsByName(String keyword, Pageable pageable) {
+        return restaurantRepository.findByNameContainingIgnoreCase(keyword, pageable)
+                .map(RestaurantDto::new);
+    }
 }
