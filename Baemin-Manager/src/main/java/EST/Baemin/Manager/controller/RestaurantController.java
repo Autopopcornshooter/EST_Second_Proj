@@ -73,7 +73,7 @@ public class RestaurantController {
         String[] parts =  address.split(" ");
         if (parts.length >= 2) {
             // parts[0] = 시, parts[1] = 구
-            return parts[0] +  " " + parts[1];
+            return parts[0] +  " " + parts[1] + " " + parts[2];
         }
 
         // 주소가 시만 있을 경우 시만 뽑기
