@@ -2,9 +2,54 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>통계</title>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" th:href="@{/css/region.css}">
+    <link rel="stylesheet" th:href="@{/css/admin-statistics.css}">
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
 </head>
 <body>
-<div th:replace="~{admin-sidebar :: sidebar}"></div>
+<header>
+    <div class="logo">
+        <a th:href="@{/api/restaurants}">
+            <img th:src="@{/images/BaeMin_Logo.jpeg}" alt="배달의민족 로고">
+        </a>
+    </div>
+    <form th:action="@{/logout}" method="post">
+        <button type="submit" class="logout-btn">로그아웃</button>
+    </form>
+</header>
+
+<div class="container">
+    <!-- 사이드바 -->
+    <div th:replace="~{admin-sidebar :: sidebar}"></div>
+
+    <!-- 본문 -->
+    <main class="content">
+        <div class="stats-box">
+            <!-- 지역별 가게 수-->
+            <div class="region-stats" style="margin-left: 30px;">
+                <ul id="regionList" style="list-style: none; padding: 0; font-size: 14px;"></ul>
+            </div>
+            <!-- 차트 표 -->
+            <div class="chart-container">
+                <canvas id="regionChart"></canvas>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    const regionLabels = /*[[${regionLabels}]]*/ '[]';
+    const regionData = /*[[${regionData}]]*/ '[]';
+    /*]]>*/
+</script>
+
+<script th:src="@{/js/admin-statistics.js}"></script>
+
 </body>
 </html>
