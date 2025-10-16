@@ -46,6 +46,10 @@ public class Restaurant {
 
     private String imageUrl;    // 이미지
 
+    @Column(nullable = false)
+    // true = 공개, false = 비공개
+    private boolean state = true;
+
     @CreationTimestamp
     private LocalDateTime createdAt = LocalDateTime.now();
     @UpdateTimestamp
