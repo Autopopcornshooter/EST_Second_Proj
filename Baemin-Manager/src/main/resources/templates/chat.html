@@ -22,14 +22,14 @@
     <div id="nickname-area" class="p-2">
       <p class="nickname mb-0" th:text="${loginUser.nickname}">내 닉네임</p>
     </div>
-    
+
     <!-- 채팅방 목록 -->
     <div th:each="room : ${chatRooms}"
         class="chatting-list-item d-flex align-items-center p-2"
         th:classappend="${selectedRoom != null and room.id == selectedRoom.id} ? ' selected'">
-      
+
       <input class="room-id" type="hidden" th:value="${room.id}" />
-      
+
       <div>
         <p class="nickname mb-0"
             th:text="${room.user1.id == loginUser.id} ? ${room.user2.nickname} : ${room.user1.nickname}">
@@ -39,22 +39,22 @@
           마지막 대화 내용
         </p>
       </div>
-      
+
       <img src="/images/default-profile.png"
           alt="상대방 프로필 사진"
           class="profile-img ms-auto" />
     </div>
   </div>
-  
+
   <div id="chat-area" th:fragment="chatFragment">
-    
+
     <!-- 정보 영역 -->
     <div id="info-area" class="ps-2">
       <div th:if="${selectedRoom != null}">
         <p class="nickname ps-2 pe-2 pt-2 mb-0 mt-2"
             th:text="${selectedRoom.user1.id == loginUser.id} ? ${selectedRoom.user2.nickname} : ${selectedRoom.user1.nickname}">
         </p>
-        
+
         <div class="d-flex align-items-center p-2">
           <img src="/images/default-profile.png" alt="상대방 프로필 사진" class="profile-img" />
           <p id="restaurant-name" class="ms-auto me-2 mt-4 mb-0"
@@ -62,14 +62,14 @@
           </p>
         </div>
       </div>
-      
+
       <div th:if="${selectedRoom == null}">
         <br>
         <p class="text-center text-muted m-2 p-2">대화 상대가 존재하지 않습니다.</p>
         <br>
       </div>
     </div>
-    
+
     <!-- 채팅 내용 영역 -->
     <div id="chatting-content" class="p-3">
       <div th:if="${selectedRoom != null}">
@@ -83,12 +83,12 @@
           </p>
         </div>
       </div>
-      
+
       <div th:if="${selectedRoom == null}">
         <h3 class="text-center text-muted mt-5 p-5 mb-0">좌측 목록에서 채팅방을 선택해 주세요</h3>
       </div>
     </div>
-    
+
     <!-- 입력 영역 -->
     <div id="chatting-input-area" class="m-3 p-2">
       <div class="input-group">
@@ -105,7 +105,7 @@
         </button>
       </div>
     </div>
-  
+
   </div>
 
 </main>
