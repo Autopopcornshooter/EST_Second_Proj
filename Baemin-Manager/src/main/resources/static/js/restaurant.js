@@ -208,3 +208,10 @@ document.addEventListener("DOMContentLoaded", function () {
 //         });
 //     }
 // });
+
+$(document).ready(function() {
+    $(".chat-btn").click(function() {
+        const otherUserId = $(this).data("userid"); // th:data-userId로 넣은 값 가져오기
+        window.location.href = `/api/chat/start/${otherUserId}`;
+    });
+});

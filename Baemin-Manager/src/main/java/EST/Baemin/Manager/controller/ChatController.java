@@ -75,4 +75,10 @@ public class ChatController {
     return "chat :: chatFragment"; // Thymeleaf fragment
   }
 
+  @GetMapping("/chat/reset")
+  public String resetChatPage(HttpSession session) {
+    session.removeAttribute("selectedRoomId");
+    return "redirect:/chat";
+  }
+
 }
