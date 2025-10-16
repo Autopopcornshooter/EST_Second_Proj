@@ -1,17 +1,18 @@
 -- Region
 INSERT INTO region ( address, latitude, longitude, google_place_id)
-VALUES ('서울특별시 강남구 테헤란로 1', 37.4979, 127.0276, 'place_001'),
-       ('서울특별시 종로구 세종대로 175', 37.5735, 126.9780, 'place_002'),
-       ('서울특별시 마포구 독막로 12', 37.5500, 126.9137, 'place_003'),
-       ('서울특별시 송파구 백제고분로 123', 37.5145, 127.1052, 'place_004'),
-       ('서울특별시 구로구 구로동 45', 37.4955, 126.8870, 'place_005'),
-       ('서울특별시 강서구 화곡로 100', 37.5420, 126.8410, 'place_006'),
-       ('서울특별시 서초구 서초대로 200', 37.4920, 127.0150, 'place_007'),
-       ('서울특별시 용산구 이태원로 50', 37.5340, 126.9940, 'place_008'),
-       ('서울특별시 동작구 상도로 120', 37.5050, 126.9490, 'place_009'),
+VALUES ( '서울특별시 강남구 테헤란로 1', 37.4979, 127.0276, 'place_001'),
+       ( '서울특별시 종로구 세종대로 175', 37.5735, 126.9780, 'place_002'),
+       ( '서울특별시 마포구 독막로 12', 37.5500, 126.9137, 'place_003'),
+       ( '서울특별시 송파구 백제고분로 123', 37.5145, 127.1052, 'place_004'),
+       ( '서울특별시 구로구 구로동 45', 37.4955, 126.8870, 'place_005'),
+       ( '서울특별시 강서구 화곡로 100', 37.5420, 126.8410, 'place_006'),
+       ( '서울특별시 서초구 서초대로 200', 37.4920, 127.0150, 'place_007'),
+       ( '서울특별시 용산구 이태원로 50', 37.5340, 126.9940, 'place_008'),
+       ( '서울특별시 동작구 상도로 120', 37.5050, 126.9490, 'place_009'),
        ( '서울특별시 영등포구 여의대로 24', 37.5210, 126.9240, 'place_010'),
        ( '서울특별시 은평구 불광로 87', 37.6190, 126.9230, 'place_011'),
-       ( '서울특별시 노원구 동일로 890', 37.6540, 127.0560, 'place_012');
+       ( '서울특별시 노원구 동일로 890', 37.6540, 127.0560, 'place_012'),
+       ( '인천광역시 서구 청마로 92', 37.586, 126.6742, 'place_013');
 
 -- User
 INSERT INTO users (nickname, login_id, password, store_name, profile_icon, created_at, updated_at, region_id, role,
@@ -43,12 +44,9 @@ VALUES ('김철수', 'kimcs', '$2a$10$Am..pIExx64m8n7mgtiMb.BtPqq3UWZ3bQsgW2n5Og
 
 INSERT INTO USERS (CREATED_AT, UPDATED_AT, LOGIN_ID, NICKNAME, PASSWORD, STORE_NAME, ROLE, IS_ACTIVE)
 VALUES
---     aabbccDD12#
-(CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'firetruck433', '이경원',
- '$2a$10$eftwQu.3tfqZ43Eoc0wZc.t5wB31SSaoBGAH9m7Nk13wI73zp8eRG', '닭꼬치', 'ROLE_USER', true),
 --     abcD1@3
-(CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'abcd111', '김철수', '$2a$10$joAuRtdFdo1dkuMqIlV8zOMCO7Y.aJd02jvgKwbSADoLFAqHmR4eS',
- '짜장면', 'ROLE_USER', true),
+(CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 12,'dlsdnd7928', '서울정인웅', '$2a$10$joAuRtdFdo1dkuMqIlV8zOMCO7Y.aJd02jvgKwbSADoLFAqHmR4eS',
+ '서울짜장면', 'ROLE_USER', true),
 --     abcD1@3
 (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'ADMIN', '관리자', '$2a$10$joAuRtdFdo1dkuMqIlV8zOMCO7Y.aJd02jvgKwbSADoLFAqHmR4eS',
  '관리자용', 'ROLE_ADMIN', true);

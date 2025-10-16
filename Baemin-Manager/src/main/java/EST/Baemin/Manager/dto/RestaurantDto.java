@@ -25,6 +25,8 @@ public class RestaurantDto {
     private String imageUrl;
     private String state;
 
+    private Long userId;
+
     public RestaurantDto(Restaurant restaurant) {
         this.id = restaurant.getId();
         this.name = restaurant.getName();
@@ -36,6 +38,7 @@ public class RestaurantDto {
         this.updatedAt = restaurant.getUpdatedAt();
         this.view = restaurant.getView();
         this.imageUrl = restaurant.getImageUrl();
+        this.userId = restaurant.getUser().getId();
         this.state = restaurant.getState();
     }
 }

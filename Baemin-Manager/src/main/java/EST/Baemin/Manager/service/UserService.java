@@ -105,4 +105,12 @@ public class UserService {
 
         return UserResponse.from(user);
     }
+
+    // 로그인한 유저의 주소 가져오기
+    public String getLoggedInUserAddress(){
+        User user = authenticatedUser();
+        if (user.getRegion() == null) return null;
+        // region 엔티티의 address 데이터
+        return user.getRegion().getAddress();
+    }
 }
