@@ -5,12 +5,11 @@ import lombok.Getter;
 
 @Getter
 public class RegionResponse {
-  private Long id;
-  private String address;
-  private Double latitude;
-  private Double longitude;
-  private String google_place_id;
-  private String apiKey;
+  private final Long id;
+  private final String address;
+  private final Double latitude;
+  private final Double longitude;
+  private final String google_place_id;
 
   public RegionResponse(Region region) {
     this.id = region.getId();

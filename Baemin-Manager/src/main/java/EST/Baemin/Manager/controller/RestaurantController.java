@@ -1,6 +1,7 @@
 package EST.Baemin.Manager.controller;
 
 import EST.Baemin.Manager.domain.Restaurant;
+import EST.Baemin.Manager.domain.User;
 import EST.Baemin.Manager.dto.RestaurantDto;
 import EST.Baemin.Manager.service.RestaurantService;
 import EST.Baemin.Manager.service.UserService;
@@ -26,6 +27,7 @@ import java.util.List;
 public class RestaurantController {
 
     private final RestaurantService restaurantService;
+    private final UserService userService;
 
     // 식당 전체 조회 기능
     @Operation(summary = "식당 전체 조회", description = "전체 식당을 조회합니다.")
@@ -39,15 +41,43 @@ public class RestaurantController {
         // 페이지 번호와 페이지 크기를 기반으로 pageable 생성
         Pageable pageable = PageRequest.of(page, size);
 
+        // 로그인한 유저의 지역 정보 가져오기
+        String userAddress = userService.getLoggedInUserAddress();
+
+        // 시/도 단위만 추출
+        String userCity = extractCity(userAddress); // ex) 인천광역시
+
+        // 해당 지역의 식당만 필터링
         // 서비스에서 Page<RestaurantDto> 반환
-        Page<RestaurantDto> restaurantPage = restaurantService.findAllRestaurants(pageable);
+        Page<RestaurantDto> restaurantPage = restaurantService.findRestaurantsByCity(userCity,pageable);
+//        List<RestaurantDto> filteredRestaurants = restaurantPage.getContent().stream()
+//                .filter(r -> {
+//                    String restaurantCity = extractCity(r.getAddress());
+//                    return restaurantCity.equals(userCity);
+//                })
+//                .toList();
 
         // model에 restaurants라는 이름으로 Page 객체를 전달
-        model.addAttribute("restaurants", restaurantPage);
+        model.addAttribute("restaurants", restaurantPage); //.getContent()
+        model.addAttribute("currentPage", page);
+//        model.addAttribute("totalPages", restaurantPage.getTotalPages());
 
 //        List<RestaurantDto> reestaurants = restaurantService.findAllRestaurants();
 //        model.addAttribute("restaurants", restaurantService.findAllRestaurants());
         return "introductionpage";
+    }
+
+    // 주소에서 시 단위만 추출하는 메서드
+    private String extractCity(String address) {
+        if (address == null || address.isEmpty()) return "";
+        String[] parts =  address.split(" ");
+        if (parts.length >= 2) {
+            // parts[0] = 시, parts[1] = 구
+            return parts[0] +  " " + parts[1];
+        }
+
+        // 주소가 시만 있을 경우 시만 뽑기
+        return parts[0];
     }
 
     // 식당 아이디별 조회 기능
@@ -75,6 +105,12 @@ public class RestaurantController {
     @Operation(summary = "식당 수정", description = "식당 정보를 수정합니다.")
     @PutMapping("/{id}")
     public ResponseEntity<RestaurantDto> updateRestaurant(@PathVariable Long id, @RequestBody RestaurantDto dto) {
+        Long currentUserId = userService.authenticatedUser().getId();   // 로그인한 유저 ID
+        // 권한 확인
+        if (!restaurantService.isOwner(id, currentUserId)) {
+            return ResponseEntity.status(403).build();
+        }
+        // 수정 진행
         return restaurantService.updateRestaurant(id, dto)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -84,6 +120,12 @@ public class RestaurantController {
     @Operation(summary = "식당 삭제", description = "식당 정보를 삭제합니다.")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteRestaurant(@PathVariable Long id) {
+        Long currentUserId = userService.authenticatedUser().getId();
+        //권한 확인
+        if (!restaurantService.isOwner(id, currentUserId)) {
+            return ResponseEntity.status(403).build();
+        }
+
         restaurantService.deleteRestaurant(id);
         return ResponseEntity.ok().build();
     }
@@ -112,6 +154,12 @@ public class RestaurantController {
         // 수정 페이지 접근
     @GetMapping("/{id}/edit")
     public String editRestaurant(@PathVariable Long id, Model model) {
+        Long currentUserId = userService.authenticatedUser().getId();
+
+        if (!restaurantService.isOwner(id, currentUserId)) {
+            throw new RuntimeException("권한이 없습니다.");
+        }
+
         RestaurantDto restaurant = restaurantService.findRestaurantById(id)
                 .orElseThrow(() -> new RuntimeException("식당을 찾을 수 없습니다."));
         model.addAttribute("restaurant", restaurant);   // 기존 데이터 폼에 채우기
@@ -123,6 +171,12 @@ public class RestaurantController {
     public String saveRestaurant(RestaurantDto dto) {
         if (dto.getId() == null) {
             throw new RuntimeException("수정할 식당 id가 없습니다.");
+        }
+
+        Long currentUserId = userService.authenticatedUser().getId();
+
+        if (!restaurantService.isOwner(dto.getId(), currentUserId)) {
+            throw new RuntimeException("권한이 없습니다.");
         }
 
         restaurantService.updateRestaurant(dto.getId(), dto)

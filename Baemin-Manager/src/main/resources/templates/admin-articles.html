@@ -14,79 +14,78 @@
           <img th:src="@{/images/BaeMin_Logo.jpeg}" alt="배달의민족 로고">
       </a>
   </div>
-  <form th:action="@{/logout}" method="post">
+  <form th:action="@{/admin/logout}" method="post">
     <button type="submit" class="logout-btn">로그아웃</button>
   </form>
 </header>
 
+<script type="text/javascript">
+  function confirmToggle(form) {
+    // form 안 hidden input에서 현재 상태 읽기
+    let currentState = form.querySelector('input[name=state]').value.trim();
+    let targetState = (currentState === '공개') ? '비공개' : '공개';
+
+    return confirm("'" + targetState + "' 상태로 변경하시겠습니까?");
+  }
+
+</script>
+
 <div class="container">
-<div th:replace="~{admin-sidebar :: sidebar}"></div>
+  <div th:replace="~{admin-sidebar :: sidebar}"></div>
 
-<div class="main">
-  <div class="search-bar">
-    <input type="text" placeholder="상호명 입력" />
-    <button>검색</button>
-  </div>
+  <div class="main">
+    <div class="search-bar">
+      <input type="text" placeholder="상호명 입력" />
+      <button>검색</button>
+    </div>
 
-  <div class="table">
-    <table>
-      <thead>
-      <tr>
-        <th>번호</th>
-        <th>상호명</th>
-        <th>대표 메뉴</th>
-        <th>작성자</th>
-        <th>지역</th>
-        <th>등록일</th>
-        <th>상태</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-        <td>1</td>
-        <td>OK Burger</td>
-        <td>데리야끼 버거</td>
-        <td>abc123</td>
-        <td>서울시 영등포구</td>
-        <td>2024.05.24</td>
-        <td>비공개</td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td>OK Burger</td>
-        <td>데리야끼 버거</td>
-        <td>오르미@화이팅.com</td>
-        <td>서울시 구로구</td>
-        <td>2024.05.29</td>
-        <td>공개</td>
-      </tr>
-      <tr>
-        <td>3</td>
-        <td>김기사식당</td>
-        <td>제육볶음</td>
-        <td>zxcvbe</td>
-        <td>서울시 강서구</td>
-        <td>2024.04.23</td>
-        <td>공개</td>
-      </tr>
-      <tr>
-        <td>4</td>
-        <td>김기사식당</td>
-        <td>순두부찌개</td>
-        <td>zxcvbe</td>
-        <td>서울시 강서구</td>
-        <td>2024.04.22</td>
-        <td>공개</td>
-      </tr>
-      </tbody>
-    </table>
-    <div class="pagination">
-      <button class="prev">&lt;</button>
-      <span>1 / 10</span>
-      <button class="next">&gt;</button>
+    <div class="table">
+      <table>
+        <thead>
+        <tr>
+          <th>번호</th>
+          <th>상호명</th>
+          <th>대표 메뉴</th>
+  <!--        <th>작성자</th>-->
+          <th>지역</th>
+          <th>등록일</th>
+          <th>상태</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="restaurant : ${restaurants}">
+          <td th:text="${restaurant.id}"></td>
+          <td th:text="${restaurant.name}"></td>
+          <td th:text="${restaurant.mainMenu}"></td>
+  <!--        <td th:text="${restaurant.user != null ? restaurant.user.username : 'N/A'}"></td>-->
+          <td th:text="${restaurant.address}"></td>
+          <td th:text="${#temporals.format(restaurant.createdAt, 'yyyy-MM-dd')}"></td>
+          <td>
+            <form th:action="@{'/admin/articles/' + ${restaurant.id} + '/toggle'}"
+                  method="post"
+                  onsubmit="return confirmToggle(this);">
+              <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+              <input type="hidden" name="state" th:value="${restaurant.state}" />
+              <button type="submit" th:text="${restaurant.state}"></button>
+            </form>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+      <div class="pagination" th:if="${restaurants.totalPages > 1}">
+        <a class="prev pagination-btn"
+           th:if="${restaurants.hasPrevious()}"
+           th:href="@{/admin/articles(page=${restaurants.number - 1}, size=${restaurants.size})}">&lt;</a>
+
+        <span class="page-info" th:text="${restaurants.number + 1} + ' / ' + ${restaurants.totalPages}"></span>
+
+        <a class="next pagination-btn"
+           th:if="${restaurants.hasNext()}"
+           th:href="@{/admin/articles(page=${restaurants.number + 1}, size=${restaurants.size})}">&gt;</a>
+      </div>
     </div>
   </div>
-</div>
 </div>
 </body>
 </html>

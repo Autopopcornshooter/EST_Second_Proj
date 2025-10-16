@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>접근 거부 페이지</title>
+    <title>배달의 민족</title>
     <link rel="stylesheet" th:href="@{/css/login.css}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,12 +15,27 @@
             th:onclick="|location.href='@{/mainpage}'|"></button>
 </header>
 <main class="page">
-  접근 권한이 없습니다.
+
+    <section class="login-panel">
+
+        <a class="form__label" style="text-align: center">접근이 거부되었습니다.</a>
+        <br>
+        <button class="btn btn--primary" id="backBtn" type="button">뒤로 가기</button>
+
+    </section>
 </main>
 <script>
     window.addEventListener("load", () => {
         console.log("리소스 로드 완료");
     });
+
+    document.getElementById('backBtn').addEventListener('click', function () {
+        if (document.referrer && document.referrer !== location.href) {
+            history.back();
+        } else {
+            window.location.href = '/mainpage'
+        }
+    })
 </script>
 </body>
 </html>
