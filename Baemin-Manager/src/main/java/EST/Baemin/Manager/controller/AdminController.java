@@ -47,22 +47,16 @@ public class AdminController {
         return "adminLoginPage";
     }
 
-//    @GetMapping("/articles")
-//    public String articlesPage(HttpServletRequest request,Model model) {
-//        model.addAttribute("currentPath", request.getRequestURI());
-//        return "admin-articles";
-//    }
-
     @GetMapping("/statistics")
     public String statisticsPage(HttpServletRequest request, Model model) {
         model.addAttribute("currentPath", request.getRequestURI());
         return "admin-statistics";
     }
+    @PostMapping("/admin/logout")
+    public void adminLogout() {
+        throw new IllegalStateException("Spring Security 에서 자동으로 로그아웃 수행함");
+    }
 
-//    @GetMapping("/sidebar")
-//    public String sidebarPage(){
-//        return "admin-sidebar";
-//    }
 
     @GetMapping({"/users", "/users/{page}"})
     public String userManagement(@PathVariable(name = "page", required = false) Integer page,
