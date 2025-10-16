@@ -24,16 +24,31 @@
 
 <main id="main-content" class="d-flex">
   <div id="chatting-list">
+    <!-- 로그인 사용자 닉네임 영역 -->
     <div id="nickname-area" class="p-2">
-      <p class="nickname mb-0" th:text="${loginUser.getNickname()}">내 닉네임</p>
+      <p class="nickname mb-0" th:text="${loginUser.nickname}">내 닉네임</p>
     </div>
-    <div th:each="room : ${chatRooms}"  class="chatting-list-item d-flex align-items-center p-2">
+    
+    <!-- 채팅방 목록 -->
+    <div th:each="room : ${chatRooms}"
+        class="chatting-list-item d-flex align-items-center p-2"
+        th:classappend="${selectedRoom != null and room.id == selectedRoom.id} ? ' selected'">
+      
       <input class="room-id" type="hidden" th:value="${room.id}" />
+      
       <div>
-        <p class="nickname mb-0" th:text="${room.user1.id == loginUser.id ? room.user2.nickname : room.user1.nickname}">상대 닉네임</p>
-        <p class="last-comment mb-0" th:text="${room.lastChat}">마지막 대화 내용</p>
+        <p class="nickname mb-0"
+            th:text="${room.user1.id == loginUser.id} ? ${room.user2.nickname} : ${room.user1.nickname}">
+          상대 닉네임
+        </p>
+        <p class="last-comment mb-0" th:text="${room.lastChat != null ? room.lastChat : ''}">
+          마지막 대화 내용
+        </p>
       </div>
-      <img src="/images/default-profile.png" alt="상대방 프로필 사진" class="profile-img ms-auto" />
+      
+      <img src="/images/default-profile.png"
+          alt="상대방 프로필 사진"
+          class="profile-img ms-auto" />
     </div>
   </div>
   

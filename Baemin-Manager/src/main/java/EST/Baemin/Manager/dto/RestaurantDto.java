@@ -24,7 +24,6 @@ public class RestaurantDto {
     private Integer view;
     private String imageUrl;
     private boolean state;
-
     private Long userId;
 
     public RestaurantDto(Restaurant restaurant) {

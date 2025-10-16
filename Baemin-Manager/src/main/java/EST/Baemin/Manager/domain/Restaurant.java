@@ -58,4 +58,12 @@ public class Restaurant {
 //    @OneToOne
 //    @JoinColumn(name = "user_id")
 //    private User user;
+
+    @Column(nullable = false)
+    private String state;  // 상태
+
+    @PrePersist
+    public void prePersist() {
+      if (this.state == null) this.state = "공개";
+    }
 }

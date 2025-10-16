@@ -140,3 +140,8 @@ header img {
   border: none;
   border-radius: 10px;
 }
+
+.chatting-list-item.selected {
+  background-color: #e0f7fa; /* 연한 하늘색 */
+  border-left: 4px solid #00acc1; /* 좌측 포인트 */
+}
