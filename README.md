@@ -195,13 +195,25 @@
 
 ---
 
-## ⚙️ 설치 및 실행
+## ⚙️ 배포 주소
 
 ```bash
 git clone https://github.com/user/project.git
 ```
+---
 
-## 발표 자료
+## 🎥 시연 영상
+
+<p align="center">
+  <a href="https://www.youtube.com/watch?v=BJOcfJpIQDo" target="_blank">
+    <img width="800" alt="image" src="https://github.com/user-attachments/assets/0a86fad0-b711-4358-bd38-3ae2e137e803" />
+  </a>
+</p>
+
+
+---
+
+## 🎤발표 자료
 
 <p align="center">
   <a href="https://www.canva.com/design/DAG19yE4Gqo/7UAVAZTXxb-hiZXLNDVDFw/edit?utm_content=DAG19yE4Gqo&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton" target="_blank">
