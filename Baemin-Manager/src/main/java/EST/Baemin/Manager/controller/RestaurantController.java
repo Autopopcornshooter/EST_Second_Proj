@@ -53,6 +53,7 @@ public class RestaurantController {
 
         // 시/도 단위만 추출
         String userCity = extractCity(userAddress); // ex) 인천광역시
+        System.out.println("userCity = " + userCity);
 
         // 해당 지역의 식당만 필터링
         // 서비스에서 Page<RestaurantDto> 반환
@@ -80,7 +81,8 @@ public class RestaurantController {
         String[] parts =  address.split(" ");
         if (parts.length >= 2) {
             // parts[0] = 시, parts[1] = 구
-            return parts[0] +  " " + parts[1] + " " + parts[2];
+            return parts[0] +  " " + parts[1];
+            // + " " + parts[2]
         }
 
         // 주소가 시만 있을 경우 시만 뽑기
