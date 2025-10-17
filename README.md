@@ -166,16 +166,6 @@
 
 ---
 
-## 🔗 주요 API
-
-| 기능 | URL | Method | 요청 Body | 응답 |
-|------|-----|--------|-----------|------|
-| 로그인 | /api/auth/login | POST | {email, password} | {token, userInfo} |
-| 가게 등록 | /api/store | POST | {name, address, category} | {storeId, success} |
-| 게시글 조회 | /api/posts | GET | - | [{postId, title, content, author}] |
-
----
-
 ## 🔹 주요 기능 
 
 1. **로그인/회원가입**
@@ -205,10 +195,9 @@
 
 ## ⚙️ 설치 및 실행
 
-1. 저장소 클론
 ```bash
 git clone https://github.com/user/project.git
-
+```
 
 ## 발표 자료
 
