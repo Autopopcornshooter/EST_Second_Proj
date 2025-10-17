@@ -1,0 +1,198 @@
+/* 기본 스타일 */
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: white;
+}
+
+/* 상단 메뉴 */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #ffffff;
+}
+
+.topbar .logo {
+  height: 50px;
+}
+.topbar nav {
+  margin-left: 20px;
+}
+
+.topbar nav a {
+  margin: 0 5px;
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+}
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+}
+
+.topbar-right input {
+  padding: 5px 10px;
+  margin-right: 10px;
+  border-radius: 10px;
+  border: none;
+  background-color: #dee2e6;
+}
+
+.topbar-right button {
+  margin-left: 5px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+
+.store-card {
+  max-width: 600px;
+  margin: 30px auto;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+.store-image img {
+  width: 100%;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.store-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.store-name {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.store-stats {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  color: #555;
+}
+
+.chat-btn {
+  padding: 6px 14px;
+  background-color: #2d9ca1;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.menu-name {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.menu-desc {
+  font-size: 14px;
+  color: #555;
+}
+
+.store-location {
+  font-size: 12px;
+  color: #aaa;
+}
+
+.menu-price {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.action-btns {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.edit-btn, .delete-btn {
+  font-size: 12px;
+  color: #888;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.edit-btn:hover, .delete-btn:hover {
+  text-decoration: underline;
+}
+
+/* 좋아요 버튼 통합 스타일 */
+.like-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px; /* 버튼 텍스트와 카운트 사이 간격 */
+    padding: 6px 12px;
+    background-color: #2d9ca1; /* 기본 버튼 색 */
+    color: #fff; /* 텍스트 색상 */
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.like-btn:hover {
+    background-color: #23878c;
+    transform: scale(1.05);
+}
+
+.like-btn span:first-child {
+    /* 좋아요 / 좋아요 취소 텍스트 */
+}
+
+.like-btn .like-count {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* 카드 안에서 버튼 위치 맞춤 */
+.store-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    color: #555;
+}
+
+/* 기존 채팅 버튼과 스타일 맞추기 */
+.chat-btn {
+    padding: 5px 13px;
+    background-color: #2d9ca1;
+    border: none;
+    border-radius: 6px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.chat-btn:hover {
+    background-color: #23878c;
+    transform: scale(1.05);
+}

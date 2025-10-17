@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--    CSRF 메타 태그-->
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+    <title>식당 세부 페이지</title>
+    <link rel="icon" type="image/png" th:href="@{/images/BaeMin-main.jpg}">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" th:href="@{/css/restaurantdetail.css}">
+</head>
+<body>
+<!-- 상단 메뉴 -->
+<div th:replace="~{topbar :: topbar}"></div>
+
+<!--식당 세부 사항 -->
+<div class="store-card">
+    <div class="store-image">
+        <img th:src="@{${restaurant.imageUrl}}" th:alt="${restaurant.name}">
+    </div>
+    <div class="store-info">
+        <h2 class="store-name" th:text="${restaurant.name}">식당 이름</h2>
+        <div class="store-stats">
+            <span th:text="'조회수 ' + ${restaurant.view}">조회수</span>
+            <!-- 좋아요 표시 & 버튼 -->
+            <button class="like-btn" th:attr="data-id=${restaurant.id}, data-liked=${userLiked}">
+                <span th:text="${userLiked} ? '좋아요 취소' : '좋아요'">좋아요</span>
+                <span class="like-count" th:text="' ' + ${likeCount} + ' 👍'">0 👍</span>
+            </button>
+            <!--            <span id="like-count" th:text="'좋아요 !@!@ ' + ${likeCount} + ' 👍'">좋아요</span>-->
+<!--            <button class="like-btn"-->
+<!--                    th:attr="data-id=${restaurant.id}, data-liked=${userLiked}">-->
+<!--                <span th:text="${userLiked} ? '좋아요 취소' : '좋아요'">좋아요</span>-->
+<!--            </button>-->
+            <button class="chat-btn" th:data-userId="${restaurant.userId}">채팅하기</button>
+        </div>
+        <p class="menu-name" th:text="${restaurant.mainMenu}">메뉴 이름</p>
+        <p class="menu-desc" th:text="${restaurant.description}">메뉴 설명</p>
+        <p class="store-location" th:text="'장소 | ' + ${restaurant.address}">장소</p>
+        <p class="menu-price" th:text="${restaurant.price} + '원'">가격</p>
+        <div class="action-btns">
+            <button class="edit-btn"
+                    th:if="${#authentication.principal.id == restaurant.userId}"
+                    th:onclick="'location.href=\'/api/restaurants/' + ${restaurant.id} + '/edit\';'">수정하기</button>
+            <button class="delete-btn"
+                    th:if="${#authentication.principal.id == restaurant.userId}"
+                    th:onclick="'deleteRestaurant(' + ${restaurant.id} + ')'">삭제하기</button>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/js/restaurant.js}"></script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>메뉴 검색시 조회 페이지</title>
+    <link rel="icon" type="image/png" th:href="@{/images/BaeMin-main.jpg}">
+    <link rel="stylesheet" href="/css/introducepage.css">
+</head>
+<body>
+<!-- 상단 메뉴 -->
+<div th:replace="~{topbar :: topbar}"></div>
+
+<!-- 식당 리스트 -->
+<section class="restaurant-list-section">
+    <div class="restaurant-grid">
+        <!-- 식당 카드 반복 -->
+        <div class="restaurant-card"
+             th:each="restaurant : ${results}"
+             th:onclick="'location.href=\'/api/restaurants/' + ${restaurant.id} + '\''"
+             style="cursor:pointer;">
+            <div class="restaurant-img">
+                <img th:if="${restaurant.imageUrl != null}" th:src="@{${restaurant.imageUrl}}" alt="식당 이미지">
+            </div>
+            <div class="restaurant-info">
+                <p class="restaurant-name" th:text="${restaurant.name}">식당명</p>
+                <p class="restaurant-menu" th:text="${restaurant.mainMenu}">대표 메뉴</p>
+                <span th:text="${#numbers.formatDecimal(restaurant.price, 0, 'COMMA', 0, 'POINT')+'원'}"></span>
+                <p class="restaurant-views" th:text="'조회수 ' + ${restaurant.view}">조회수</p>
+            </div>
+        </div>
+    </div>
+
+    <!--리스트가 비어 있을 때-->
+    <p th:if="${results.size() == 0}" class="no-restaurant" style="color: #666666">
+        검색 결과가 없어요...
+    </p>
+
+</section>
+
+</body>
+</html>

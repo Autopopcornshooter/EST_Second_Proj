@@ -1,0 +1,147 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #ddd;
+}
+
+header img {
+  height: 50px;
+}
+
+.logout-btn {
+  padding: 6px 12px;
+  color: #dfdfdf;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#main-content {
+  width: 1440px;
+  height: 720px;
+  margin: 10px auto;
+  border: 1px solid #ccc;
+}
+
+#chatting-list {
+  width: 25%;
+  border-right: 1px solid #ccc;
+}
+
+#chat-area {
+  width: 75%;
+  height: 100%;
+}
+
+#chatting-room {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.profile-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 5px;
+}
+
+#nickname-area {
+  width: 100%;
+  border-bottom: 1px solid #ccc;
+}
+
+.nickname {
+  font-weight: bold;
+}
+
+.last-comment {
+  color: #666;
+  font-size: 0.9em;
+  margin-top: 2px;
+  width: 250px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.chatting-list-item {
+  border-bottom: 1px solid #ccc;
+}
+
+#restaurant-name {
+  font-weight: bold;
+}
+
+#info-area {
+  border-bottom: 1px solid #ccc;
+}
+
+#chatting-content {
+  flex: 1;
+  height: 400px;
+  overflow-y: auto;
+  display: block;
+}
+
+.chatting-item1 {
+  background-color: #f2f3f6;
+  padding: 10px;
+  border-radius: 10px;
+  max-width: 30%;
+  margin: 5px 0;
+}
+
+.chatting-item2 {
+  background-color: #2f9eab;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  max-width: 30%;
+  margin: 5px 0;
+}
+
+.time {
+  font-size: 0.7em;
+}
+
+#chatting-input-area {
+  height: 180px;
+  background-color: #f2f3f6;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+#message-input {
+  width: 100%;
+  height: 120px;
+  resize: none;
+  border: none;
+  background-color: #f2f3f6;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+#message-input:focus {
+  outline: none;
+  box-shadow: none;
+  border-color: inherit;
+}
+
+#send-btn {
+  width: 60px;
+  height: 40px;
+  background-color: #2f9eab;
+  color: white;
+  border: none;
+  border-radius: 10px;
+}
+
+.chatting-list-item.selected {
+  background-color: #e0f7fa; /* 연한 하늘색 */
+  border-left: 4px solid #00acc1; /* 좌측 포인트 */
+}

@@ -1,0 +1,163 @@
+package EST.Baemin.Manager.service;
+
+import EST.Baemin.Manager.domain.Restaurant;
+import EST.Baemin.Manager.domain.User;
+import EST.Baemin.Manager.dto.RestaurantDto;
+import EST.Baemin.Manager.repository.RestaurantRepository;
+import EST.Baemin.Manager.repository.UserRepository;
+import EST.Baemin.Manager.util.SecurityUtil;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+@Service
+@RequiredArgsConstructor
+public class RestaurantService {
+    private final RestaurantRepository restaurantRepository;
+    private final UserRepository userRepository;
+    private final S3Service s3Service;
+
+    // 식당 조회 기능
+    public Page<RestaurantDto> findAllRestaurants(Pageable pageable) {
+
+        return restaurantRepository.findAll(pageable)
+                .map(RestaurantDto::new);    // DTO 변환 예시
+
+    }
+
+    // 식당 아이디별 조회 기능
+    public Optional<RestaurantDto> findRestaurantById(Long id) {
+
+        return restaurantRepository.findById(id)
+                .map(RestaurantDto::new);
+    }
+
+    // 식당 추가 기능
+    // feat: 식당에 user 필드 추가, user에 식당 리스트 필드 추가로 인한 수정
+    @Transactional
+    public RestaurantDto createRestaurant(RestaurantDto dto) {
+        User user = userRepository.findByLoginId(SecurityUtil.getCurrentUserLoginId()).orElseThrow(() -> new IllegalArgumentException("findById Not Found with id : " + SecurityUtil.getCurrentUserLoginId()));
+
+        Restaurant restaurant = Restaurant.builder()
+                .name(dto.getName() != null && !dto.getName().isEmpty() ? dto.getName() : user.getStoreName())
+                .mainMenu(dto.getMainMenu())
+                .description(dto.getDescription())
+                .address(dto.getAddress())
+                .price(dto.getPrice())
+                .view(dto.getView() != null ? dto.getView() : 0)    // null 값이면 0으로
+                .user(user)
+                .state(dto.getState())
+                .imageUrl(dto.getImageUrl())
+                .build();
+        user.updateRestaurant(restaurant);
+        Restaurant saved = restaurantRepository.save(restaurant);
+
+
+        return new RestaurantDto(saved);
+    }
+
+    // 식당 수정 기능
+    public Optional<RestaurantDto> updateRestaurant(Long id, RestaurantDto dto) {
+        return restaurantRepository.findById(id)
+                .map(r -> {
+                    // PutMapping 할 때 들어온값이 null이면 기존 데이터 유지
+                    if (dto.getName() != null) r.setName(dto.getName());
+                    if (dto.getMainMenu() != null) r.setMainMenu(dto.getMainMenu());
+                    if (dto.getDescription() != null) r.setDescription(dto.getDescription());
+                    if (dto.getAddress() != null) r.setAddress(dto.getAddress());
+                    if (dto.getPrice() != null) r.setPrice(dto.getPrice());
+                    if (dto.getState() != null) r.setState(dto.getState());
+                    if(dto.getImageUrl() != null) r.setImageUrl(dto.getImageUrl());
+                    return restaurantRepository.save(r);
+                })
+                .map(RestaurantDto::new);
+    }
+
+    // 식당 삭제 기능
+    public void deleteRestaurant(Long id) {
+        restaurantRepository.findById(id).ifPresent(restaurant -> {
+            User user = restaurant.getUser();
+            if (user != null) {
+                user.setRestaurant(null);   // User와의 연관 끊기
+            }
+            restaurant.setUser(null);   // Restaurant에서 User 연관 끊기
+            restaurantRepository.delete(restaurant);
+        });
+    }
+
+    // 조회수 증가 기능
+    @Transactional
+    public void increaseView(Long id) {
+        restaurantRepository.findById(id).ifPresent(restaurant -> {
+            restaurant.setView(restaurant.getView() + 1);
+            restaurantRepository.save(restaurant);
+        });
+    }
+
+    // 검색 기능 추가
+    public List<RestaurantDto> searchRestaurant(String keyword) {
+        return restaurantRepository
+                .findByNameContainingIgnoreCaseOrMainMenuContainingIgnoreCase(keyword, keyword)
+                .stream()
+                .map(RestaurantDto::new)
+                .toList();
+    }
+
+    // address 기반 주소 추출
+    public Page<RestaurantDto> findRestaurantsByCity(String city, Pageable pageable) {
+        return restaurantRepository.findByAddressContainingAndState(city, "공개", pageable)
+                .map(RestaurantDto::new);
+    }
+
+    // 권한 체크 메서드
+    public boolean isOwner(Long restaurantId, Long userId) {
+        return restaurantRepository.findById(restaurantId)
+                .map(r -> r.getUser().getId().equals(userId))
+                .orElse(false);
+    }
+
+    // 식당 주소에서 시 추출 후 그룹핑
+    public Map<String, Long> getCityStatistics() {
+        List<Restaurant> restaurants = restaurantRepository.findAll();
+
+        Map<String, Long> stats = restaurants.stream()
+                .map(r -> extractCityFromAddress(r.getAddress()))
+                .collect(Collectors.groupingBy(city -> city, LinkedHashMap::new, Collectors.counting()));
+
+        return sortByCountDescending(stats);
+    }
+
+    // 주소에서 시만 추출
+    private  String extractCityFromAddress(String address) {
+        if (address == null || address.isBlank()) return "기타";
+        String[] parts = address.split(" ");
+        return parts.length > 1 ? parts[1] : "기타";
+    }
+
+    // 내림차순으로 정렬
+    private Map<String, Long> sortByCountDescending(Map<String, Long> unsorted) {
+        return unsorted.entrySet().stream()
+                .sorted(Map.Entry.<String, Long>comparingByValue().reversed())
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue,
+                        (e1, e2) -> e1,
+                        LinkedHashMap::new
+                ));
+    }
+
+    public Page<RestaurantDto> searchRestaurantsByName(String keyword, Pageable pageable) {
+        return restaurantRepository.findByNameContainingIgnoreCase(keyword, pageable)
+                .map(RestaurantDto::new);
+    }
+}

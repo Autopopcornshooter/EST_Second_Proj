@@ -1,0 +1,150 @@
+/* 기본 스타일 */
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: white;
+}
+
+/* 메인 히어로 섹션 */
+.main-hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px 80px;
+  background-color: #d7f5f9;
+}
+
+.hero-text h1 {
+  margin: 0;
+  font-size: 36px;
+}
+
+.hero-text p {
+  margin-top: 10px;
+  font-size: 16px;
+  color: #666;
+}
+
+.hero-img {
+  text-align: center;
+}
+
+.hero-img img {
+  border-radius: 10%;
+  width: 200px;
+  height: 200px;
+}
+
+/* 식당 리스트 */
+.restaurant-list-section {
+  padding: 20px 40px;
+}
+
+.restaurant-list-section h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.no-restaurant {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666666;
+}
+
+.restaurant-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 20px;
+}
+
+.restaurant-card {
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.restaurant-img {
+    position: relative;
+    width: 100%;
+    padding-top: 100%; /* 정사각형 유지 */
+    border-radius: 10px;
+    overflow: hidden; /* 이미지가 넘어가면 숨김 */
+}
+
+.restaurant-img img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 이미지 비율 유지하며 정사각형 안에 꽉 채움 */
+}
+
+
+.restaurant-info {
+  margin-top: 10px;
+}
+
+.restaurant-name {
+  font-weight: bold;
+  margin: 0;
+}
+
+.restaurant-menu, .restaurant-price, .restaurant-views {
+  margin: 2px 0;
+  font-size: 14px;
+  color: #333;
+}
+
+/* 오른쪽 식당 등록 버튼 */
+.add-restaurant-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #2abf9f;
+  color: #fff;
+  border: none;
+  padding: 15px 20px;
+  border-radius: 100%;
+  cursor: pointer;
+  font-weight: bold;
+  height: 50px;
+}
+
+/* 페이지네이션 전체 */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin: 30px 0;
+    font-family: 'Arial', sans-serif;
+}
+
+.pagination .page-btn {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 36px;
+    height: 36px;
+    background-color: #d7f5f9;
+    color: #333;
+    border-radius: 50%;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.2s;
+}
+
+.pagination .page-btn:hover {
+    background-color: #ffd600;
+    color: #000;
+    transform: scale(1.1);
+    border-color: #ffd600;
+}
+
+.pagination .page-info {
+    font-size: 16px;
+    font-weight: bold;
+    color: #666;
+}

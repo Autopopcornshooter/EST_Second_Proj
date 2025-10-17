@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>배달의 민족</title>
+    <link rel="icon" type="image/png" th:href="@{/images/BaeMin-main.jpg}">
+  <link rel="stylesheet" th:href="@{/css/region.css}">
+</head>
+<body>
+
+<header>
+  <div class="logo">
+      <a th:href="@{/api/restaurants}">
+          <img th:src="@{/images/BaeMin_Logo.jpeg}" alt="배달의민족 로고">
+      </a>
+  </div>
+  <form th:action="@{/logout}" method="post">
+    <button type="submit" class="logout-btn">로그아웃</button>
+  </form>
+</header>
+
+<section class="main-section">
+  <div class="text">
+    <h3>어디에 살고 계신가요?</h3>
+    <input id="address-input" type="text" placeholder="예) 서울 강서구 화곡동">
+    <button id="Myposition-btn" name="Myposition-location">내 동네 설정</button>
+  </div>
+  <div class="text">
+    <h3>현재 위치로 동네 인증하기</h3>
+    <div id="map"></div>
+    <label id="location-firstlabel">현재 위치는 서울 강서구 화곡동입니다.</label>
+    <br>
+    <button id="verify-btn" name="verify-location">동네인증 완료하기</button>
+  </div>
+</section>
+
+<form id="location-form" th:action="@{/api/regions}" method="post">
+  <input type="hidden" name="address" id="form-address">
+  <input type="hidden" name="latitude" id="form-latitude">
+  <input type="hidden" name="longitude" id="form-longitude">
+  <input type="hidden" name="google_place_id" id="form-google_place_id">
+</form>
+
+<script>
+  let map;
+  let marker;
+  let geocoder;
+
+  function initMap() {
+    const seoul = { lat: 37.5665, lng: 126.9780 };
+    map = new google.maps.Map(document.getElementById("map"), { center: seoul, zoom: 14 });
+    marker = new google.maps.Marker({ position: seoul, map: map });
+    geocoder = new google.maps.Geocoder();
+  }
+
+  document.getElementById("Myposition-btn").addEventListener("click", () => {
+    const address = document.getElementById("address-input").value;
+    if (!address) { alert("주소를 입력해주세요!"); return; }
+
+    geocoder.geocode({ address }, (results, status) => {
+      if (status === "OK") {
+        const location = results[0].geometry.location;
+        map.setCenter(location);
+        marker.setPosition(location);
+        document.getElementById("location-firstlabel").innerText =
+            "현재 위치는 " + results[0].formatted_address + "입니다.";
+      } else {
+        alert("주소를 찾을 수 없습니다: " + status);
+      }
+    });
+  });
+
+  document.getElementById("verify-btn").addEventListener("click", () => {
+    if (!navigator.geolocation) {
+      alert("이 브라우저는 위치 정보를 지원하지 않습니다.");
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition((position) => {
+      const userLocation = { lat: position.coords.latitude, lng: position.coords.longitude };
+
+      geocoder.geocode({ location: userLocation }, (results, status) => {
+        let addressText = "";
+        let placeId = "";
+        if (status === "OK" && results[0]) {
+          addressText = results[0].formatted_address;
+          placeId = results[0].place_id;
+          document.getElementById("location-firstlabel").innerText =
+              "현재 위치는 " + addressText + "입니다.";
+        }
+
+        // form에 값 넣기
+        document.getElementById("form-address").value = addressText;
+        document.getElementById("form-latitude").value = userLocation.lat;
+        document.getElementById("form-longitude").value = userLocation.lng;
+        document.getElementById("form-google_place_id").value = placeId;
+
+        // form 제출
+        document.getElementById("location-form").submit();
+      });
+    });
+  });
+
+
+</script>
+
+<!-- 구글 지도 API -->
+<script async defer
+        th:src="@{'https://maps.googleapis.com/maps/api/js?key=' + ${apiKey} + '&callback=initMap'}">
+</script>
+
+</body>
+</html>

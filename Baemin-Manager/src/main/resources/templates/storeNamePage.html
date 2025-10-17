@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>구글 로그인 상호명</title>
+    <link rel="icon" type="image/png" th:href="@{/images/BaeMin-main.jpg}">
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+<!-- 헤더: 좌측 로고/브랜딩 -->
+<header class="gnb">
+    <button type="button" class="brand__logo-btn" aria-label="배달의민족 홈"
+            th:onclick="|location.href='@{/mainpage}'|"></button>
+
+</header>
+
+<!-- 배경 컨테이너 -->
+<main class="page">
+    <section class="login-panel">
+        <h1 class="sr-only">상호명</h1>
+
+
+        <!-- 로그인 폼 -->
+        <form class="form" th:action="@{/api/storeName}" method="post" autocomplete="on">
+            <div class="form__group">
+                <label class="form__label" for="storeName">상호명</label>
+                <input class="form__input" type="text" id="storeName" name="storeName"
+                       placeholder="상호명을 입력해주세요" required/>
+            </div>
+
+            <button class="btn btn--primary form__submit" type="submit">회원가입</button>
+        </form>
+
+
+    </section>
+</main>
+<script>
+    window.addEventListener("load", () => {
+        console.log("리소스 로드 완료");
+    });
+</script>
+</body>
+</html>
