@@ -15,7 +15,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-
 import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
 
 
@@ -78,7 +77,6 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(auth ->
                         auth
                                 .requestMatchers("/mainpage", "/login", "/signup","/api/signup","/access-denied").permitAll()// 로그인, 회원가입은 인증 없이 접근 가능
-                                .requestMatchers(toH2Console()).permitAll()
                                 .requestMatchers("/.well-known/**").permitAll()
                                 .anyRequest().hasRole(Role.ROLE_USER.name().replace("ROLE_", "")))
                 .formLogin(auth ->
@@ -100,7 +98,6 @@ public class WebSecurityConfig {
                         exception
                                 .accessDeniedPage("/access-denied"));
 
-        httpSecurity.csrf(csrf -> csrf.ignoringRequestMatchers(toH2Console()));
         httpSecurity.headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()));
         log.info("User SecurityFilterChain Applied");
         return httpSecurity.build();

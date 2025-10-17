@@ -7,15 +7,28 @@
 #    active: prod
 #
 #
-#aws:
-#  access-key-id: ${ACCESS_KEY}
-#  secret-access-key:  ${SECRET_KEY}
-#  region: ap-northeast-2
-#  s3:
-#    bucket-name:  ${BUCKET_NAME}
-#
+aws:
+  access-key-id: ${ACCESS_KEY}
+  secret-access-key:  ${SECRET_KEY}
+  region: ap-northeast-2
+  s3:
+    bucket-name:  ${BUCKET_NAME}
 
 spring:
+  datasource:
+    url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update   # 개발 환경에서는 update, 운영은 validate 혹은 none
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
   security:
     oauth2:
       client:
@@ -33,7 +46,9 @@ spring:
             token-uri: https://oauth2.googleapis.com/token
             user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
             user-name-attribute: sub
+
   google:
     maps:
       api:
         key: ${GOOGLE_MAPS_API_KEY}
+
