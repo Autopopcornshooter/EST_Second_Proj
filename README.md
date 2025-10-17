@@ -1,6 +1,7 @@
-# 🛵 EST 2차 프로젝트(배민 사업자용 페이지 클론코딩)
+# 🛵 EST 2차 프로젝트 (배민 사업자용 페이지 클론코딩)
+
 <p align="center">
-    <img width="500" height="496" alt="image" src="https://github.com/user-attachments/assets/34e7147d-f0c2-494c-98f5-4952327e5e87" />
+  <img width="500" height="496" src="https://github.com/user-attachments/assets/34e7147d-f0c2-494c-98f5-4952327e5e87" alt="프로젝트 이미지"/>
 </p>
 
 ---
@@ -9,30 +10,58 @@
 
 ### 팀명 : Dev의 민족
 
-- 👨‍💻 이경원
-- 👨‍💻 정인웅
-- 👨‍💻 정준범
-- 👩‍💻 최애정
+| 이름 | 역할 |
+|------|------|
+| 👨‍💻 이경원 |  |
+| 👨‍💻 정인웅 |  |
+| 👨‍💻 정준범 |  |
+| 👩‍💻 최애정 |  |
 
 ---
 
 ## 📖 프로젝트 소개
 
-👨‍🍳 사장님을 위한 커뮤니티 플랫폼 만들기
-- 이웃 사장님과 함께하는 비즈니스!
-- 우리 동네의 다양한 이야기를 이웃과 함께 나눠요!
-- 사장님들만의 다양한 고충을 함께 나누어요.
+👨‍🍳 **사장님 전용 커뮤니티 플랫폼**
+
+### 문제 정의
+- 동네 사장님들은 정보 공유와 네트워킹이 어렵습니다.
+- 매출 관리, 프로모션, 커뮤니티 활동을 동시에 관리할 수 있는 도구 필요
+
+### 목표
+- 사장님 전용 커뮤니티 제공
+- 동네 정보와 비즈니스 노하우 공유
+- 쉽고 직관적인 UI/UX 제공
+
+### 핵심 기능
+- 게시판 및 댓글 기능
+- 가게 정보 관리
+- 실시간 알림과 소셜 로그인 지원
+
+---
+
+## 📝 프로젝트 요구사항
+- Spring 기반 프로젝트 구성
+- View는 HTML + Thymeleaf 권장
+- 필수 화면 레이아웃 및 기능 구현
+- 추가 기능, 스타일링, 반응형은 자유
+- 매일 작업 진행 상황 업데이트 필수
 
 ---
 
 ## 🗓️ 프로젝트 일정
-- 프로젝트 일정: 9/23(화) ~ 10/20(월)
-- 발표 순서 선정: 10/17(금)
-- 프로젝트 발표: 10/20(월)
+- 프로젝트 일정: 2025/09/23(화) ~ 2025/10/20(월)
+- 발표 순서 선정: 2025/10/17(금)
+- 프로젝트 발표: 2025/10/20(월)
 
 ---
 
 ## ✏️ 계획 일정표
+
+<p align="center">
+  <a href="https://www.notion.so/oreumi/Mile-Stone-27eebaa8982b808687ddea626dbc6359" target="_blank">
+    <img width="500" height="496" src="https://github.com/user-attachments/assets/bfad0eaa-084d-493d-9bb2-ac918cea0cc6" alt="계획 일정표"/>
+  </a>
+</p>
 
 ---
 
@@ -69,73 +98,117 @@
   <img src="https://img.shields.io/badge/jQuery-0769AD?style=flat&logo=jquery&logoColor=white"/>
 </p>
 
+---
+
+## 🎨 디자인 자료
+
+<p align="center">
+  <a href="https://www.figma.com/design/LxDQnJF9Qkv7RnbSKT3fWk/12%EA%B8%B0-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8?node-id=0-1&p=f&t=SWN8wmjD3z4PXGfe-0" target="_blank">
+    <img width="800" src="https://github.com/user-attachments/assets/63eaad61-3444-442d-8992-d4975e4d9067" alt="Figma 팀 페이지"/>
+  </a>
+</p>
+
+---
+
+## 🚀 프로젝트 문서 안내
+
+### 📌 기능 명세서
+> 프로젝트에서 구현할 **주요 기능과 흐름**을 정리한 문서입니다.  
+🔗 [기능 명세서 바로가기](https://www.notion.so/oreumi/277ebaa8982b80a5bfabe9f0885e55c6)
+
+### 📌 API 명세서
+> 서버와 클라이언트 간 통신 규격과 **요청/응답 형식**을 확인할 수 있습니다.  
+🔗 [API 명세서 바로가기](https://www.notion.so/oreumi/API-28eebaa8982b805e8ebae3ee778e9143)
+
+### 🗂 ERD (데이터베이스 구조)
+> 프로젝트 데이터베이스 구조를 한눈에 볼 수 있습니다.  
+<img src="https://github.com/user-attachments/assets/dfd2f958-e73e-44e4-a197-09c13be333f1" alt="ERD 이미지" width="100%"/>
+
+---
+
+## 📁 프로젝트 구조
+
+```
+## 📁 프로젝트 구조
+📦 Baemin-Manager/
+├── .gradle/                         🧱 Gradle 빌드 캐시 폴더
+├── build/                           🏗️ 빌드 결과물 폴더
+├── gradle/                          ⚙️ Gradle 설정 관련 폴더
+├── src/
+│   └── main/
+│       ├── java/
+│       │   └── EST/
+│       │       └── Baemin/
+│       │           └── Manager/
+│       │               ├── config/         ⚙️ 프로젝트 설정 (Spring, JPA, Security 등)
+│       │               ├── controller/     🎯 클라이언트 요청 처리 컨트롤러
+│       │               ├── domain/         🧩 엔티티 클래스 (DB 매핑)
+│       │               ├── dto/            💌 데이터 전송 객체 (Request, Response 등)
+│       │               ├── Exception/      🚨 예외 처리 클래스
+│       │               ├── repository/     🗃️ 데이터 접근 계층 (JPA Repository)
+│       │               ├── security/       🔒 인증·인가 관련 설정
+│       │               ├── service/        🧠 비즈니스 로직 처리
+│       │               ├── util/           🛠️ 공통 유틸리티 클래스
+│       │               └── BaeminManagerApplication.java  🚀 Spring Boot 메인 실행 클래스
+│       │
+│       └── resources/
+│           ├── static/           🎨 정적 리소스 폴더
+│           │   ├── css/          🎀 스타일시트
+│           │   ├── images/       🖼️ 이미지 파일
+│           │   └── js/           ⚡ JavaScript 파일
+│           ├── templates/        🧾 Thymeleaf 템플릿 파일
+│           ├── .env              🌍 환경 변수 파일
+│           ├── application.properties  ⚙️ 설정 파일
+│           └── application.yml         ⚙️ 설정 파일 (YAML 형식)
+│
+└── build.gradle                  📜 Gradle 빌드 스크립트
+```
+
+---
+
+## 🔗 주요 API
+
+| 기능 | URL | Method | 요청 Body | 응답 |
+|------|-----|--------|-----------|------|
+| 로그인 | /api/auth/login | POST | {email, password} | {token, userInfo} |
+| 가게 등록 | /api/store | POST | {name, address, category} | {storeId, success} |
+| 게시글 조회 | /api/posts | GET | - | [{postId, title, content, author}] |
+
+---
+
+## 🔹 주요 기능 
+
+1. **로그인/회원가입**
+    - 로그인/회원가입, 구글 소셜 로그인 기능 
+   <img width="400" alt="image" src="https://github.com/user-attachments/assets/7eb5461b-6af5-42a6-accf-23da9e7cd805" />
+
+
+2. **동네 인증**
+    - 유저의 현재 위치를 구글맵을 이용하여 찾는 기능 
+   <img width="400"  alt="image" src="https://github.com/user-attachments/assets/3eac54f3-3386-415c-8595-4d69ece53566" />
+
+
+3. **동네 식당 소개**
+    - 위치를 기반으로 동네의 식당들을 리스트 형식으로 
+   <img width="400" src="가게관리_스크린샷_URL" />
+
+4. **동네 식당 상세 보기**
+    - 해당 식당의 대표메뉴, 메뉴 설명, 가격, 좋아요, 조회수를 확인할 수 있는 기능
+   <img width="400" src="가게관리_스크린샷_URL" />
+
+5. **사장님과 채팅하기**
+    - 해당 가게의 사장님과 직접 채팅을 할 수 있는 기능
+   <img width="400"  alt="image" src="https://github.com/user-attachments/assets/1d6296d3-5f8a-48a8-b52a-f496b788db0e" />
 
 
 ---
 
-  
-## 피그마 팀 페이지
-https://www.figma.com/design/LxDQnJF9Qkv7RnbSKT3fWk/12%EA%B8%B0-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8?node-id=0-1&p=f&t=SWN8wmjD3z4PXGfe-0
+## ⚙️ 설치 및 실행
 
----
-  
-## 📝 프로젝트 요구사항
-- spring 기반 프로젝트를 구성합니다.
-- view 의 경우에는 html+타임리프를 권장합니다.
-- 아래와 같은 화면의 레이아웃과 화면 내 구현 기능은 필수로 구성해야 합니다.
-- 기본 구성 외 추가적인 기능, 스타일링, 반응형은 자유롭게 진행합니다.
-- 각 팀은 작업 진행을 매일 업데이트합니다.
+1. 저장소 클론
+```bash
+git clone https://github.com/user/project.git
 
----
-
-## 📄 기능 및 API 명세서
-
-프로젝트 관련 기능과 API 명세서는 아래 링크에서 확인할 수 있습니다.
-
-### 기능 명세서
-- 🔗 [기능 명세서 바로가기](https://www.notion.so/oreumi/277ebaa8982b80a5bfabe9f0885e55c6)
-- 프로젝트에서 구현할 주요 기능과 흐름을 정리했습니다.
-
-### API 명세서
-- 🔗 [API 명세서 바로가기](https://www.notion.so/oreumi/API-277ebaa8982b803ebdd2fb83b41f61f4)
-- 서버와 클라이언트 간 통신 규격과 요청/응답 형식을 확인할 수 있습니다.
-
-### ERD
-<img width="1868" height="946" alt="image" src="https://github.com/user-attachments/assets/c38484c1-2558-45cf-b595-7fe0827055db" />
-      
----
-
-## API
-
-API 
-
----
-
-## 외부 API
-
-- 소셜 로그인
-    - 기본으로는 구글 소셜 로그인을 사용합니다.
-    - 이외의 소셜 로그인 구현은 여력이 되면 자유롭게 구성하세요.
-- 이미지 업로드
-    - AWS S3 사용합니다. (팀별 계정 추후 제공 예정입니다.)
-- 지도
-    - 구글 map API를 사용합니다.
- 
----
-
-## 프로젝트 구조
-
-프로젝트 구조 
-
----
-
-## 기능
-
----
-
-## 설치 및 실행 방법
-
----
 
 ## 발표 자료
 
