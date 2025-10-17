@@ -180,11 +180,13 @@
 
 3. **동네 식당 소개**
     - 위치를 기반으로 동네의 식당들을 리스트 형식으로 
-   <img width="600" src="가게관리_스크린샷_URL" />
+   <img width="600" alt="image" src="https://github.com/user-attachments/assets/d0912dcd-2d78-40c7-a5d2-ab7250b40477" />
+
 
 4. **동네 식당 상세 보기**
     - 해당 식당의 대표메뉴, 메뉴 설명, 가격, 좋아요, 조회수를 확인할 수 있는 기능
-   <img width="600" src="가게관리_스크린샷_URL" />
+   <img width="600" alt="image" src="https://github.com/user-attachments/assets/0fcfc775-43da-4679-8eb9-2535f2c1a23b" />
+
 
 5. **사장님과 채팅하기**
     - 해당 가게의 사장님과 직접 채팅을 할 수 있는 기능
