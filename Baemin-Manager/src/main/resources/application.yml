@@ -1,21 +1,7 @@
-#spring:
-#  config:
-#    import: optional:file:.env[.properties]
-#  application:
-#    name: day14
-#  profiles:
-#    active: prod
-#
-#
-#aws:
-#  access-key-id: ${ACCESS_KEY}
-#  secret-access-key:  ${SECRET_KEY}
-#  region: ap-northeast-2
-#  s3:
-#    bucket-name:  ${BUCKET_NAME}
-#
 
 spring:
+  profiles:
+    active: prod
   security:
     oauth2:
       client:
