@@ -12,10 +12,10 @@
 
 | 이름 | 역할 |
 |------|------|
-| 👨‍💻 이경원 |  |
-| 👨‍💻 정인웅 |  |
-| 👨‍💻 정준범 |  |
-| 👩‍💻 최애정 |  |
+| 👨‍💻 이경원 | 로그인,회원가입 담당 |
+| 👨‍💻 정인웅 | 식당 등록/수정/삭제 담당 |
+| 👨‍💻 정준범 | 채팅 기능 담당 |
+| 👩‍💻 최애정 | 동네 인증 기능 담당 |
 
 ---
 
@@ -72,6 +72,7 @@
   <img src="https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white"/>
   <img src="https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white"/>
   <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black"/>
+  <img src="https://img.shields.io/badge/Bootstrap-7952B3?style=flat&logo=bootstrap&logoColor=white"/>
 </p>
 
 ### 🧩 Server
@@ -94,13 +95,12 @@
   <img src="https://img.shields.io/badge/IntelliJ%20IDEA-000000?style=flat&logo=intellijidea&logoColor=white"/>
   <img src="https://img.shields.io/badge/Discord-5865F2?style=flat&logo=discord&logoColor=white"/>
   <img src="https://img.shields.io/badge/Notion-000000?style=flat&logo=notion&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Bootstrap-7952B3?style=flat&logo=bootstrap&logoColor=white"/>
   <img src="https://img.shields.io/badge/jQuery-0769AD?style=flat&logo=jquery&logoColor=white"/>
 </p>
 
 ---
 
-## 🎨 디자인 자료
+## 🎨 와이어 프레임
 
 <p align="center">
   <a href="https://www.figma.com/design/LxDQnJF9Qkv7RnbSKT3fWk/12%EA%B8%B0-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8?node-id=0-1&p=f&t=SWN8wmjD3z4PXGfe-0" target="_blank">
@@ -122,7 +122,7 @@
 
 ### 🗂 ERD (데이터베이스 구조)
 > 프로젝트 데이터베이스 구조를 한눈에 볼 수 있습니다.  
-<img src="https://github.com/user-attachments/assets/dfd2f958-e73e-44e4-a197-09c13be333f1" alt="ERD 이미지" width="100%"/>
+<img src="https://github.com/user-attachments/assets/dfd2f958-e73e-44e4-a197-09c13be333f1" alt="ERD 이미지" width="60%"/>
 
 ---
 
@@ -131,7 +131,7 @@
 ```
 ## 📁 프로젝트 구조
 📦 Baemin-Manager/
-├── .gradle/                         🧱 Gradle 빌드 캐시 폴더
+├── .gradle/                         🧱Gradle 빌드 캐시 폴더
 ├── build/                           🏗️ 빌드 결과물 폴더
 ├── gradle/                          ⚙️ Gradle 설정 관련 폴더
 ├── src/
@@ -170,25 +170,25 @@
 
 1. **로그인/회원가입**
     - 로그인/회원가입, 구글 소셜 로그인 기능 
-   <img width="400" alt="image" src="https://github.com/user-attachments/assets/7eb5461b-6af5-42a6-accf-23da9e7cd805" />
+   <img width="600" alt="image" src="https://github.com/user-attachments/assets/7eb5461b-6af5-42a6-accf-23da9e7cd805" />
 
 
 2. **동네 인증**
     - 유저의 현재 위치를 구글맵을 이용하여 찾는 기능 
-   <img width="400"  alt="image" src="https://github.com/user-attachments/assets/3eac54f3-3386-415c-8595-4d69ece53566" />
+   <img width="600"  alt="image" src="https://github.com/user-attachments/assets/3eac54f3-3386-415c-8595-4d69ece53566" />
 
 
 3. **동네 식당 소개**
     - 위치를 기반으로 동네의 식당들을 리스트 형식으로 
-   <img width="400" src="가게관리_스크린샷_URL" />
+   <img width="600" src="가게관리_스크린샷_URL" />
 
 4. **동네 식당 상세 보기**
     - 해당 식당의 대표메뉴, 메뉴 설명, 가격, 좋아요, 조회수를 확인할 수 있는 기능
-   <img width="400" src="가게관리_스크린샷_URL" />
+   <img width="600" src="가게관리_스크린샷_URL" />
 
 5. **사장님과 채팅하기**
     - 해당 가게의 사장님과 직접 채팅을 할 수 있는 기능
-   <img width="400"  alt="image" src="https://github.com/user-attachments/assets/1d6296d3-5f8a-48a8-b52a-f496b788db0e" />
+   <img width="600"  alt="image" src="https://github.com/user-attachments/assets/1d6296d3-5f8a-48a8-b52a-f496b788db0e" />
 
 
 ---
@@ -200,6 +200,12 @@ git clone https://github.com/user/project.git
 ```
 
 ## 발표 자료
+
+<p align="center">
+  <a href="https://www.canva.com/design/DAG19yE4Gqo/7UAVAZTXxb-hiZXLNDVDFw/edit?utm_content=DAG19yE4Gqo&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton" target="_blank">
+    <img width="2014" height="1154" alt="image" src="https://github.com/user-attachments/assets/2cec9ae1-7781-465e-bdfe-1fe0aad3718b" />
+  </a>
+</p>
 
 ---
 
