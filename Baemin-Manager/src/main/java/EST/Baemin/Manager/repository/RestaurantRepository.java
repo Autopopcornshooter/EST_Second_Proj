@@ -10,6 +10,6 @@ import java.util.List;
 public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
     List<Restaurant> findByNameContainingIgnoreCaseOrMainMenuContainingIgnoreCase(String name, String mainMenu);
     Page<Restaurant> findByAddressContaining(String city, Pageable pageable);
-
+    Page<Restaurant> findByAddressContainingAndState(String address, String state, Pageable pageable);
     Page<Restaurant> findByNameContainingIgnoreCase(String name, Pageable pageable);
 }

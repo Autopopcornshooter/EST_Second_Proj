@@ -55,7 +55,7 @@ public class UserController {
     public String setStoreName(@RequestParam String storeName) {
         userService.updateStoreName(storeName, SecurityUtil.getCurrentUserLoginId());
         log.info("상호명: "+storeName);
-        return "RegionPage";
+        return "redirect:/api/regions";
     }
 
 

@@ -29,6 +29,7 @@
         <!-- 식당 카드 반복 -->
         <div class="restaurant-card"
              th:each="restaurant : ${restaurants}"
+
              th:onclick="'location.href=\'/api/restaurants/' + ${restaurant.id} + '\''"
              style="cursor:pointer;">
             <div class="restaurant-img">

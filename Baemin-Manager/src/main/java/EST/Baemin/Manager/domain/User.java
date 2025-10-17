@@ -70,7 +70,7 @@ public class User implements UserDetails {
 
     //TODO
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "region_id")
+    @JoinColumn(name = "region_id", unique = false)
     private Region region;
 
 

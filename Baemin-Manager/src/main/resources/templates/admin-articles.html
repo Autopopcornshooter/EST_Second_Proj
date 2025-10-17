@@ -56,7 +56,7 @@
           <th>번호</th>
           <th>상호명</th>
           <th>대표 메뉴</th>
-  <!--        <th>작성자</th>-->
+          <th>작성자</th>
           <th>지역</th>
           <th>등록일</th>
           <th>상태</th>
@@ -67,7 +67,7 @@
           <td th:text="${restaurant.id}"></td>
           <td th:text="${restaurant.name}"></td>
           <td th:text="${restaurant.mainMenu}"></td>
-  <!--        <td th:text="${restaurant.user != null ? restaurant.user.username : 'N/A'}"></td>-->
+          <td th:text="${restaurant.userName}"></td>
           <td th:text="${restaurant.address}"></td>
           <td th:text="${#temporals.format(restaurant.createdAt, 'yyyy-MM-dd')}"></td>
           <td>

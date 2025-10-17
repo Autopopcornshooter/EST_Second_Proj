@@ -8,39 +8,43 @@ import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserServ
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
-import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.Map;
 
 @Service
 @AllArgsConstructor
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
+
     private final UserRepository userRepository;
 
-
     @Override
-    public OAuth2User loadUser(OAuth2UserRequest request) throws OAuth2AuthenticationException{
-            OAuth2User oAuth2User=new DefaultOAuth2UserService().loadUser(request);
+    public OAuth2User loadUser(OAuth2UserRequest request) throws OAuth2AuthenticationException {
+        OAuth2User oAuth2User = new DefaultOAuth2UserService().loadUser(request);
 
-            String email=oAuth2User.getAttribute("email");
-            String name=oAuth2User.getAttribute("name");
+        String email = oAuth2User.getAttribute("email");
+        String name = oAuth2User.getAttribute("name");
 
-            if(userRepository.findByLoginId(email).isEmpty()){
-                userRepository.save(
+        User user = userRepository.findByLoginId(email)
+                .orElseGet(() -> userRepository.save(
                         User.builder()
                                 .loginId(email)
                                 .nickname(name)
                                 .role(Role.ROLE_USER)
+                                .isActive(true)
                                 .build()
-                );
-            }
-        return new DefaultOAuth2User(
-                Collections.singleton(() -> "ROLE_USER"), // 권한
-                oAuth2User.getAttributes(),              // 구글에서 받은 사용자 정보
-                "email"                                  // 기본 키로 삼을 속성
-        );
+                ));
 
+
+        Map<String, Object> attributes = oAuth2User.getAttributes();
+
+        return new CustomOAuth2User(
+                Collections.singleton(() -> "ROLE_USER"),
+                attributes,
+                "email",
+                user.getId()
+        );
     }
 }
