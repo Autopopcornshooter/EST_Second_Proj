@@ -48,7 +48,7 @@
                 <input class="form__input" type="text" id="loginId" name="username"
                        th:value="${formData.username}"
                        placeholder="아이디를 입력해주세요" required/>
-                <span id="idMessage"></span>
+                <span id="idMessage" ></span>
             </div>
             <div class="form__group">
                 <label class="form__label" for="password">비밀번호</label>
@@ -73,17 +73,20 @@
             이미 계정이 있으신가요?
             <a class="helper__link" th:href="@{/login}">로그인</a>
         </p>
-        <a href="/oauth2/authorization/google" class="btn btn-danger">
-            <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google" width="20" height="20">
-            Google 계정으로 로그인
-        </a>
+        <br>
+        <button class="btn btn--primary form--submit" onclick="location.href='/oauth2/authorization/google'">
+            <img src="https://img.icons8.com/?size=512&id=17949&format=png" alt="Google" width="20" height="20">
+            <span>Google 계정으로 로그인</span>
+        </button>
     </section>
 </main>
 
-<script>
+<script th:inline="javascript">
     const signupForm = document.getElementById("signupForm");
     const password = document.getElementById("password");
     const confirmPassword = document.getElementById("confirmPassword");
+
+    const errorMessage = /*[[${errorMessage}]]*/ null;
 
     const pwMessage = document.getElementById("pwMessage")
     const pwConfirmMessage = document.getElementById("pwConfirmMessage");
@@ -98,6 +101,14 @@
             pwConfirmMessage.style.color = "green";
         }
     });
+
+    document.addEventListener("DOMContentLoaded", ()=>{
+        if(errorMessage!=null){
+            idMessage.textContent = errorMessage;
+            idMessage.style.color = "red";
+        }
+
+    })
 
     signupForm.addEventListener("submit", event => {
         const loginId = document.getElementById("loginId");

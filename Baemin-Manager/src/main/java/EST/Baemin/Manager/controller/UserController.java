@@ -80,10 +80,18 @@ public class UserController {
 
     @PostMapping("/api/signup")
     public String signup(SignupRequest request, Model model) {
+
+        log.info(request.getUsername());
+        if(userService.isLoginIdExist(request.getUsername())){
+            model.addAttribute("formData", request);
+            model.addAttribute("errorMessage", "이미 존재하는 아이디입니다.");
+            return "signup";
+        }
         if (!request.getPassword().equals(request.getConfirmPassword())) {
             model.addAttribute("formData", request);
-            return "redirect:/signup";
+            return "signup";
         }
+
         userService.save(request);
         return "redirect:/login";
     }

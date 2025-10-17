@@ -6,56 +6,56 @@ body {
 }
 
 /* 상단 메뉴 */
-.topbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0px 50px;
-    background-color: #fff;
-    border-bottom: 1px solid #ddd;
-}
+/*.topbar {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: space-between;*/
+/*    padding: 0px 50px;*/
+/*    background-color: #fff;*/
+/*    border-bottom: 1px solid #ddd;*/
+/*}*/
 
-.topbar .logo {
-    height: 40px;
-    width: 85px;
-}
-.topbar nav {
-    margin-left: 20px;
-}
+/*.topbar .logo {*/
+/*    height: 40px;*/
+/*    width: 85px;*/
+/*}*/
+/*.topbar nav {*/
+/*    margin-left: 20px;*/
+/*}*/
 
-.topbar nav a {
-    margin: 0 5px;
-    text-decoration: none;
-    color: #333;
-    font-weight: 500;
-}
+/*.topbar nav a {*/
+/*    margin: 0 5px;*/
+/*    text-decoration: none;*/
+/*    color: #333;*/
+/*    font-weight: 500;*/
+/*}*/
 
-.topbar-left {
-    display: flex;
-    align-items: center;
-}
+/*.topbar-left {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*}*/
 
-.topbar-right {
-    display: flex;
-    align-items: center;
-}
+/*.topbar-right {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*}*/
 
-.topbar-right input {
-    padding: 5px 10px;
-    margin-right: 10px;
-    border-radius: 10px;
-    border: none;
-    background-color: #dee2e6;
-}
+/*.topbar-right input {*/
+/*    padding: 5px 10px;*/
+/*    margin-right: 10px;*/
+/*    border-radius: 10px;*/
+/*    border: none;*/
+/*    background-color: #dee2e6;*/
+/*}*/
 
-.topbar-right button {
-    margin-left: 5px;
-    padding: 5px 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    background-color: #fff;
-    cursor: pointer;
-}
+/*.topbar-right button {*/
+/*    margin-left: 5px;*/
+/*    padding: 5px 10px;*/
+/*    border-radius: 5px;*/
+/*    border: 1px solid #ccc;*/
+/*    background-color: #fff;*/
+/*    cursor: pointer;*/
+/*}*/
 
 /* 메인 컨테이너 */
 .form-container {
