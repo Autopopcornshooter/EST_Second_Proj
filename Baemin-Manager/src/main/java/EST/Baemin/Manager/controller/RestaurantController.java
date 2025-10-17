@@ -152,18 +152,6 @@ public class RestaurantController {
         return ResponseEntity.ok().build();
     }
 
-    // 식당 이미지 업로드 기능
-//    @PostMapping("/{id}/image")
-//    public ResponseEntity<Restaurant> uploadImage(@PathVariable Long id, @RequestParam("file") MultipartFile file) {
-//        try {
-//            return restaurantService.uploadImage(id, file)
-//                    .map(ResponseEntity::ok)
-//                    .orELse(ResponseEntity.notFound().build());
-//        } catch (Exception e) {
-//            return ResponseEntity.badRequest().build();
-//        }
-//    }
-
     // 식당 등록 폼 페이지 (새 레스토랑 등록)
     @Operation(summary = "식당 등록", description = "식당 정보를 등록합니다.")
     @GetMapping("/restaurant-form")
