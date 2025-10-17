@@ -17,3 +17,9 @@ spring:
       hibernate:
         format_sql: true
 
+aws:
+  access-key-id: ${ACCESS_KEY}
+  secret-access-key:  ${SECRET_KEY}
+  region: ap-northeast-2
+  s3:
+    bucket-name:  ${BUCKET_NAME}
