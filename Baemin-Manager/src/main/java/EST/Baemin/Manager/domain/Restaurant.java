@@ -56,10 +56,6 @@ public class Restaurant {
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Like> likes = new ArrayList<>();
 
-//    @OneToOne
-//    @JoinColumn(name = "user_id")
-//    private User user;
-
     @Column(nullable = false)
     private String state;  // 상태
 

@@ -11,7 +11,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +25,7 @@ import java.util.stream.Collectors;
 public class RestaurantService {
     private final RestaurantRepository restaurantRepository;
     private final UserRepository userRepository;
+    private final S3Service s3Service;
 
     // 식당 조회 기능
     public Page<RestaurantDto> findAllRestaurants(Pageable pageable) {
@@ -30,11 +33,6 @@ public class RestaurantService {
         return restaurantRepository.findAll(pageable)
                 .map(RestaurantDto::new);    // DTO 변환 예시
 
-
-//        return restaurantRepository.findAll()
-//                .stream()
-//                .map(RestaurantDto::new)
-//                .toList();
     }
 
     // 식당 아이디별 조회 기능
@@ -59,7 +57,7 @@ public class RestaurantService {
                 .view(dto.getView() != null ? dto.getView() : 0)    // null 값이면 0으로
                 .user(user)
                 .state(dto.getState())
-//                .imageUrl(dto.getImageUrl())
+                .imageUrl(dto.getImageUrl())
                 .build();
         user.updateRestaurant(restaurant);
         Restaurant saved = restaurantRepository.save(restaurant);
@@ -79,7 +77,7 @@ public class RestaurantService {
                     if (dto.getAddress() != null) r.setAddress(dto.getAddress());
                     if (dto.getPrice() != null) r.setPrice(dto.getPrice());
                     if (dto.getState() != null) r.setState(dto.getState());
-//                  r.setImageUrl(dto.getImageUrl());
+                    if(dto.getImageUrl() != null) r.setImageUrl(dto.getImageUrl());
                     return restaurantRepository.save(r);
                 })
                 .map(RestaurantDto::new);
@@ -96,19 +94,6 @@ public class RestaurantService {
             restaurantRepository.delete(restaurant);
         });
     }
-
-//    // 이미지 업로드 기능
-//    public Optional<Restaurant> uploadImage(Long id, MultipartFile file) {
-//        return restaurantRepository.findById(id).map(r -> {
-//            try {
-//                String fileName = file.getOriginalFilename();
-//                r.setImageUrl("/images/" + fileName);
-//            } catch (Exception e) {
-//                throw new RuntimeException("이미지 업로드 실패");
-//            }
-//            return restaurantRepository.save(r);
-//        });
-//    }
 
     // 조회수 증가 기능
     @Transactional
@@ -130,8 +115,6 @@ public class RestaurantService {
 
     // address 기반 주소 추출
     public Page<RestaurantDto> findRestaurantsByCity(String city, Pageable pageable) {
-//      return restaurantRepository.findByAddressContaining(city, pageable)
-//          .map(RestaurantDto::new);       //state 추가하여 아래 방식 사용
         return restaurantRepository.findByAddressContainingAndState(city, "공개", pageable)
                 .map(RestaurantDto::new);
     }

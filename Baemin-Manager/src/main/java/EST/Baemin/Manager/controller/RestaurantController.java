@@ -5,6 +5,7 @@ import EST.Baemin.Manager.domain.User;
 import EST.Baemin.Manager.dto.RestaurantDto;
 import EST.Baemin.Manager.service.LikeService;
 import EST.Baemin.Manager.service.RestaurantService;
+import EST.Baemin.Manager.service.S3Service;
 import EST.Baemin.Manager.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -19,6 +20,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Page;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 import java.util.List;
 
 @Tag(name = "Restaurant", description = "식당 관리 API")
@@ -30,6 +34,7 @@ public class RestaurantController {
     private final RestaurantService restaurantService;
     private final UserService userService;
     private final LikeService likeService;
+    private final S3Service s3Service;
 
     // 식당 전체 조회 기능
     @Operation(summary = "식당 전체 조회", description = "전체 식당을 조회합니다.")
@@ -185,20 +190,28 @@ public class RestaurantController {
 
         // 폼 제출 처리
     @PostMapping("/save")
-    public String saveRestaurant(RestaurantDto dto) {
+    public String saveRestaurant(
+            @ModelAttribute RestaurantDto dto,                     // form 데이터 DTO
+            @RequestParam(value = "file", required = false) MultipartFile file // 이미지 파일
+    ) throws IOException {
+
+        // DTO의 id 확인
         if (dto.getId() == null) {
             throw new RuntimeException("수정할 식당 id가 없습니다.");
         }
 
         Long currentUserId = userService.authenticatedUser().getId();
 
+        // 권한 체크
         if (!restaurantService.isOwner(dto.getId(), currentUserId)) {
             throw new RuntimeException("권한이 없습니다.");
         }
 
+        // 레스토랑 정보 업데이트
         restaurantService.updateRestaurant(dto.getId(), dto)
                 .orElseThrow(() -> new RuntimeException("해당 식당을 찾을 수 없습니다."));
 
+        // 완료 후 레스토랑 목록 페이지로 리다이렉트
         return "redirect:/api/restaurants";
     }
 
@@ -211,4 +224,9 @@ public class RestaurantController {
         return "restaurant-search";
     }
 
+    @PostMapping("/upload")
+    public ResponseEntity<String> uploadImage(@RequestParam("file") MultipartFile file) throws IOException {
+        String imageUrl = s3Service.uploadFile(file);
+        return ResponseEntity.ok(imageUrl);
+    }
 }
