@@ -198,7 +198,7 @@
 ## ⚙️ 배포 주소
 
 ```bash
-git clone http://3.37.159.17:8080/mainpage
+http://3.37.159.17:8080/mainpage
 ```
 ---
 
