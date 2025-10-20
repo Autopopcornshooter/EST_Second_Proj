@@ -75,45 +75,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
-    // const form = document.getElementById("restaurantForm");
-    // if (form) {
-    //     form.addEventListener("submit", async function(event) {
-    //         event.preventDefault();
-    //         const id = this.getAttribute("data-id");
-    //
-    //         const data = {
-    //             mainMenu: document.getElementById("menuName").value,
-    //             price: document.getElementById("menuPrice").value,
-    //             description: document.getElementById("menuDesc").value,
-    //             address: document.getElementById("location").value
-    //         };
-    //
-    //         const url = id ? `/api/restaurants/${id}` : "/api/restaurants";
-    //         const method = id ? "PUT" : "POST";
-    //
-    //         try {
-    //             const response = await fetch(url, {
-    //                 method,
-    //                 headers: {
-    //                     "Content-Type": "application/json",
-    //                     [csrfHeader]: csrfToken
-    //                 },
-    //                 credentials: 'include',
-    //                 body: JSON.stringify(data)
-    //             });
-    //
-    //             if (response.ok) {
-    //                 alert(id ? "수정 성공!" : "등록 성공!");
-    //                 window.location.href = "/api/restaurants";
-    //             } else {
-    //                 alert("실패: " + response.status);
-    //             }
-    //         } catch (error) {
-    //             console.error("에러 발생:", error);
-    //             alert("서버 오류 발생으로 인해 저장할 수 없습니다.");
-    //         }
-    //     });
-    // }
 
     // 식당 삭제
     window.deleteRestaurant = function(id) {

@@ -82,16 +82,6 @@ public class UserService {
         return region;
     }
 
-    //사용자가 선택한 지역 삭제
-    //지역 테이블에서 지역 삭제
-//    @Transactional
-//    public void deleteRegion(){
-//        User user=userRepository.findByLoginId(SecurityUtil.getCurrentUserLoginId())
-//                .orElseThrow(()->new IllegalArgumentException("findById Not Found with id: "+SecurityUtil.getCurrentUserLoginId()));
-//        regionService.deleteRegion(user.getRegion().getId());
-//        user.updateRegion(null);
-//    }
-
 
     public Page<UserResponse> getAllUsers(Pageable pageable) {
         return userRepository.findAll(pageable)

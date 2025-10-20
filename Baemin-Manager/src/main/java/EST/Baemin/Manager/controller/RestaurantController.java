@@ -58,20 +58,12 @@ public class RestaurantController {
         // 해당 지역의 식당만 필터링
         // 서비스에서 Page<RestaurantDto> 반환
         Page<RestaurantDto> restaurantPage = restaurantService.findRestaurantsByCity(userCity,pageable);
-//        List<RestaurantDto> filteredRestaurants = restaurantPage.getContent().stream()
-//                .filter(r -> {
-//                    String restaurantCity = extractCity(r.getAddress());
-//                    return restaurantCity.equals(userCity);
-//                })
-//                .toList();
+
 
         // model에 restaurants라는 이름으로 Page 객체를 전달
         model.addAttribute("restaurants", restaurantPage); //.getContent()
         model.addAttribute("currentPage", page);
-//        model.addAttribute("totalPages", restaurantPage.getTotalPages());
 
-//        List<RestaurantDto> reestaurants = restaurantService.findAllRestaurants();
-//        model.addAttribute("restaurants", restaurantService.findAllRestaurants());
         return "introductionpage";
     }
 
@@ -111,10 +103,6 @@ public class RestaurantController {
         model.addAttribute("userLiked", userLiked);
         model.addAttribute("likeCount", likeCount);
 
-//        // DB 조회하고 최신 데이터 가져오기
-//        RestaurantDto restaurant = restaurantService.findRestaurantById(id)
-//                .orElseThrow(() -> new RuntimeException("식당을 찾을 수 없습니다."));
-//        model.addAttribute("restaurant", restaurant);
         return "restaurantdetail";
     }
 
@@ -159,7 +147,6 @@ public class RestaurantController {
     @GetMapping("/restaurant-form")
     public String restaurantForm() {
         return "restaurant-form";
-        // templetes/restaurantapplicationpage.html 랜더링
     }
 
     // 식당 수정 페이지 (기존 레스토랑 수정)

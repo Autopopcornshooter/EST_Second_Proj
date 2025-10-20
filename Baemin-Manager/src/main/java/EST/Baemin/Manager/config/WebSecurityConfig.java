@@ -16,9 +16,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 
-//import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
-
-
 @EnableWebSecurity
 @Configuration
 @AllArgsConstructor
@@ -98,26 +95,12 @@ public class WebSecurityConfig {
                         exception
                                 .accessDeniedPage("/access-denied"));
 
-//        httpSecurity.csrf(csrf -> csrf.ignoringRequestMatchers(toH2Console()));
         httpSecurity.headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()));
         log.info("User SecurityFilterChain Applied");
         return httpSecurity.build();
     }
 
 
-    //개발용 보안 설정
-//    @Bean
-//    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception{
-//        httpSecurity.authorizeHttpRequests(auth->auth.anyRequest().permitAll())
-//                .formLogin(auth-> auth.loginPage("/login")
-//                        .defaultSuccessUrl("/api/regions",true))
-//                .logout(auth->auth.logoutSuccessUrl("/login")
-//                        .invalidateHttpSession(true)
-//                        .clearAuthentication(true));
-//        httpSecurity.csrf(csrf -> csrf.ignoringRequestMatchers(toH2Console())); // ✅ CSRF 무시
-//        httpSecurity.headers(headers -> headers.frameOptions(frame -> frame.sameOrigin())); // ✅ frame 허용
-//        return httpSecurity.build();
-//    }
 
 
 }

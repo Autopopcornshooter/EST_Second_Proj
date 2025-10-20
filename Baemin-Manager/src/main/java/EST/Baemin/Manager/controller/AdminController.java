@@ -52,10 +52,6 @@ public class AdminController {
     }
 
     @GetMapping("/statistics")
-//    public String statisticsPage(HttpServletRequest request, Model model) {
-//        model.addAttribute("currentPath", request.getRequestURI());
-//        return "admin-statistics";
-//    }
     public String statisticsPage(Model model) throws JsonProcessingException {
         Map<String, Long> stats = restaurantService.getCityStatistics();
 
